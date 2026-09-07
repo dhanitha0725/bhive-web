@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "watermelon-mcp": {
+      "serverUrl": "https://mcp.watermelon.sh/mcp"
+    }
+  }
+}

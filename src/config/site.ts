@@ -1,0 +1,3 @@
+export const siteConfig = { name: "BHive", description: "Strategy, brand, marketing, and digital execution—built as one growth system.", url: process.env.NEXT_PUBLIC_SITE_URL, email: undefined as string | undefined, social: [] as Array<{ label: string; href: string }> } as const;
+export const audiencePaths = [{ label: "Grow an Existing Business", href: "/grow-your-business", audience: "existing-business" }, { label: "Launch a New Business", href: "/launch-your-business", audience: "new-venture" }] as const;
+export const primaryNavigation = [{ label: "Services", href: "/services" }, { label: "Work", href: "/work" }, { label: "Insights", href: "/insights" }, { label: "About", href: "/about" }, { label: "Contact", href: "/contact" }] as const;

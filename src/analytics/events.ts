@@ -1,0 +1,3 @@
+export type AnalyticsEvent = "audience_path_selected" | "cta_clicked" | "growth_audit_started" | "growth_audit_submitted" | "guidance_call_started" | "guidance_call_submitted" | "service_viewed" | "package_viewed" | "case_study_viewed" | "insight_viewed";
+export type AnalyticsProperties = { placement?: string; audience?: "existing-business" | "new-venture"; service?: string; utm_source?: string; utm_medium?: string; utm_campaign?: string; utm_term?: string; utm_content?: string; referrer?: string };
+export function trackEvent(event: AnalyticsEvent, properties: AnalyticsProperties = {}) { if (typeof window === "undefined") return; window.dispatchEvent(new CustomEvent("bhive:analytics", { detail: { event, properties } })); }

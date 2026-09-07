@@ -1,0 +1,4 @@
+{
+  "name": "vercel-mcp",
+  "description": "Hosted MCP endpoint for managing Vercel projects, deployments, logs, analytics, and documentation."
+}
