@@ -8,7 +8,6 @@ import { BrandMark } from "./brand-mark";
 import { LinkButton } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/drawer";
 import { Container } from "@/components/ui/container";
-import { ThemeSelector } from "@/components/theme/theme-selector";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -41,7 +40,6 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <ThemeSelector />
           <LinkButton href="/contact">Start a Conversation</LinkButton>
         </div>
 
@@ -59,13 +57,6 @@ export function Header() {
 
       <Drawer open={open} onClose={close} title="Navigate">
         <nav id="mobile-navigation" aria-label="Mobile navigation" className="grid gap-1">
-          <div className="mb-2 pb-3 border-b border-[var(--border)]">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)]">
-              Design System Theme
-            </p>
-            <ThemeSelector className="w-full" />
-          </div>
-
           {primaryNavigation.map((item) => (
             <Link
               key={item.href}

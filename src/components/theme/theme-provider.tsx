@@ -1,7 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useMemo } from "react";
-import { designSystems, type ThemeDefinition } from "@/config/themes";
+import React, { createContext, useContext, useMemo } from "react";
+import { corporateTheme, designSystems, type ThemeDefinition } from "@/config/themes";
 
 interface ThemeContextValue {
   theme: string;
@@ -12,52 +12,20 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-const STORAGE_KEY = "bhive_active_design_system";
-
+// Fixed single corporate light theme. setTheme is a no-op kept for API
+// compatibility so existing components do not break.
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<string>("bhive");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    try {
-      const savedTheme = localStorage.getItem(STORAGE_KEY);
-      if (savedTheme && designSystems.some((t) => t.id === savedTheme)) {
-        setThemeState(savedTheme);
-        document.documentElement.setAttribute("data-theme", savedTheme);
-      } else {
-        const currentAttr = document.documentElement.getAttribute("data-theme");
-        if (currentAttr && designSystems.some((t) => t.id === currentAttr)) {
-          setThemeState(currentAttr);
-        } else {
-          document.documentElement.setAttribute("data-theme", "bhive");
-        }
-      }
-    } catch {
-      // ignore storage errors
-    }
-    setMounted(true);
-  }, []);
-
-  const setTheme = (themeId: string) => {
-    if (!designSystems.some((t) => t.id === themeId)) return;
-    setThemeState(themeId);
-    try {
-      localStorage.setItem(STORAGE_KEY, themeId);
-    } catch {
-      // ignore
-    }
-    document.documentElement.setAttribute("data-theme", themeId);
-  };
-
-  const activeThemeMeta = useMemo(() => {
-    return designSystems.find((t) => t.id === theme) || designSystems[0];
-  }, [theme]);
-
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme, themes: designSystems, activeThemeMeta }}>
-      {children}
-    </ThemeContext.Provider>
+  const value = useMemo<ThemeContextValue>(
+    () => ({
+      theme: corporateTheme.id,
+      setTheme: () => {},
+      themes: designSystems,
+      activeThemeMeta: corporateTheme,
+    }),
+    []
   );
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {

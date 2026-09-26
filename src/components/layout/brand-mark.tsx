@@ -12,8 +12,8 @@ export function BrandMark({ inverted = false }: { inverted?: boolean }) {
       <span
         className={`mr-1 inline-grid size-6.5 place-items-center text-sm font-black tracking-[-0.08em] ${
           inverted
-            ? "bg-white text-navy-600"
-            : "bg-navy-600 text-honey-500 shadow-xs"
+            ? "bg-white text-[#0b4cc4]"
+            : "bg-[#0b4cc4] text-white shadow-xs"
         }`}
         style={{ borderRadius: "var(--radius-btn, 6px)" }}
       >

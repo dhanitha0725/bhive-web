@@ -128,7 +128,7 @@ export default function Grow() {
             {packages.map((item) => (
               <div
                 key={item.id}
-                className={`card-base border p-6 ${item.featured ? "border-honey-500 bg-navy-600 text-white shadow-md" : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]"}`}
+                className={`card-base border p-6 ${item.featured ? "border-navy-600 bg-navy-600 text-white shadow-md" : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]"}`}
               >
                 <p className="eyebrow">{item.label}</p>
                 <h3 className="mt-3 font-display text-2xl font-semibold">
@@ -142,7 +142,7 @@ export default function Grow() {
                 </ul>
                 <LinkButton
                   href="/contact"
-                  variant={item.featured ? "honey" : "navy"}
+                  variant={item.featured ? "white" : "navy"}
                   className="mt-6"
                 >
                   Discuss {item.name}
