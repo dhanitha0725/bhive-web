@@ -1,39 +1,31 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, PhoneCall, ArrowRight, ChevronDown } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  Check,
+  Rocket,
+  Building2,
+  Lock,
+  Sparkles,
+} from "lucide-react";
 import { CloudSky } from "@/components/ui/cloud-sky";
 import { Container } from "@/components/ui/container";
+import { Dialog } from "@/components/ui/dialog";
+import { LeadForm } from "@/components/forms/lead-form";
 
 const ROTATING_WORDS = ["Designs", "Grow", "Develop", "Scale", "Transform"];
 
-const AVATARS = [
-  {
-    name: "Alex Rivera",
-    src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80",
-    fallback: "AR",
-  },
-  {
-    name: "David Chen",
-    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80",
-    fallback: "DC",
-  },
-  {
-    name: "Elena Rostova",
-    src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80",
-    fallback: "ER",
-  },
-  {
-    name: "Marcus Vance",
-    src: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=120&auto=format&fit=crop&q=80",
-    fallback: "MV",
-  },
-];
+const HELP_PILLS = ["Paid Ads", "SEO", "Social Media", "Website", "Consulting"];
 
 export function HeroSection() {
   const [wordIndex, setWordIndex] = useState(0);
+  const [strategyDialogOpen, setStrategyDialogOpen] = useState(false);
+  const [auditDialogOpen, setAuditDialogOpen] = useState(false);
+  const [selectedPills, setSelectedPills] = useState<string[]>(["Social Media", "Paid Ads"]);
+  const [auditUrl, setAuditUrl] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,181 +34,326 @@ export function HeroSection() {
     return () => clearInterval(interval);
   }, []);
 
+  const togglePill = (pill: string) => {
+    setSelectedPills((prev) =>
+      prev.includes(pill) ? prev.filter((p) => p !== pill) : [...prev, pill]
+    );
+  };
+
+  const handleAuditSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuditDialogOpen(true);
+  };
+
   return (
-    <section className="relative flex min-h-[calc(100vh-4.5rem)] min-h-[calc(100dvh-4.5rem)] w-full flex-col justify-center items-center overflow-hidden bg-[#0075FF] text-white py-12 sm:py-16 lg:py-20">
-      {/* 1. Cloud Sky Background (Interactive WebGL Drifting Sky with #0075FF background) */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-auto">
-        <CloudSky
-          background="#0075FF"
-          baseColor="#B4D2F0"
-          accentColor="#FFFFFF"
-          density={85}
-          speed={45}
-          size={130}
-          clouds={{ softness: 160, shadow: 65, cirrus: 65 }}
-          sun={{ x: 92, y: 94, glow: "#FFFFFF" }}
-          pointer={{ wind: 220, damping: 40, parallax: 240 }}
-          style={{ width: "100%", height: "100%", minWidth: "100%", minHeight: "100%" }}
-        />
-        {/* Soft atmospheric gradient to maintain high legibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0075FF]/35 via-transparent to-[#0075FF]/50 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-[#0060df]/30 pointer-events-none" />
-      </div>
+    <>
+      <section className="relative flex min-h-[calc(100vh-4.5rem)] min-h-[calc(100dvh-4.5rem)] w-full flex-col justify-center items-center overflow-hidden bg-[#0075FF] text-white py-12 sm:py-16 lg:py-20">
+        {/* 1. Cloud Sky Background (Interactive WebGL Drifting Sky with #0075FF background) */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-auto">
+          <CloudSky
+            background="#0075FF"
+            baseColor="#B4D2F0"
+            accentColor="#FFFFFF"
+            density={85}
+            speed={45}
+            size={130}
+            clouds={{ softness: 160, shadow: 65, cirrus: 65 }}
+            sun={{ x: 92, y: 94, glow: "#FFFFFF" }}
+            pointer={{ wind: 220, damping: 40, parallax: 240 }}
+            style={{ width: "100%", height: "100%", minWidth: "100%", minHeight: "100%" }}
+          />
+          {/* Soft atmospheric gradient to maintain high legibility */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0075FF]/35 via-transparent to-[#0075FF]/50 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-[#0060df]/30 pointer-events-none" />
+        </div>
 
-      {/* 2. Main Hero Content Container */}
-      <Container className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center px-4 sm:px-6">
-        {/* Top Badge: [ AI-Powered ] Solutions for Client Businesses */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="inline-flex items-center gap-2.5 rounded-full border border-white/35 bg-white/20 backdrop-blur-md p-1 pr-4 shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:scale-[1.02]"
-        >
-          <span className="rounded-full bg-[#0a254f] px-3.5 py-1 text-xs font-semibold text-white tracking-wide shadow-sm">
-            AI-Powered
-          </span>
-          <span className="text-xs sm:text-sm font-semibold text-white drop-shadow-sm">
-            Solutions for Client Businesses
-          </span>
-        </motion.div>
+        {/* 2. Main Hero Content Container */}
+        <Container className="relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center px-4 sm:px-6">
+          {/* Top Pill Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 backdrop-blur-md p-1 pr-4"
+          >
+            <span className="rounded-full bg-[#0a254f] px-3.5 py-1 text-xs font-semibold text-white tracking-wide flex items-center gap-1.5">
+              <Sparkles className="h-3 w-3 text-blue-300" />
+              AI-Powered
+            </span>
+            <span className="text-xs sm:text-sm font-semibold text-white/95">
+              Commercial Growth &amp; Brand Systems
+            </span>
+          </motion.div>
 
-        {/* Main Display Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          className="mt-6 sm:mt-8 text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.18] sm:leading-[1.15] drop-shadow-[0_2px_16px_rgba(0,40,120,0.35)]"
-        >
-          {/* Line 1: Innovative [ Animated Word ] and Creative */}
-          <span className="inline-flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3.5 gap-y-2">
-            <span>Innovative</span>
+          {/* Main Display Headline (Crisp, clean typography with no muddy drop shadows) */}
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="mt-6 text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold tracking-tight text-white leading-[1.14] max-w-4xl"
+          >
+            <span className="inline-flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-2">
+              <span>Innovative</span>
 
-            {/* Glowing Rounded Rectangle Container */}
-            <span className="relative inline-flex items-center justify-center rounded-full border-2 border-white bg-white/20 px-4 sm:px-8 py-0.5 sm:py-1 shadow-[0_0_35px_rgba(255,255,255,0.45)] backdrop-blur-md min-w-[130px] sm:min-w-[210px] md:min-w-[240px] h-[46px] sm:h-[62px] md:h-[74px] overflow-hidden align-middle">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={ROTATING_WORDS[wordIndex]}
-                  initial={{ y: 28, opacity: 0, filter: "blur(6px)" }}
-                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                  exit={{ y: -28, opacity: 0, filter: "blur(6px)" }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="inline-block text-white font-bold tracking-tight whitespace-nowrap drop-shadow-[0_2px_10px_rgba(0,40,120,0.5)]"
-                >
-                  {ROTATING_WORDS[wordIndex]}
-                </motion.span>
-              </AnimatePresence>
+              {/* Clean Glass Word Capsule */}
+              <span className="relative inline-flex items-center justify-center rounded-full border border-white/60 bg-white/20 px-4 sm:px-7 py-0.5 sm:py-1 backdrop-blur-md min-w-[130px] sm:min-w-[190px] md:min-w-[220px] h-[44px] sm:h-[58px] md:h-[66px] overflow-hidden align-middle">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={ROTATING_WORDS[wordIndex]}
+                    initial={{ y: 26, opacity: 0, filter: "blur(4px)" }}
+                    animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                    exit={{ y: -26, opacity: 0, filter: "blur(4px)" }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="inline-block text-white font-bold tracking-tight whitespace-nowrap"
+                  >
+                    {ROTATING_WORDS[wordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+
+              <span>and Creative</span>
             </span>
 
-            <span>and Creative</span>
-          </span>
+            <span className="mt-2 block">
+              Ideas To Boost{" "}
+              <motion.span
+                animate={{ y: [0, -4, 0], rotate: [0, 4, 0] }}
+                transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
+                className="inline-block cursor-default select-none"
+              >
+                🚀
+              </motion.span>{" "}
+              Your Brand!
+            </span>
+          </motion.h1>
 
-          {/* Line 2: Ideas To Boost 🚀 Your Brand! */}
-          <span className="mt-2 sm:mt-3 block">
-            Ideas To Boost{" "}
-            <motion.span
-              animate={{ y: [0, -5, 0], rotate: [0, 4, 0] }}
-              transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
-              className="inline-block cursor-default select-none"
-            >
-              🚀
-            </motion.span>{" "}
-            Your Brand!
-          </span>
-        </motion.h1>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="mt-5 max-w-2xl text-base sm:text-lg text-white/90 font-normal leading-relaxed text-balance"
+          >
+            Two dedicated commercial pathways: claim a free social media &amp; growth audit for
+            your existing brand, or book a 1-on-1 strategy call to launch something new.
+          </motion.p>
 
-        {/* Subtitle / Paragraph */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="mt-6 sm:mt-7 max-w-2xl text-base sm:text-lg text-white font-medium leading-relaxed text-balance drop-shadow-[0_1px_6px_rgba(0,40,120,0.3)]"
-        >
-          Our trusted agency for designs that captivate and strategies that drive
-          results. We transform ideas into unforgettable experiences.
-        </motion.p>
+          {/* 3. DUAL PATHWAY CARDS CONTAINER (Transparent glass frame + clean white cards as shown in image) */}
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+            className="mt-10 sm:mt-12 w-full rounded-[28px] sm:rounded-[34px] bg-white/20 backdrop-blur-2xl p-2 sm:p-4 lg:p-5"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5 sm:gap-4 text-left">
+              {/* Card 1: For New Businesses & Founders (Free Strategy Call) */}
+              <div className="rounded-2xl sm:rounded-[22px] bg-white p-6 sm:p-8 text-slate-900 border border-white/80 flex flex-col justify-between transition-colors">
+                <div>
+                  {/* Pathway Tag */}
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+                    <Rocket className="h-3.5 w-3.5 text-blue-600" />
+                    <span>FOR NEW BUSINESSES &amp; FOUNDERS</span>
+                  </div>
 
-        {/* Social Proof Bar (4 Avatars + 5 Stars + 4.5 Rating + Subtext) */}
+                  {/* Title & Description */}
+                  <h3 className="mt-4 text-xl sm:text-2xl font-bold font-display text-slate-900 tracking-tight">
+                    Book a Free 1-on-1 Strategy Call
+                  </h3>
+                  <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Building something new? Don't build in the dark. Discuss your business model,
+                    target audience, and go-to-market direction 1-on-1 with a senior strategist.
+                  </p>
+
+                  {/* Clean Metric Proof Badges */}
+                  <div className="mt-5 flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50/90 px-3 py-1 text-xs font-mono font-bold text-blue-800 tracking-wide">
+                      + 40–60% QUALIFIED LEADS
+                    </span>
+                    <span className="inline-flex items-center rounded-full border border-purple-200 bg-purple-50/90 px-3 py-1 text-xs font-mono font-bold text-purple-800 tracking-wide">
+                      ↑ 2–4× ROAS
+                    </span>
+                  </div>
+
+                  {/* Clean Checkmarks List */}
+                  <div className="mt-5 space-y-2.5 text-xs sm:text-sm text-slate-700 border-t border-slate-100 pt-4">
+                    <div className="flex items-start gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 stroke-[2.5]" />
+                      </div>
+                      <span>Proven ROI — sustainable growth, not vanity metrics</span>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 stroke-[2.5]" />
+                      </div>
+                      <span>Full-stack architecture: SEO, Google Ads &amp; web funnel</span>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 stroke-[2.5]" />
+                      </div>
+                      <span>30-min tailored discovery session · 100% free guidance</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Clean Flat Action Button */}
+                <div className="mt-7">
+                  <button
+                    type="button"
+                    onClick={() => setStrategyDialogOpen(true)}
+                    className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#0a254f] hover:bg-[#071a3a] px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+                  >
+                    <span>BOOK A FREE STRATEGY CALL</span>
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Card 2: For Existing Businesses (Free Social Media & Growth Audit Card) */}
+              <div className="rounded-2xl sm:rounded-[22px] bg-white p-6 sm:p-8 text-slate-900 border border-white/80 flex flex-col justify-between transition-colors">
+                <div>
+                  {/* Pathway Tag */}
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+                    <Building2 className="h-3.5 w-3.5 text-blue-600" />
+                    <span>FOR EXISTING BUSINESSES</span>
+                  </div>
+
+                  {/* Title & Description */}
+                  <h3 className="mt-4 text-xl sm:text-2xl font-bold font-display text-slate-900 tracking-tight">
+                    Free Social Media &amp; Growth Audit
+                  </h3>
+                  <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Already running a business? Uncover hidden leaks and low-converting channels.
+                    We inspect your social accounts, ads, and conversion flow to unlock growth.
+                  </p>
+
+                  {/* "WHAT DO YOU NEED HELP WITH?" Interactive Selector */}
+                  <div className="mt-5">
+                    <p className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-slate-500 uppercase">
+                      WHAT DO YOU NEED HELP WITH?
+                    </p>
+                    <div className="mt-2.5 flex flex-wrap gap-2">
+                      {HELP_PILLS.map((pill) => {
+                        const isSelected = selectedPills.includes(pill);
+                        return (
+                          <button
+                            key={pill}
+                            type="button"
+                            onClick={() => togglePill(pill)}
+                            className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-colors duration-150 ${
+                              isSelected
+                                ? "bg-blue-600 text-white"
+                                : "border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
+                            }`}
+                          >
+                            {pill}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Clean Input Form */}
+                  <form onSubmit={handleAuditSubmit} className="mt-4 space-y-2">
+                    <label className="block text-xs font-semibold text-slate-700">
+                      Website URL or Social Profile:
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={auditUrl}
+                        onChange={(e) => setAuditUrl(e.target.value)}
+                        placeholder="e.g. yourbrand.com or @instagram"
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none"
+                      />
+                    </div>
+                  </form>
+                </div>
+
+                {/* Clean Flat Action Button & Guarantee */}
+                <div className="mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setAuditDialogOpen(true)}
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+                  >
+                    <span>REQUEST MY AUDIT →</span>
+                  </button>
+
+                  {/* Minimal Subtext */}
+                  <div className="mt-3 text-center">
+                    <p className="text-[11px] text-slate-500 flex items-center justify-center gap-1.5 font-medium">
+                      <Lock className="h-3 w-3 text-slate-500 inline" />
+                      <span className="font-mono text-[10px] tracking-wider uppercase font-semibold text-slate-600">
+                        NO SPAM · NO OBLIGATION
+                      </span>
+                      <span>· 48H Delivery</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </Container>
+
+        {/* Subtle Scroll Down Prompt */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-          className="mt-7 sm:mt-8 flex flex-wrap items-center justify-center gap-3.5"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0.4, 0.9, 0.4], y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 2.2, delay: 1 }}
+          className="mt-12 hidden sm:flex flex-col items-center gap-1 text-white/80 text-xs pointer-events-none"
         >
-          {/* Overlapping Avatar Stack */}
-          <div className="flex -space-x-2.5 overflow-hidden p-0.5">
-            {AVATARS.map((avatar, idx) => (
-              <img
-                key={idx}
-                src={avatar.src}
-                alt={avatar.name}
-                loading="lazy"
-                className="inline-block h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover ring-2 ring-white shadow-md transition-transform hover:scale-110 hover:z-20"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  target.style.display = "none";
-                }}
-              />
+          <span className="tracking-widest uppercase text-[10px] font-mono font-medium opacity-80">
+            Scroll to explore
+          </span>
+          <ChevronDown className="h-4 w-4" />
+        </motion.div>
+      </section>
+
+      {/* Dialog for New Businesses: 1-on-1 Free Strategy Call */}
+      <Dialog
+        open={strategyDialogOpen}
+        onClose={() => setStrategyDialogOpen(false)}
+        title="Book Your Free Strategy Call"
+      >
+        <div className="text-sm text-slate-600 -mt-2 mb-4 space-y-1">
+          <p>
+            Connect 1-on-1 with a senior commercial strategist. We will discuss your business
+            concept, target market, and map out a high-converting launch roadmap.
+          </p>
+          <p className="text-xs font-semibold text-blue-600">
+            ✓ 30 minutes · 100% confidential · Zero sales pressure
+          </p>
+        </div>
+        <LeadForm type="business-guidance" />
+      </Dialog>
+
+      {/* Dialog for Existing Businesses: Free Social Media & Growth Audit */}
+      <Dialog
+        open={auditDialogOpen}
+        onClose={() => setAuditDialogOpen(false)}
+        title="Request Your Free Social Media Audit"
+      >
+        <div className="text-sm text-slate-600 -mt-2 mb-4 space-y-1">
+          <p>
+            We will conduct an objective, diagnostic audit of your social channels, content
+            cadence, and conversion funnels, delivered with actionable insights in 48 hours.
+          </p>
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            <span className="text-[11px] font-mono uppercase text-slate-500">Selected focus:</span>
+            {selectedPills.map((pill) => (
+              <span
+                key={pill}
+                className="rounded bg-blue-50 text-blue-700 px-2 py-0.5 text-[10px] font-bold"
+              >
+                {pill}
+              </span>
             ))}
           </div>
-
-          {/* Rating Stars & Text */}
-          <div className="flex flex-col text-left">
-            <div className="flex items-center gap-1.5">
-              <div className="flex items-center text-amber-300">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-4 w-4 fill-amber-300 text-amber-300 drop-shadow-sm"
-                  />
-                ))}
-              </div>
-              <span className="text-sm font-bold text-white tracking-wide drop-shadow-sm">
-                4.5
-              </span>
-            </div>
-            <p className="mt-0.5 text-xs sm:text-sm font-semibold text-white/95 drop-shadow-sm">
-              Trusted by 1000+ Designers &amp; Developers
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Action CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          className="mt-8 sm:mt-9 flex flex-wrap items-center justify-center gap-4"
-        >
-          {/* Primary Action Button: Book a Call 📞 */}
-          <Link
-            href="/contact"
-            className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-[#0a254f] hover:bg-[#071e42] px-7 sm:px-8 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[0_6px_24px_rgba(10,37,79,0.4)] transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-          >
-            <span>Book a Call</span>
-            <PhoneCall className="h-4 w-4 transition-transform duration-200 group-hover:rotate-12" />
-          </Link>
-
-          {/* Secondary Action Button: View Pricing → */}
-          <Link
-            href="/grow-your-business"
-            className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/20 hover:bg-white/30 px-7 sm:px-8 py-3.5 text-sm sm:text-base font-semibold text-white backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.1)] transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-          >
-            <span>View Pricing</span>
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </Link>
-        </motion.div>
-      </Container>
-
-      {/* Subtle Scroll Down Prompt */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0.4, 0.9, 0.4], y: [0, 6, 0] }}
-        transition={{ repeat: Infinity, duration: 2.2, delay: 1 }}
-        className="absolute bottom-4 z-10 hidden sm:flex flex-col items-center gap-1 text-white/80 text-xs pointer-events-none drop-shadow-sm"
-      >
-        <span className="tracking-widest uppercase text-[10px] font-mono font-medium opacity-80">Scroll</span>
-        <ChevronDown className="h-4 w-4" />
-      </motion.div>
-    </section>
+        </div>
+        <LeadForm type="growth-audit" />
+      </Dialog>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/sections/hero-section";
+import { TrustedPartnersSection } from "@/components/sections/trusted-partners-section";
 import { BentoOutcomes } from "@/components/sections/bento-outcomes";
 import { PathwaySection } from "@/components/sections/pathway-section";
 import { SystemSection } from "@/components/sections/system-section";
@@ -12,10 +13,13 @@ import { FinalCtaSection } from "@/components/sections/final-cta-section";
 export default function Home() {
   return (
     <>
-      {/* 1. Hero Section (Watermelon hero-19) */}
+      {/* 1. Hero Section (Dual Value Pathways) */}
       <HeroSection />
 
-      {/* 2. Built for Business Outcomes (Watermelon bento-01) */}
+      {/* 2. Trusted Partners & Proof Grid (Proof Section) */}
+      <TrustedPartnersSection />
+
+      {/* 3. Built for Business Outcomes (Watermelon bento-01) */}
       <div id="outcomes">
         <BentoOutcomes />
       </div>
