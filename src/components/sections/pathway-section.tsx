@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/motion/reveal";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { ArrowRight, Check, Sparkles, Building2, Rocket } from "lucide-react";
@@ -67,12 +67,10 @@ export function PathwaySection() {
           {pathways.map((path, idx) => {
             const Icon = path.icon;
             return (
-              <motion.div
+              <Reveal
                 key={path.category}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                y={20}
+                delay={idx * 100}
                 className={`relative flex flex-col justify-between rounded-2xl border p-8 transition-all duration-300 hover:shadow-xl ${
                   path.featured
                     ? "border-blue-500/40 bg-[var(--background)] shadow-lg ring-1 ring-blue-500/20"
@@ -137,7 +135,7 @@ export function PathwaySection() {
                     <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </div>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

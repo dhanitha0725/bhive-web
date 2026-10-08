@@ -4,9 +4,8 @@ import { useEffect } from "react";
 
 export function SmoothScroll() {
   useEffect(() => {
-    // Respect reduced motion and mobile touch devices
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduced.matches) return;
+    // Respect reduced motion: leave native scrolling alone.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let disposed = false;
     let cleanup: (() => void) | undefined;
@@ -26,12 +25,16 @@ export function SmoothScroll() {
 
       const lenis = new Lenis({
         duration: 1.15,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
-        wheelMultiplier: 1.0,
+        // Keep touch scrolling native (1:1 finger tracking). Smoothing touch
+        // input fights the browser compositor and feels laggy on mobile.
+        syncTouch: false,
         touchMultiplier: 1.5,
+        wheelMultiplier: 1.0,
+        anchors: false,
       });
 
       // Synchronize Lenis scroll with GSAP ScrollTrigger
@@ -47,6 +50,14 @@ export function SmoothScroll() {
 
       gsap.ticker.add(tick);
       gsap.ticker.lagSmoothing(0);
+
+      // Re-measure trigger positions once fonts/layout settle.
+      const refresh = () => ScrollTrigger.refresh();
+      window.addEventListener("load", refresh);
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(refresh).catch(() => {});
+      }
+      const refreshTimer = window.setTimeout(refresh, 500);
 
       // Handle in-page hash links smoothly
       const handleAnchorClick = (e: MouseEvent) => {
@@ -67,6 +78,8 @@ export function SmoothScroll() {
       document.addEventListener("click", handleAnchorClick);
 
       cleanup = () => {
+        window.clearTimeout(refreshTimer);
+        window.removeEventListener("load", refresh);
         document.removeEventListener("click", handleAnchorClick);
         lenis.off("scroll", onScroll);
         lenis.destroy();

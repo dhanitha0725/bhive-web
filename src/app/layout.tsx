@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { siteConfig } from "@/config/site";
 
 const fontInter = Inter({
@@ -40,6 +41,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <Header />
+        <SmoothScroll />
         <main id="main-content" className="flex min-h-[60vh] flex-col">
           {children}
         </main>

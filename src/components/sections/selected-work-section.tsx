@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/motion/reveal";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
@@ -39,12 +39,10 @@ export function SelectedWorkSection() {
         {/* Showcase Cards Grid */}
         <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {featuredCases.map((item, idx) => (
-            <motion.div
+            <Reveal
               key={item.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              y={20}
+              delay={idx * 100}
               className="group flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-[var(--background)] p-7 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400/60 hover:shadow-xl"
             >
               <div>
@@ -89,7 +87,7 @@ export function SelectedWorkSection() {
                   {item.result}
                 </p>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </Container>

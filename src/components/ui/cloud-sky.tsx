@@ -4,7 +4,10 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
 
-const MAX_DPR = 2;
+// Cap render resolution: the fragment shader is heavy (multi-octave fbm +
+// per-pixel blob fields), and anything above ~1.25x is invisible under the
+// hero's glass overlays while doubling GPU cost during scroll.
+const MAX_DPR = 1.25;
 
 const PUFF_UP = 0.34;
 const PUFF_DOWN = 0.19;
@@ -265,11 +268,15 @@ function OriginkitBase_CloudSky(props: CloudSkyProps) {
   const pointer_ = { ...POINTER_DEFAULTS, ...(pointer || {}) };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
-  sizeRef.current = { w: num(width, 0), h: num(height, 0) };
 
   const vRef = useRef<Record<string, number | string>>({});
-  vRef.current = {
+
+  // Publish prop values to the frame loop outside of render (writing refs
+  // during render is a no-op risk under concurrent rendering).
+  const explicitSize = { w: num(width, 0), h: num(height, 0) };
+  const frameValues: Record<string, number | string> = {
     zenith: background,
     horizon: baseColor,
     cloud: accentColor,
@@ -286,13 +293,28 @@ function OriginkitBase_CloudSky(props: CloudSkyProps) {
     wind: clampN(num(pointer_.wind, 100), 0, 300) / 100,
     damping: clampN(num(pointer_.damping, 20), 1, 100),
   };
+  useEffect(() => {
+    vRef.current = frameValues;
+    // Explicit width/height props win when provided; otherwise the
+    // ResizeObserver inside the main effect owns the backing store size.
+    if (explicitSize.w > 0 && explicitSize.h > 0) {
+      sizeRef.current = explicitSize;
+    }
+  });
 
   const ptrRef = useRef({ x: 0, y: 0, inside: false });
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const gl = canvas.getContext("webgl", { alpha: false, antialias: false, depth: false });
+    const wrap = wrapRef.current;
+    if (!canvas || !wrap) return;
+    const gl = canvas.getContext("webgl", {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: "low-power",
+    });
     if (!gl) {
       console.error("CloudSky: WebGL unavailable");
       return;
@@ -325,8 +347,30 @@ function OriginkitBase_CloudSky(props: CloudSkyProps) {
       return locs[name];
     };
 
+    // Cache parsed colors: parsing strings + allocating arrays every frame
+    // created GC pressure on the scroll hot path. Re-parse only when inputs change.
+    let colorSig = "";
+    let zenC: RGBA = [0, 0, 0, 1];
+    let horC: RGBA = [0, 0, 0, 1];
+    let cldC: RGBA = [1, 1, 1, 1];
+    let glowC: RGBA = [1, 1, 1, 1];
+    const syncColors = (v: Record<string, number | string>) => {
+      const sig = `${v.zenith}|${v.horizon}|${v.cloud}|${v.glow}`;
+      if (sig === colorSig) return;
+      colorSig = sig;
+      zenC = parseColor(v.zenith as string, [0.369, 0.576, 0.824, 1]);
+      horC = parseColor(v.horizon as string, [0.706, 0.824, 0.941, 1]);
+      cldC = parseColor(v.cloud as string, [1, 1, 1, 1]);
+      glowC = parseColor(v.glow as string, [0.91, 0.953, 1, 0.9]);
+    };
+
     let raf = 0;
     let last = performance.now();
+    let canvasVisible = true;
+    let pageVisible = document.visibilityState !== "hidden";
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     let nearX = 0;
     let farX = 0;
@@ -334,7 +378,7 @@ function OriginkitBase_CloudSky(props: CloudSkyProps) {
     let leanX = 0;
     let leanY = 0;
 
-    const render = (now: number) => {
+    const draw = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       const v = vRef.current;
@@ -350,41 +394,80 @@ function OriginkitBase_CloudSky(props: CloudSkyProps) {
       farX = (farX - FAR_DRIFT * rate * dt) % 1000;
       cirrusX = (cirrusX - CIRRUS_DRIFT * rate * dt) % 1000;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
-      const cw = sizeRef.current.w || canvas.clientWidth || 1200;
-      const ch = sizeRef.current.h || canvas.clientHeight || 800;
-      const bw = Math.max(1, Math.round(cw * dpr));
-      const bh = Math.max(1, Math.round(ch * dpr));
-      if (canvas.width !== bw || canvas.height !== bh) {
-        canvas.width = bw;
-        canvas.height = bh;
+      // Canvas size is maintained by the ResizeObserver below — never read
+      // layout (clientWidth) inside the frame loop.
+      const bw = sizeRef.current.w;
+      const bh = sizeRef.current.h;
+      if (bw > 0 && bh > 0) {
+        if (canvas.width !== bw || canvas.height !== bh) {
+          canvas.width = bw;
+          canvas.height = bh;
+        }
+        gl.viewport(0, 0, bw, bh);
+
+        syncColors(v);
+
+        gl.uniform2f(u("uRes"), bw, bh);
+        gl.uniform1f(u("uNearX"), nearX);
+        gl.uniform1f(u("uFarX"), farX);
+        gl.uniform1f(u("uCirrusX"), cirrusX);
+        gl.uniform1f(u("uCoverage"), v.coverage as number);
+        gl.uniform1f(u("uSize"), v.size as number);
+        gl.uniform1f(u("uSoftness"), v.softness as number);
+        gl.uniform1f(u("uShadow"), v.shadow as number);
+        gl.uniform1f(u("uCirrus"), v.cirrus as number);
+        gl.uniform2f(u("uSun"), v.sunX as number, v.sunY as number);
+        gl.uniform2f(u("uParallax"), -leanX * (v.parallax as number) * 0.07, -leanY * (v.parallax as number) * 0.05);
+        gl.uniform3f(u("uZenith"), zenC[0], zenC[1], zenC[2]);
+        gl.uniform3f(u("uHorizon"), horC[0], horC[1], horC[2]);
+        gl.uniform3f(u("uCloud"), cldC[0], cldC[1], cldC[2]);
+        gl.uniform4f(u("uGlow"), glowC[0], glowC[1], glowC[2], glowC[3]);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
       }
-      gl.viewport(0, 0, bw, bh);
-
-      const zen = parseColor(v.zenith as string, [0.369, 0.576, 0.824, 1]);
-      const hor = parseColor(v.horizon as string, [0.706, 0.824, 0.941, 1]);
-      const cld = parseColor(v.cloud as string, [1, 1, 1, 1]);
-      const glow = parseColor(v.glow as string, [0.91, 0.953, 1, 0.9]);
-
-      gl.uniform2f(u("uRes"), bw, bh);
-      gl.uniform1f(u("uNearX"), nearX);
-      gl.uniform1f(u("uFarX"), farX);
-      gl.uniform1f(u("uCirrusX"), cirrusX);
-      gl.uniform1f(u("uCoverage"), v.coverage as number);
-      gl.uniform1f(u("uSize"), v.size as number);
-      gl.uniform1f(u("uSoftness"), v.softness as number);
-      gl.uniform1f(u("uShadow"), v.shadow as number);
-      gl.uniform1f(u("uCirrus"), v.cirrus as number);
-      gl.uniform2f(u("uSun"), v.sunX as number, v.sunY as number);
-      gl.uniform2f(u("uParallax"), -leanX * (v.parallax as number) * 0.07, -leanY * (v.parallax as number) * 0.05);
-      gl.uniform3f(u("uZenith"), zen[0], zen[1], zen[2]);
-      gl.uniform3f(u("uHorizon"), hor[0], hor[1], hor[2]);
-      gl.uniform3f(u("uCloud"), cld[0], cld[1], cld[2]);
-      gl.uniform4f(u("uGlow"), glow[0], glow[1], glow[2], glow[3]);
-
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      raf = requestAnimationFrame(render);
     };
+
+    // The rAF chain is unconditional while mounted (exactly like the
+    // original) so the animation can never get stuck stopped. The perf win
+    // comes from skipping the expensive GPU draw when the hero is offscreen
+    // or the tab is hidden — a skipped frame costs essentially nothing.
+    const render = (now: number) => {
+      // Reschedule first: the chain survives even a skipped frame.
+      raf = requestAnimationFrame(render);
+      if (reducedMotion || !canvasVisible || !pageVisible) {
+        last = now;
+        return;
+      }
+      draw(now);
+    };
+
+    // Size the backing store off-layout-thread via ResizeObserver instead of
+    // reading clientWidth every frame (which forces layout during scroll).
+    const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+    const ro = new ResizeObserver((entries) => {
+      const rect = entries[0]?.contentRect;
+      const cw = Math.max(1, Math.round((rect?.width || 1200) * dpr));
+      const ch = Math.max(1, Math.round((rect?.height || 800) * dpr));
+      sizeRef.current = { w: cw, h: ch };
+      // Reduced-motion users get one static frame as soon as we know the size.
+      if (reducedMotion) draw(performance.now());
+    });
+    ro.observe(wrap);
+
+    // Track visibility only — the loop keeps ticking (cheap) and simply
+    // skips GPU work while the hero is offscreen. This is the scroll-jank win.
+    const io = new IntersectionObserver(
+      (entries) => {
+        canvasVisible = entries[0]?.isIntersecting ?? true;
+      },
+      { threshold: 0 }
+    );
+    io.observe(wrap);
+
+    const onVisibility = () => {
+      pageVisible = document.visibilityState !== "hidden";
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     const track = (e: PointerEvent) => {
       const r = canvas.getBoundingClientRect();
@@ -397,14 +480,17 @@ function OriginkitBase_CloudSky(props: CloudSkyProps) {
       ptrRef.current.inside = false;
     };
 
-    canvas.addEventListener("pointermove", track);
-    canvas.addEventListener("pointerenter", track);
-    canvas.addEventListener("pointerleave", onLeave)
+    canvas.addEventListener("pointermove", track, { passive: true });
+    canvas.addEventListener("pointerenter", track, { passive: true });
+    canvas.addEventListener("pointerleave", onLeave, { passive: true });
 
     raf = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(raf);
+      ro.disconnect();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       canvas.removeEventListener("pointermove", track);
       canvas.removeEventListener("pointerenter", track);
       canvas.removeEventListener("pointerleave", onLeave);
@@ -413,6 +499,7 @@ function OriginkitBase_CloudSky(props: CloudSkyProps) {
 
   return (
     <div
+      ref={wrapRef}
       className={className}
       style={{
         position: "relative",

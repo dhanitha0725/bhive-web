@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef } from "react";
 import { Container } from "@/components/ui/container";
 
 interface PartnerLogo {
@@ -140,6 +141,25 @@ const PARTNERS: PartnerLogo[] = [
 ];
 
 export function TrustedPartnersSection() {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Pause the marquee when offscreen: even compositor-driven animations
+  // cost frames while scrolling past this section.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        track.style.animationPlayState = entries[0]?.isIntersecting
+          ? ""
+          : "paused";
+      },
+      { threshold: 0 }
+    );
+    io.observe(track);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section className="relative w-full border-b border-slate-200 bg-white pt-14 pb-16 sm:pt-16 sm:pb-20 text-slate-900 overflow-hidden">
       {/* Subtle Grid Background matching the reference layout */}
@@ -166,7 +186,10 @@ export function TrustedPartnersSection() {
           <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
           {/* Continuous Running Logo Track */}
-          <div className="flex items-center gap-10 sm:gap-14 py-2 w-max animate-marquee hover:[animation-play-state:paused]">
+          <div
+            ref={trackRef}
+            className="flex items-center gap-10 sm:gap-14 py-2 w-max animate-marquee hover:[animation-play-state:paused]"
+          >
             {[...PARTNERS, ...PARTNERS].map((partner, idx) => (
               <div
                 key={`${partner.name}-${idx}`}

@@ -68,18 +68,14 @@ export function HeroSection() {
         </div>
 
         {/* 2. Main Hero Content Container */}
-        <Container className="relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center px-4 sm:px-6">
+        <Container className="relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center px-5 sm:px-6">
           {/* Top Pill Badge */}
           <motion.div
             initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 backdrop-blur-md p-1 pr-4"
+            className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 backdrop-blur-md p-2"
           >
-            <span className="rounded-full bg-[#0a254f] px-3.5 py-1 text-xs font-semibold text-white tracking-wide flex items-center gap-1.5">
-              <Sparkles className="h-3 w-3 text-blue-300" />
-              AI-Powered
-            </span>
             <span className="text-xs sm:text-sm font-semibold text-white/95">
               Commercial Growth &amp; Brand Systems
             </span>
@@ -100,30 +96,18 @@ export function HeroSection() {
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={ROTATING_WORDS[wordIndex]}
-                    initial={{ y: 26, opacity: 0, filter: "blur(4px)" }}
-                    animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                    exit={{ y: -26, opacity: 0, filter: "blur(4px)" }}
+                    initial={{ y: 26, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -26, opacity: 0 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="inline-block text-white font-bold tracking-tight whitespace-nowrap"
+                    className="inline-block text-white font-bold tracking-tight whitespace-nowrap will-change-transform"
                   >
                     {ROTATING_WORDS[wordIndex]}
                   </motion.span>
                 </AnimatePresence>
               </span>
 
-              <span>and Creative</span>
-            </span>
-
-            <span className="mt-2 block">
-              Ideas To Boost{" "}
-              <motion.span
-                animate={{ y: [0, -4, 0], rotate: [0, 4, 0] }}
-                transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
-                className="inline-block cursor-default select-none"
-              >
-                🚀
-              </motion.span>{" "}
-              Your Brand!
+              <span>and Creative Ideas To Boost Your Brand!</span>
             </span>
           </motion.h1>
 
@@ -280,35 +264,19 @@ export function HeroSection() {
                   >
                     <span>REQUEST MY AUDIT →</span>
                   </button>
-
-                  {/* Minimal Subtext */}
-                  <div className="mt-3 text-center">
-                    <p className="text-[11px] text-slate-500 flex items-center justify-center gap-1.5 font-medium">
-                      <Lock className="h-3 w-3 text-slate-500 inline" />
-                      <span className="font-mono text-[10px] tracking-wider uppercase font-semibold text-slate-600">
-                        NO SPAM · NO OBLIGATION
-                      </span>
-                      <span>· 48H Delivery</span>
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
           </motion.div>
         </Container>
 
-        {/* Subtle Scroll Down Prompt */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0.4, 0.9, 0.4], y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 2.2, delay: 1 }}
-          className="mt-12 hidden sm:flex flex-col items-center gap-1 text-white/80 text-xs pointer-events-none"
-        >
+        {/* Subtle Scroll Down Prompt (pure CSS animation: zero main-thread cost while scrolling) */}
+        <div className="animate-scroll-cue mt-12 hidden sm:flex flex-col items-center gap-1 text-white/80 text-xs pointer-events-none">
           <span className="tracking-widest uppercase text-[10px] font-mono font-medium opacity-80">
             Scroll to explore
           </span>
           <ChevronDown className="h-4 w-4" />
-        </motion.div>
+        </div>
       </section>
 
       {/* Dialog for New Businesses: 1-on-1 Free Strategy Call */}

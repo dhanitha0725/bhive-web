@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/motion/reveal";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { ArrowRight, PhoneCall, CheckCircle2, ChevronRight } from "lucide-react";
@@ -38,12 +38,10 @@ export function FoundersSection() {
         {/* 8-Step Progressive Grid (Watermelon Stepper/Process Cards) */}
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {founderSteps.map((item, idx) => (
-            <motion.div
+            <Reveal
               key={item.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.4, delay: idx * 0.05 }}
+              y={16}
+              delay={idx * 50}
               className="group relative flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-navy-50/40 p-5 shadow-2xs transition-all duration-300 hover:border-blue-500/50 hover:bg-[var(--background)] hover:shadow-md"
             >
               <div>
@@ -67,7 +65,7 @@ export function FoundersSection() {
                 <CheckCircle2 className="h-3 w-3 text-emerald-600 shrink-0" />
                 <span className="truncate">Connected sequence</span>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
 

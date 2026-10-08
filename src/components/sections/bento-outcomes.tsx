@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
 import {
   Compass,
@@ -33,11 +33,8 @@ export function BentoOutcomes() {
         {/* Bento Grid Layout */}
         <div className="mt-12 grid gap-6 md:grid-cols-12">
           {/* Card 1: Strategy before execution (Span 7 cols) */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5 }}
+          <Reveal
+            y={16}
             className="md:col-span-7 flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-navy-50/50 p-6 lg:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:border-blue-300"
           >
             <div>
@@ -102,14 +99,12 @@ export function BentoOutcomes() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </Reveal>
 
           {/* Card 2: One connected system (Span 5 cols) */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+          <Reveal
+            y={16}
+            delay={100}
             className="md:col-span-5 flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-navy-50/50 p-6 lg:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:border-blue-300"
           >
             <div>
@@ -153,14 +148,12 @@ export function BentoOutcomes() {
                 Aligned around the same commercial direction
               </p>
             </div>
-          </motion.div>
+          </Reveal>
 
           {/* Card 3: Growth with direction (Span 12 cols / full width bento banner) */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+          <Reveal
+            y={16}
+            delay={200}
             className="md:col-span-12 rounded-2xl border border-[var(--border)] bg-navy-50/50 p-6 lg:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:border-blue-300"
           >
             <div className="grid gap-8 lg:grid-cols-12 items-center">
@@ -214,7 +207,7 @@ export function BentoOutcomes() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </Reveal>
         </div>
       </Container>
     </section>

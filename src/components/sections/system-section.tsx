@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
 import {
   Compass,
@@ -81,12 +81,10 @@ export function SystemSection() {
           {systemPillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
-              <motion.div
+              <Reveal
                 key={pillar.title}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.45, delay: idx * 0.08 }}
+                y={18}
+                delay={idx * 80}
                 className="group relative flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-navy-50/40 p-6 lg:p-7 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/60 hover:bg-[var(--background)] hover:shadow-lg"
               >
                 <div>
@@ -113,7 +111,7 @@ export function SystemSection() {
                   <span>Connected Component</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </div>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

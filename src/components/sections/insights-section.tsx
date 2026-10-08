@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/motion/reveal";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { ArrowUpRight, ArrowRight, Clock } from "lucide-react";
@@ -39,12 +39,11 @@ export function InsightsSection() {
         {/* Editorial Insight Cards Grid (Watermelon blog-1 adaptation) */}
         <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {recentInsights.map((item, idx) => (
-            <motion.article
+            <Reveal
+              as="article"
               key={item.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              y={20}
+              delay={idx * 100}
               className="group flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-[var(--background)] p-7 shadow-2xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400/60 hover:shadow-xl"
             >
               <div>
@@ -79,7 +78,7 @@ export function InsightsSection() {
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
               </div>
-            </motion.article>
+            </Reveal>
           ))}
         </div>
       </Container>
