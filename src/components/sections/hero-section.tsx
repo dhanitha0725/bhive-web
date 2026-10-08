@@ -7,8 +7,7 @@ import {
   ChevronDown,
   Check,
   Rocket,
-  Building2,
-  Lock,
+  TrendingUp,
   Sparkles,
 } from "lucide-react";
 import { CloudSky } from "@/components/ui/cloud-sky";
@@ -16,16 +15,12 @@ import { Container } from "@/components/ui/container";
 import { Dialog } from "@/components/ui/dialog";
 import { LeadForm } from "@/components/forms/lead-form";
 
-const ROTATING_WORDS = ["Designs", "Grow", "Develop", "Scale", "Transform"];
-
-const HELP_PILLS = ["Paid Ads", "SEO", "Social Media", "Website", "Consulting"];
+const ROTATING_WORDS = ["Scale", "Launch", "Build", "Grow", "Transform"];
 
 export function HeroSection() {
   const [wordIndex, setWordIndex] = useState(0);
   const [strategyDialogOpen, setStrategyDialogOpen] = useState(false);
   const [auditDialogOpen, setAuditDialogOpen] = useState(false);
-  const [selectedPills, setSelectedPills] = useState<string[]>(["Social Media", "Paid Ads"]);
-  const [auditUrl, setAuditUrl] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,17 +28,6 @@ export function HeroSection() {
     }, 2800);
     return () => clearInterval(interval);
   }, []);
-
-  const togglePill = (pill: string) => {
-    setSelectedPills((prev) =>
-      prev.includes(pill) ? prev.filter((p) => p !== pill) : [...prev, pill]
-    );
-  };
-
-  const handleAuditSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuditDialogOpen(true);
-  };
 
   return (
     <>
@@ -74,55 +58,61 @@ export function HeroSection() {
             initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 backdrop-blur-md p-2"
+            className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 backdrop-blur-md px-3.5 py-1.5"
           >
+            <Sparkles className="h-3.5 w-3.5 text-white/90" />
             <span className="text-xs sm:text-sm font-semibold text-white/95">
-              Commercial Growth &amp; Brand Systems
+              Strategic Brand &amp; Growth Marketing Agency
             </span>
           </motion.div>
 
-          {/* Main Display Headline (Crisp, clean typography with no muddy drop shadows) */}
+          {/* Main Display Headline (Marketing-focused, strictly 2 lines) */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-6 text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold tracking-tight text-white leading-[1.14] max-w-4xl"
+            className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-[3.35rem] xl:text-[3.65rem] font-bold tracking-tight text-white leading-[1.18] max-w-6xl"
           >
-            <span className="inline-flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-2">
-              <span>Innovative</span>
-
+            <span className="block sm:whitespace-nowrap">
+              <span>We</span>{" "}
               {/* Clean Glass Word Capsule */}
-              <span className="relative inline-flex items-center justify-center rounded-full border border-white/60 bg-white/20 px-4 sm:px-7 py-0.5 sm:py-1 backdrop-blur-md min-w-[130px] sm:min-w-[190px] md:min-w-[220px] h-[44px] sm:h-[58px] md:h-[66px] overflow-hidden align-middle">
+              <span className="relative inline-flex items-center justify-center rounded-full border border-white/60 bg-white/20 px-3 sm:px-5 py-0.5 backdrop-blur-md min-w-[120px] sm:min-w-[160px] md:min-w-[190px] h-[40px] sm:h-[50px] md:h-[58px] overflow-hidden align-middle mx-1 sm:mx-1.5">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={ROTATING_WORDS[wordIndex]}
-                    initial={{ y: 26, opacity: 0 }}
+                    initial={{ y: 24, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -26, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    exit={{ y: -24, opacity: 0 }}
+                    transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
                     className="inline-block text-white font-bold tracking-tight whitespace-nowrap will-change-transform"
                   >
                     {ROTATING_WORDS[wordIndex]}
                   </motion.span>
                 </AnimatePresence>
-              </span>
-
-              <span>and Creative Ideas To Boost Your Brand!</span>
+              </span>{" "}
+              <span>High-Impact</span>
+            </span>
+            <span className="block mt-1 sm:mt-2.5 sm:whitespace-nowrap">
+              Brands, Websites &amp; Growth Systems
             </span>
           </motion.h1>
 
-          {/* Subtitle */}
+          {/* Subtitle - strictly 2 lines */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="mt-5 max-w-2xl text-base sm:text-lg text-white/90 font-normal leading-relaxed text-balance"
+            className="mt-5 max-w-3xl text-base sm:text-lg text-white/90 font-normal leading-relaxed"
           >
-            Two dedicated commercial pathways: claim a free social media &amp; growth audit for
-            your existing brand, or book a 1-on-1 strategy call to launch something new.
+            <span className="block sm:whitespace-nowrap">
+              From strategic branding and high-converting websites to paid ads and SEO—
+            </span>
+            <span className="block sm:whitespace-nowrap mt-0.5">
+              we build connected growth systems that turn vision into measurable revenue.
+            </span>
           </motion.p>
 
-          {/* 3. DUAL PATHWAY CARDS CONTAINER (Transparent glass frame + clean white cards as shown in image) */}
+          {/* 3. DUAL PATHWAY CARDS CONTAINER (Clean, simple, high-converting) */}
           <motion.div
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
@@ -131,7 +121,7 @@ export function HeroSection() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5 sm:gap-4 text-left">
               {/* Card 1: For New Businesses & Founders (Free Strategy Call) */}
-              <div className="rounded-2xl sm:rounded-[22px] bg-white p-6 sm:p-8 text-slate-900 border border-white/80 flex flex-col justify-between transition-colors">
+              <div className="rounded-2xl sm:rounded-[22px] bg-white p-6 sm:p-8 text-slate-900 border border-white/80 flex flex-col justify-between shadow-lg hover:shadow-xl transition-shadow">
                 <div>
                   {/* Pathway Tag */}
                   <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
@@ -144,49 +134,38 @@ export function HeroSection() {
                     Book a Free 1-on-1 Strategy Call
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Building something new? Don't build in the dark. Discuss your business model,
-                    target audience, and go-to-market direction 1-on-1 with a senior strategist.
+                    Building a new venture? Discuss your business model, brand identity, and go-to-market launch plan 1-on-1 with a senior strategist.
                   </p>
-
-                  {/* Clean Metric Proof Badges */}
-                  <div className="mt-5 flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50/90 px-3 py-1 text-xs font-mono font-bold text-blue-800 tracking-wide">
-                      + 40–60% QUALIFIED LEADS
-                    </span>
-                    <span className="inline-flex items-center rounded-full border border-purple-200 bg-purple-50/90 px-3 py-1 text-xs font-mono font-bold text-purple-800 tracking-wide">
-                      ↑ 2–4× ROAS
-                    </span>
-                  </div>
 
                   {/* Clean Checkmarks List */}
                   <div className="mt-5 space-y-2.5 text-xs sm:text-sm text-slate-700 border-t border-slate-100 pt-4">
-                    <div className="flex items-start gap-2.5">
-                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                         <Check className="h-3 w-3 stroke-[2.5]" />
                       </div>
-                      <span>Proven ROI — sustainable growth, not vanity metrics</span>
+                      <span>Market positioning &amp; launch roadmap</span>
                     </div>
-                    <div className="flex items-start gap-2.5">
-                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                         <Check className="h-3 w-3 stroke-[2.5]" />
                       </div>
-                      <span>Full-stack architecture: SEO, Google Ads &amp; web funnel</span>
+                      <span>Brand identity &amp; high-converting website direction</span>
                     </div>
-                    <div className="flex items-start gap-2.5">
-                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                         <Check className="h-3 w-3 stroke-[2.5]" />
                       </div>
-                      <span>30-min tailored discovery session · 100% free guidance</span>
+                      <span>30-minute tailored discovery session · 100% free guidance</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Clean Flat Action Button */}
+                {/* Clean Action Button */}
                 <div className="mt-7">
                   <button
                     type="button"
                     onClick={() => setStrategyDialogOpen(true)}
-                    className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#0a254f] hover:bg-[#071a3a] px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+                    className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#0a254f] hover:bg-[#071a3a] px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-md"
                   >
                     <span>BOOK A FREE STRATEGY CALL</span>
                     <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -194,12 +173,12 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* Card 2: For Existing Businesses (Free Social Media & Growth Audit Card) */}
-              <div className="rounded-2xl sm:rounded-[22px] bg-white p-6 sm:p-8 text-slate-900 border border-white/80 flex flex-col justify-between transition-colors">
+              {/* Card 2: For Existing Businesses (Free Growth Audit) */}
+              <div className="rounded-2xl sm:rounded-[22px] bg-white p-6 sm:p-8 text-slate-900 border border-white/80 flex flex-col justify-between shadow-lg hover:shadow-xl transition-shadow">
                 <div>
                   {/* Pathway Tag */}
                   <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
-                    <Building2 className="h-3.5 w-3.5 text-blue-600" />
+                    <TrendingUp className="h-3.5 w-3.5 text-blue-600" />
                     <span>FOR EXISTING BUSINESSES</span>
                   </div>
 
@@ -208,61 +187,41 @@ export function HeroSection() {
                     Free Social Media &amp; Growth Audit
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Already running a business? Uncover hidden leaks and low-converting channels.
-                    We inspect your social accounts, ads, and conversion flow to unlock growth.
+                    Already running a business? Uncover hidden revenue leaks and discover high-ROI channels across your social, ads, and web funnel.
                   </p>
 
-                  {/* "WHAT DO YOU NEED HELP WITH?" Interactive Selector */}
-                  <div className="mt-5">
-                    <p className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-slate-500 uppercase">
-                      WHAT DO YOU NEED HELP WITH?
-                    </p>
-                    <div className="mt-2.5 flex flex-wrap gap-2">
-                      {HELP_PILLS.map((pill) => {
-                        const isSelected = selectedPills.includes(pill);
-                        return (
-                          <button
-                            key={pill}
-                            type="button"
-                            onClick={() => togglePill(pill)}
-                            className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-colors duration-150 ${
-                              isSelected
-                                ? "bg-blue-600 text-white"
-                                : "border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
-                            }`}
-                          >
-                            {pill}
-                          </button>
-                        );
-                      })}
+                  {/* Clean Checkmarks List */}
+                  <div className="mt-5 space-y-2.5 text-xs sm:text-sm text-slate-700 border-t border-slate-100 pt-4">
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                        <Check className="h-3 w-3 stroke-[2.5]" />
+                      </div>
+                      <span>Social media &amp; paid ads performance review</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                        <Check className="h-3 w-3 stroke-[2.5]" />
+                      </div>
+                      <span>Website conversion funnel &amp; SEO diagnostics</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                        <Check className="h-3 w-3 stroke-[2.5]" />
+                      </div>
+                      <span>Actionable growth roadmap delivered in 48h · 100% free</span>
                     </div>
                   </div>
-
-                  {/* Clean Input Form */}
-                  <form onSubmit={handleAuditSubmit} className="mt-4 space-y-2">
-                    <label className="block text-xs font-semibold text-slate-700">
-                      Website URL or Social Profile:
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={auditUrl}
-                        onChange={(e) => setAuditUrl(e.target.value)}
-                        placeholder="e.g. yourbrand.com or @instagram"
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none"
-                      />
-                    </div>
-                  </form>
                 </div>
 
-                {/* Clean Flat Action Button & Guarantee */}
-                <div className="mt-6">
+                {/* Clean Action Button */}
+                <div className="mt-7">
                   <button
                     type="button"
                     onClick={() => setAuditDialogOpen(true)}
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+                    className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-md"
                   >
-                    <span>REQUEST MY AUDIT →</span>
+                    <span>REQUEST MY FREE AUDIT</span>
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                   </button>
                 </div>
               </div>
@@ -285,7 +244,7 @@ export function HeroSection() {
         onClose={() => setStrategyDialogOpen(false)}
         title="Book Your Free Strategy Call"
       >
-        <div className="text-sm text-slate-600 -mt-2 mb-4 space-y-1">
+        <div className="text-sm text-slate-600 -mt-2 mb-4 space-y-1.5">
           <p>
             Connect 1-on-1 with a senior commercial strategist. We will discuss your business
             concept, target market, and map out a high-converting launch roadmap.
@@ -301,24 +260,16 @@ export function HeroSection() {
       <Dialog
         open={auditDialogOpen}
         onClose={() => setAuditDialogOpen(false)}
-        title="Request Your Free Social Media Audit"
+        title="Request Your Free Growth & Marketing Audit"
       >
-        <div className="text-sm text-slate-600 -mt-2 mb-4 space-y-1">
+        <div className="text-sm text-slate-600 -mt-2 mb-4 space-y-1.5">
           <p>
-            We will conduct an objective, diagnostic audit of your social channels, content
-            cadence, and conversion funnels, delivered with actionable insights in 48 hours.
+            We will conduct an objective, diagnostic audit of your channels, website, and
+            conversion funnels, delivered with actionable insights in 48 hours.
           </p>
-          <div className="flex flex-wrap gap-1.5 pt-1">
-            <span className="text-[11px] font-mono uppercase text-slate-500">Selected focus:</span>
-            {selectedPills.map((pill) => (
-              <span
-                key={pill}
-                className="rounded bg-blue-50 text-blue-700 px-2 py-0.5 text-[10px] font-bold"
-              >
-                {pill}
-              </span>
-            ))}
-          </div>
+          <p className="text-xs font-semibold text-blue-600">
+            ✓ 100% free audit · Objective analysis · Zero obligation
+          </p>
         </div>
         <LeadForm type="growth-audit" />
       </Dialog>

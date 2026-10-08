@@ -196,11 +196,13 @@ const PillNav: React.FC<PillNavProps> = ({
     const img = logoImgRef.current;
     if (!img) return;
     logoTweenRef.current?.kill();
-    gsap.set(img, { rotate: 0 });
+    gsap.set(img, { scale: 1 });
     logoTweenRef.current = gsap.to(img, {
-      rotate: 360,
-      duration: 0.45,
+      scale: 1.05,
+      duration: 0.22,
       ease,
+      yoyo: true,
+      repeat: 1,
       overwrite: "auto",
     });
   };
@@ -295,10 +297,10 @@ const PillNav: React.FC<PillNavProps> = ({
             ref={(el) => {
               logoRef.current = el;
             }}
-            className="rounded-full p-1.5 inline-flex items-center justify-center overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.12)] transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)]"
+            className="rounded-full px-4 py-2 inline-flex items-center justify-center overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.12)] transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)] shrink-0"
             style={{
-              width: "var(--nav-h)",
               height: "var(--nav-h)",
+              width: "auto",
               background: "var(--base, #000)",
             }}
           >
@@ -306,7 +308,7 @@ const PillNav: React.FC<PillNavProps> = ({
               src={logo}
               alt={logoAlt}
               ref={logoImgRef}
-              className="w-full h-full object-contain block"
+              className="h-6 sm:h-7 w-auto max-w-none object-contain block"
             />
           </Link>
         ) : (
@@ -317,10 +319,10 @@ const PillNav: React.FC<PillNavProps> = ({
             ref={(el) => {
               logoRef.current = el;
             }}
-            className="rounded-full p-1.5 inline-flex items-center justify-center overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.12)] transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)]"
+            className="rounded-full px-4 py-2 inline-flex items-center justify-center overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.12)] transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)] shrink-0"
             style={{
-              width: "var(--nav-h)",
               height: "var(--nav-h)",
+              width: "auto",
               background: "var(--base, #000)",
             }}
           >
@@ -328,7 +330,7 @@ const PillNav: React.FC<PillNavProps> = ({
               src={logo}
               alt={logoAlt}
               ref={logoImgRef}
-              className="w-full h-full object-contain block"
+              className="h-6 sm:h-7 w-auto max-w-none object-contain block"
             />
           </a>
         )}
