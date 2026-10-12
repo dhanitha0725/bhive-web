@@ -16,11 +16,64 @@ import { LeadForm } from "@/components/forms/lead-form";
 
 const ROTATING_WORDS = ["Scale", "Launch", "Build", "Grow", "Transform"];
 
+const AUTOPLAY_INTERVAL = 6000; // 6 seconds per card switch
+
+interface HeroCardData {
+  id: "strategy" | "audit";
+  badge: string;
+  icon: typeof Rocket;
+  title: string;
+  description: string;
+  points: string[];
+  buttonText: string;
+  buttonClass: string;
+  dialogType: "strategy" | "audit";
+}
+
+const HERO_CARDS: HeroCardData[] = [
+  {
+    id: "strategy",
+    badge: "FOR NEW BUSINESSES & FOUNDERS",
+    icon: Rocket,
+    title: "Book a Free 1-on-1 Strategy Call",
+    description:
+      "Building a new venture? Discuss your business model, brand identity, and go-to-market launch plan 1-on-1 with a senior strategist.",
+    points: [
+      "Market positioning & launch roadmap",
+      "Brand identity & high-converting website direction",
+      "30-minute tailored discovery session · 100% free guidance",
+    ],
+    buttonText: "BOOK A FREE STRATEGY CALL",
+    buttonClass: "bg-[#0a254f] hover:bg-[#071a3a]",
+    dialogType: "strategy",
+  },
+  {
+    id: "audit",
+    badge: "FOR EXISTING BUSINESSES",
+    icon: TrendingUp,
+    title: "Free Social Media & Growth Audit",
+    description:
+      "Already running a business? Uncover hidden revenue leaks and discover high-ROI channels across your social, ads, and web funnel.",
+    points: [
+      "Social media & paid ads performance review",
+      "Website conversion funnel & SEO diagnostics",
+      "Actionable growth roadmap delivered in 48h · 100% free",
+    ],
+    buttonText: "REQUEST MY FREE AUDIT",
+    buttonClass: "bg-blue-600 hover:bg-blue-700",
+    dialogType: "audit",
+  },
+];
+
 export function HeroSection() {
   const [wordIndex, setWordIndex] = useState(0);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [timerKey, setTimerKey] = useState(0);
   const [strategyDialogOpen, setStrategyDialogOpen] = useState(false);
   const [auditDialogOpen, setAuditDialogOpen] = useState(false);
 
+  // Rotating headline word
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
@@ -28,22 +81,33 @@ export function HeroSection() {
     return () => clearInterval(interval);
   }, []);
 
+  // Periodic card auto-switching with hover pause & modal pause
+  useEffect(() => {
+    if (isPaused || strategyDialogOpen || auditDialogOpen) return;
+
+    const interval = setInterval(() => {
+      setActiveCardIndex((prev) => (prev + 1) % HERO_CARDS.length);
+      setTimerKey((k) => k + 1);
+    }, AUTOPLAY_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [isPaused, strategyDialogOpen, auditDialogOpen, timerKey]);
+
+  const handleSelectCard = (index: number) => {
+    if (index === activeCardIndex) return;
+    setActiveCardIndex(index);
+    setTimerKey((k) => k + 1);
+  };
+
+  const activeCard = HERO_CARDS[activeCardIndex];
+
   return (
     <>
-      {/* Outer wrapper: full viewport width. Mobile = 100% (no frame).
-          md+ = uniform inset frame: same margin on top/left/right/bottom.
-          12px on md, 16px on lg+ (small, responsive, no max-width cap so
-          side gutters can never grow larger than top/bottom). */}
-      <div className="w-full max-w-none bg-white p-0 md:p-3 lg:p-4 overflow-x-clip">
-        {/* Rounded rectangle frame: mobile = full-bleed square; md+ = inset rounded.
-            min-h is viewport-relative minus the outer inset (12px*2=24px on md,
-            16px*2=32px on lg+) so top AND bottom edges sit equally inside the
-            initial viewport. Content taller than viewport will still expand
-            naturally — bottom rounded corners then appear after a short scroll
-            with the same margin. */}
-        <section className="relative flex w-full flex-col justify-center items-center overflow-hidden bg-[#0075FF] text-white rounded-none md:rounded-[32px] lg:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,100,255,0.28)] md:border md:border-black/[0.04] min-h-[100svh] md:min-h-[calc(100dvh-24px)] lg:min-h-[calc(100dvh-32px)] pt-24 pb-8 sm:pt-24 sm:pb-10 md:pt-28 md:pb-10 lg:pt-32 lg:pb-12">
-          {/* 1. Cloud Sky Background (Interactive WebGL Drifting Sky with #0075FF background) */}
-          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-auto rounded-none md:rounded-[32px] lg:rounded-[40px]">
+      {/* Outer wrapper: 100% width across all screens with zero outer margins or frames */}
+      <div className="w-full max-w-none overflow-x-clip">
+        <section className="relative flex w-full flex-col justify-center items-center overflow-hidden bg-[#0075FF] text-white rounded-none min-h-[100svh] pt-28 pb-14 sm:pt-32 sm:pb-16 md:pt-36 md:pb-20">
+          {/* 1. Cloud Sky Background (Interactive WebGL Drifting Sky with 100% full-bleed coverage) */}
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-auto rounded-none">
             <CloudSky
               background="#0075FF"
               baseColor="#B4D2F0"
@@ -62,7 +126,7 @@ export function HeroSection() {
           </div>
 
           {/* 2. Main Hero Content Container */}
-          <Container className="relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center px-5 sm:px-6">
+          <Container className="relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center px-4 sm:px-6">
             {/* Top Pill Badge */}
             <motion.div
               initial={{ opacity: 0, y: -14 }}
@@ -107,7 +171,7 @@ export function HeroSection() {
               </span>
             </motion.h1>
 
-            {/* Subtitle - strictly 2 lines */}
+            {/* Subtitle */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -122,118 +186,150 @@ export function HeroSection() {
               </span>
             </motion.p>
 
-          {/* 3. DUAL PATHWAY CARDS CONTAINER (Clean, simple, high-converting) */}
+            {/* 3. FOCUSED AUTO-SWITCHING CARD CONTAINER */}
             <motion.div
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-            className="mt-8 md:mt-10 w-full rounded-[28px] sm:rounded-[34px] bg-white/20 backdrop-blur-2xl p-2 sm:p-3 lg:p-4"
+              className="mt-8 md:mt-10 w-full max-w-4xl mx-auto"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
             >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5 sm:gap-4 text-left">
-                {/* Card 1: For New Businesses & Founders (Free Strategy Call) */}
-              <div className="rounded-2xl sm:rounded-[22px] bg-white p-6 sm:p-8 text-slate-900 border border-white/80 flex flex-col justify-between shadow-lg hover:shadow-xl transition-shadow">
-                  <div>
-                    {/* Pathway Tag */}
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
-                      <Rocket className="h-3.5 w-3.5 text-blue-600" />
-                      <span>FOR NEW BUSINESSES &amp; FOUNDERS</span>
+              {/* Frosted Glass Outer Container */}
+              <div className="rounded-[26px] sm:rounded-[30px] bg-white/20 backdrop-blur-2xl p-2 sm:p-3 border border-white/40 shadow-[0_20px_50px_rgba(0,35,110,0.22)]">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={activeCard.id}
+                    initial={{ opacity: 0, y: 12, scale: 0.99 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -12, scale: 0.99 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="rounded-2xl sm:rounded-[24px] bg-white p-6 sm:p-8 md:p-9 text-slate-900 border border-white/90 shadow-xl text-left"
+                  >
+                    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+                      {/* Left Column: Pathway Badge, Title, Description, and Desktop CTA */}
+                      <div className="order-1 lg:col-span-7 flex flex-col justify-between">
+                        <div>
+                          {/* Pathway Tag */}
+                          <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/85 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+                            <activeCard.icon className="h-3.5 w-3.5 text-blue-600" />
+                            <span>{activeCard.badge}</span>
+                          </div>
+
+                          {/* Title */}
+                          <h3 className="mt-3.5 text-xl sm:text-2xl md:text-3xl font-bold font-display text-slate-900 tracking-tight leading-snug">
+                            {activeCard.title}
+                          </h3>
+
+                          {/* Description */}
+                          <p className="mt-2 text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed">
+                            {activeCard.description}
+                          </p>
+                        </div>
+
+                        {/* Desktop Action Button */}
+                        <div className="hidden lg:block mt-7 pt-1">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              activeCard.dialogType === "strategy"
+                                ? setStrategyDialogOpen(true)
+                                : setAuditDialogOpen(true)
+                            }
+                            className={`group inline-flex items-center justify-center gap-2.5 rounded-xl ${activeCard.buttonClass} px-7 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-md hover:shadow-lg`}
+                          >
+                            <span>{activeCard.buttonText}</span>
+                            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Right Column: Deliverables / Checklist highlights card */}
+                      <div className="order-2 lg:col-span-5 bg-slate-50/90 rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-slate-100 flex flex-col justify-center space-y-3">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                          Included in this session · 100% Free
+                        </div>
+                        <div className="space-y-3 text-xs sm:text-sm text-slate-700">
+                          {activeCard.points.map((point, i) => (
+                            <div key={i} className="flex items-start gap-2.5">
+                              <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                                <Check className="h-3 w-3 stroke-[2.5]" />
+                              </div>
+                              <span className="leading-snug text-slate-800 font-medium">
+                                {point}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Mobile Action Button (shown below checklist on small screens) */}
+                      <div className="order-3 lg:hidden mt-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            activeCard.dialogType === "strategy"
+                              ? setStrategyDialogOpen(true)
+                              : setAuditDialogOpen(true)
+                          }
+                          className={`group inline-flex w-full items-center justify-center gap-2.5 rounded-xl ${activeCard.buttonClass} px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-md hover:shadow-lg`}
+                        >
+                          <span>{activeCard.buttonText}</span>
+                          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                        </button>
+                      </div>
                     </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
 
-                    {/* Title & Description */}
-                    <h3 className="mt-4 text-xl sm:text-2xl font-bold font-display text-slate-900 tracking-tight">
-                      Book a Free 1-on-1 Strategy Call
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      Building a new venture? Discuss your business model, brand identity, and go-to-market launch plan 1-on-1 with a senior strategist.
-                    </p>
-
-                    {/* Clean Checkmarks List */}
-                    <div className="mt-5 space-y-2.5 text-xs sm:text-sm text-slate-700 border-t border-slate-100 pt-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                          <Check className="h-3 w-3 stroke-[2.5]" />
+              {/* Card Switching UI - Dash Progress Indicators matching reference image rectangle */}
+              <div className="flex flex-col items-center justify-center mt-5 sm:mt-6">
+                <div className="flex items-center justify-center gap-2.5 sm:gap-3.5">
+                  {HERO_CARDS.map((card, idx) => {
+                    const isActive = activeCardIndex === idx;
+                    return (
+                      <button
+                        key={card.id}
+                        type="button"
+                        onClick={() => handleSelectCard(idx)}
+                        aria-label={`Switch to ${card.badge}`}
+                        title={card.badge}
+                        className="group relative py-2 px-1 focus:outline-none cursor-pointer"
+                      >
+                        {/* Dash track */}
+                        <div className="relative w-14 sm:w-20 h-1.5 sm:h-2 rounded-full bg-white/35 group-hover:bg-white/55 transition-colors overflow-hidden">
+                          {isActive && (
+                            isPaused ? (
+                              <div className="absolute inset-y-0 left-0 w-full bg-white rounded-full" />
+                            ) : (
+                              <motion.div
+                                key={`progress-${idx}-${timerKey}`}
+                                className="absolute inset-y-0 left-0 bg-white rounded-full"
+                                initial={{ width: "0%" }}
+                                animate={{ width: "100%" }}
+                                transition={{
+                                  duration: AUTOPLAY_INTERVAL / 1000,
+                                  ease: "linear",
+                                }}
+                              />
+                            )
+                          )}
                         </div>
-                        <span>Market positioning &amp; launch roadmap</span>
-                      </div>
-                      <div className="flex items-center gap-2.5">
-                        <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                          <Check className="h-3 w-3 stroke-[2.5]" />
-                        </div>
-                        <span>Brand identity &amp; high-converting website direction</span>
-                      </div>
-                      <div className="flex items-center gap-2.5">
-                        <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                          <Check className="h-3 w-3 stroke-[2.5]" />
-                        </div>
-                        <span>30-minute tailored discovery session · 100% free guidance</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Clean Action Button */}
-                  <div className="mt-7 pt-1">
-                    <button
-                      type="button"
-                      onClick={() => setStrategyDialogOpen(true)}
-                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#0a254f] hover:bg-[#071a3a] px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-md hover:shadow-lg"
-                    >
-                      <span>BOOK A FREE STRATEGY CALL</span>
-                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                    </button>
-                  </div>
+                      </button>
+                    );
+                  })}
                 </div>
 
-                {/* Card 2: For Existing Businesses (Free Growth Audit) */}
-                <div className="rounded-2xl sm:rounded-[24px] bg-white p-7 sm:p-8 text-slate-900 border border-white/90 flex flex-col justify-between shadow-[0_16px_45px_rgba(0,25,90,0.14)] hover:shadow-[0_22px_55px_rgba(0,25,90,0.2)] transition-all duration-300">
-                  <div>
-                    {/* Pathway Tag */}
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
-                      <TrendingUp className="h-3.5 w-3.5 text-blue-600" />
-                      <span>FOR EXISTING BUSINESSES</span>
-                    </div>
-
-                    {/* Title & Description */}
-                    <h3 className="mt-4 text-xl sm:text-2xl font-bold font-display text-slate-900 tracking-tight">
-                      Free Social Media &amp; Growth Audit
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      Already running a business? Uncover hidden revenue leaks and discover high-ROI channels across your social, ads, and web funnel.
-                    </p>
-
-                    {/* Clean Checkmarks List */}
-                    <div className="mt-5 space-y-2.5 text-xs sm:text-sm text-slate-700 border-t border-slate-100 pt-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                          <Check className="h-3 w-3 stroke-[2.5]" />
-                        </div>
-                        <span>Social media &amp; paid ads performance review</span>
-                      </div>
-                      <div className="flex items-center gap-2.5">
-                        <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                          <Check className="h-3 w-3 stroke-[2.5]" />
-                        </div>
-                        <span>Website conversion funnel &amp; SEO diagnostics</span>
-                      </div>
-                      <div className="flex items-center gap-2.5">
-                        <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                          <Check className="h-3 w-3 stroke-[2.5]" />
-                        </div>
-                        <span>Actionable growth roadmap delivered in 48h · 100% free</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Clean Action Button */}
-                  <div className="mt-7 pt-1">
-                    <button
-                      type="button"
-                      onClick={() => setAuditDialogOpen(true)}
-                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-md hover:shadow-lg"
-                    >
-                      <span>REQUEST MY FREE AUDIT</span>
-                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                    </button>
-                  </div>
+                {/* Subtle Pathway indicator labels below the dashes */}
+                <div className="flex items-center justify-center gap-2 sm:gap-2.5 mt-1 text-[11px] sm:text-xs font-semibold text-white/80">
+                  {HERO_CARDS.map((card, idx) => (
+                    <span key={card.id} className="flex items-center gap-2">
+                      {idx < HERO_CARDS.length - 1 && (
+                        <span className="text-white/30">·</span>
+                      )}
+                    </span>
+                  ))}
                 </div>
               </div>
             </motion.div>
