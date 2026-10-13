@@ -320,17 +320,6 @@ export function HeroSection() {
                     );
                   })}
                 </div>
-
-                {/* Subtle Pathway indicator labels below the dashes */}
-                <div className="flex items-center justify-center gap-2 sm:gap-2.5 mt-1 text-[11px] sm:text-xs font-semibold text-white/80">
-                  {HERO_CARDS.map((card, idx) => (
-                    <span key={card.id} className="flex items-center gap-2">
-                      {idx < HERO_CARDS.length - 1 && (
-                        <span className="text-white/30">·</span>
-                      )}
-                    </span>
-                  ))}
-                </div>
               </div>
             </motion.div>
           </Container>

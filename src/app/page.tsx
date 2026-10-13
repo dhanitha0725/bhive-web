@@ -1,8 +1,7 @@
 import { HeroSection } from "@/components/sections/hero-section";
 import { TrustedPartnersSection } from "@/components/sections/trusted-partners-section";
-import { BentoOutcomes } from "@/components/sections/bento-outcomes";
-import { PathwaySection } from "@/components/sections/pathway-section";
 import { SystemSection } from "@/components/sections/system-section";
+import { PathwaySection } from "@/components/sections/pathway-section";
 import { ExistingBusinessSection } from "@/components/sections/existing-business-section";
 import { FoundersSection } from "@/components/sections/founders-section";
 import { SelectedWorkSection } from "@/components/sections/selected-work-section";
@@ -19,18 +18,13 @@ export default function Home() {
       {/* 2. Trusted Partners & Proof Grid (Proof Section) */}
       <TrustedPartnersSection />
 
-      {/* 3. Built for Business Outcomes (Watermelon bento-01) */}
-      <div id="outcomes">
-        <BentoOutcomes />
-      </div>
-
-      {/* 3. Choose Your Path (Watermelon Pathway Cards) */}
-      <PathwaySection />
-
-      {/* 4. The BHive System (Watermelon feature-1) */}
+      {/* 3. The BHive System (How Our System Works - Perspective Carousel) */}
       <div id="system">
         <SystemSection />
       </div>
+
+      {/* 4. Choose Your Path (Watermelon Pathway Cards) */}
+      <PathwaySection />
 
       {/* 5. For Existing Businesses (Watermelon Split Transformation Card) */}
       <ExistingBusinessSection />

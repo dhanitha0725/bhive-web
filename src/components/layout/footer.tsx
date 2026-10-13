@@ -32,7 +32,7 @@ export function Footer() {
         { label: "Selected Work", href: "/work" },
         { label: "Insights & Articles", href: "/insights" },
         { label: "The BHive System", href: "/#system" },
-        { label: "Business Outcomes", href: "/#outcomes" },
+        { label: "How Our System Works", href: "/#system" },
       ],
     },
     {
