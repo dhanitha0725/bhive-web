@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import BlurText from "@/components/BlurText";
 import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
 
 export function FinalCtaSection() {
@@ -13,8 +14,14 @@ export function FinalCtaSection() {
             Ready To Start
           </p>
 
-          <h2 className="heading-1 mt-6 text-white">
-            Bring us the business problem. We build the growth system.
+          <h2 className="heading-1 mt-6 text-white flex justify-center">
+            <BlurText
+              text="Bring us the business problem. We build the growth system."
+              animateBy="words"
+              direction="bottom"
+              delay={70}
+              className="justify-center text-white"
+            />
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-blue-100">

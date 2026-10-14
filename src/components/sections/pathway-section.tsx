@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/ui/container";
+import BlurText from "@/components/BlurText";
 import { services, type Service, type ServiceSlug } from "@/content/services";
 import {
   Sparkles,
@@ -192,22 +193,31 @@ export function PathwaySection() {
       className="relative w-full py-20 lg:py-28 bg-slate-50/60 text-slate-900 border-b border-slate-200 transition-colors duration-200"
     >
       <Container className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* 1. Section Header (Matching System Section Top Flow) */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
-              <Sparkles className="h-3.5 w-3.5 text-blue-600" />
-              <span>WHAT WE OFFER</span>
-            </div>
-
-            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] font-bold font-display tracking-tight text-slate-900 leading-[1.16]">
-              Commercial capabilities built to grow.
-              <span className="block text-blue-600 mt-1">
-                Precision-tailored to your exact stage.
-              </span>
-            </h2>
+        {/* 1. Section Header (Centered & Balanced) */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-14">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+            <Sparkles className="h-3.5 w-3.5 text-blue-600" />
+            <span>WHAT WE OFFER</span>
           </div>
 
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] font-bold font-display tracking-tight text-slate-900 leading-[1.16]">
+            <BlurText
+              text="Commercial capabilities built to grow."
+              animateBy="words"
+              direction="bottom"
+              delay={70}
+              className="justify-center"
+            />
+            <span className="block mt-1">
+              <BlurText
+                text="Precision-tailored to your exact stage."
+                animateBy="words"
+                direction="bottom"
+                delay={90}
+                className="justify-center text-blue-600"
+              />
+            </span>
+          </h2>
         </div>
 
         {/* 2. Fluid Tabs Switcher (Watermelon UI Inspired) */}

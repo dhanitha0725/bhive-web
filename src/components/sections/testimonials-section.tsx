@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
+import BlurText from "@/components/BlurText";
 import {
   Quote,
   Star,
@@ -76,23 +77,23 @@ export function TestimonialsSection() {
   return (
     <section className="py-20 lg:py-28 bg-[var(--background)] text-[var(--foreground)] transition-colors duration-200">
       <Container>
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <p className="eyebrow text-blue-600 font-mono tracking-widest text-xs uppercase font-semibold">
-              Client Stories
-            </p>
-            <h2 className="heading-2 mt-3 font-display tracking-tight text-[var(--foreground)]">
-              Trusted by leaders who value commercial clarity.
-            </h2>
-            <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-              Here is how business owners and founders experience building with
-              the BHive system.
-            </p>
+        {/* Header (Centered & Balanced) */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+            <span>CLIENT STORIES</span>
           </div>
+          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-[2.6rem] font-bold">
+            <BlurText
+              text="Trusted by leaders who value commercial clarity."
+              animateBy="words"
+              direction="bottom"
+              delay={70}
+              className="justify-center"
+            />
+          </h2>
 
           {/* Carousel Controls */}
-          <div className="flex items-center gap-2">
+          <div className="mt-6 flex items-center justify-center gap-2.5">
             <button
               onClick={prevTestimonial}
               aria-label="Previous testimonials"

@@ -3,6 +3,7 @@
 import React from "react";
 import { Container } from "@/components/ui/container";
 import { ScrollStack, ScrollStackItem } from "@/components/ScrollStack";
+import BlurText from "@/components/BlurText";
 import {
   Sparkles,
   CheckCircle2,
@@ -435,24 +436,31 @@ export function SystemSection() {
   return (
     <section className="relative w-full py-20 lg:py-28 bg-white text-slate-900 border-b border-slate-200">
       <Container className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* 1. Section Header */}
-        <div className="max-w-3xl mb-12 sm:mb-16">
+        {/* 1. Section Header (Centered, Balanced, High-Impact) */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
             <Sparkles className="h-3.5 w-3.5 text-blue-600" />
             <span>HOW OUR SYSTEM WORKS</span>
           </div>
 
           <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] font-bold font-display tracking-tight text-slate-900 leading-[1.16]">
-            We don’t just do social media marketing.
-            <span className="block text-blue-600 mt-1">
-              We build systems that grow businesses.
+            <BlurText
+              text="We don’t just do social media marketing."
+              animateBy="words"
+              direction="bottom"
+              delay={70}
+              className="justify-center"
+            />
+            <span className="block mt-1">
+              <BlurText
+                text="We build systems that grow businesses."
+                animateBy="words"
+                direction="bottom"
+                delay={90}
+                className="justify-center text-blue-600"
+              />
             </span>
           </h2>
-
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-            A 4-step commercial engine engineered to replace guesswork with
-            predictable, compounding revenue.
-          </p>
         </div>
 
         {/* 2. ScrollStack Component (4 Steps: Research, Plan, Strategy, Execution) */}

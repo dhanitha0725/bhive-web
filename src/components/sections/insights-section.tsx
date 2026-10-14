@@ -3,6 +3,7 @@
 import { Reveal } from "@/components/motion/reveal";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import BlurText from "@/components/BlurText";
 import { ArrowUpRight, ArrowRight, Clock } from "lucide-react";
 import { insights, pillars } from "@/content/insights";
 
@@ -12,28 +13,29 @@ export function InsightsSection() {
   return (
     <section className="py-20 lg:py-28 bg-navy-50/50 text-[var(--foreground)] transition-colors duration-200">
       <Container>
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <p className="eyebrow text-blue-600 font-mono tracking-widest text-xs uppercase font-semibold">
-              BHive insights
-            </p>
-            <h2 className="heading-2 mt-3 font-display tracking-tight text-[var(--foreground)]">
-              Better growth starts with better decisions.
-            </h2>
-            <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-              Strategic frameworks, brand thinking, and commercial clarity for
-              business leaders.
-            </p>
+        {/* Header (Centered & Balanced) */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+            <span>BHIVE INSIGHTS</span>
           </div>
-
-          <Link
-            href="/insights"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors group"
-          >
-            <span>Explore All Insights</span>
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-[2.6rem] font-bold">
+            <BlurText
+              text="Better growth starts with better decisions."
+              animateBy="words"
+              direction="bottom"
+              delay={70}
+              className="justify-center"
+            />
+          </h2>
+          <div className="mt-5 flex items-center justify-center">
+            <Link
+              href="/insights"
+              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 hover:text-blue-700 transition-colors group"
+            >
+              <span>Explore All Insights</span>
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
 
         {/* Editorial Insight Cards Grid (Watermelon blog-1 adaptation) */}

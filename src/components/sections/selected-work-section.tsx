@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
 import SpotlightCard from "@/components/SpotlightCard";
+import BlurText from "@/components/BlurText";
 import { caseStudies } from "@/content/case-studies";
 import {
   ArrowUpRight,
@@ -15,7 +15,6 @@ import {
   TrendingUp,
   Layers,
   Zap,
-  MousePointer2,
   ShieldCheck,
   Building2,
   UtensilsCrossed,
@@ -45,34 +44,20 @@ export function SelectedWorkSection() {
       />
 
       <Container className="relative z-10">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-[var(--border)]">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-700 text-xs font-mono font-medium tracking-wide">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
-              </span>
-              SELECTED WORK & PROOF
-            </div>
-            <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-5xl font-bold">
-              Proof through transformation.
-            </h2>
-            <p className="mt-3 text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Real commercial change begins with structure. Here is how strategic positioning,
-              clear architecture, and digital craftsmanship reshape client decisions.
-            </p>
+        {/* Section Header (Centered & Balanced) */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto pb-10 border-b border-[var(--border)]">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-700 text-xs font-mono font-medium tracking-wide">
+            SELECTED WORK & PROOF
           </div>
-
-          <div className="flex items-center gap-4">
-            <Link
-              href="/work"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200/80 hover:border-blue-300 transition-all duration-200 group"
-            >
-              <span>View All 4 Case Studies</span>
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
+          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-5xl font-bold">
+            <BlurText
+              text="Proof through transformation."
+              animateBy="words"
+              direction="bottom"
+              delay={70}
+              className="justify-center"
+            />
+          </h2>
         </div>
 
         {/* Asymmetric Bento Spotlight Grid */}
