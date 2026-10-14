@@ -2,8 +2,6 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { TrustedPartnersSection } from "@/components/sections/trusted-partners-section";
 import { SystemSection } from "@/components/sections/system-section";
 import { PathwaySection } from "@/components/sections/pathway-section";
-import { ExistingBusinessSection } from "@/components/sections/existing-business-section";
-import { FoundersSection } from "@/components/sections/founders-section";
 import { SelectedWorkSection } from "@/components/sections/selected-work-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { InsightsSection } from "@/components/sections/insights-section";
@@ -25,12 +23,6 @@ export default function Home() {
 
       {/* 4. What We Offer (Dynamic Services with Existing & New Business Tabs) */}
       <PathwaySection />
-
-      {/* 5. For Existing Businesses (Watermelon Split Transformation Card) */}
-      <ExistingBusinessSection />
-
-      {/* 6. For Founders (Watermelon Stepper/Process Progression) */}
-      <FoundersSection />
 
       {/* 7. Selected Work (Watermelon Showcase/Portfolio Grid) */}
       <SelectedWorkSection />

@@ -206,24 +206,8 @@ export function PathwaySection() {
                 Precision-tailored to your exact stage.
               </span>
             </h2>
-
-            <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-              Strategy, brand, digital infrastructure, and marketing—delivered as
-              one connected commercial system with zero guesswork.
-            </p>
           </div>
 
-          {/* Top Stage Indicator Pill */}
-          <div className="hidden lg:flex flex-col items-end text-right">
-            <span className="text-[11px] font-mono text-slate-400 uppercase tracking-widest">
-              DEPLOYMENT MODE
-            </span>
-            <span className="font-mono text-xs font-bold text-slate-800 mt-1 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-2xs">
-              {activeTab === "existing-business"
-                ? "ESTABLISHED OPERATIONS • OPTIMIZATION"
-                : "NEW VENTURE • ZERO TO ONE"}
-            </span>
-          </div>
         </div>
 
         {/* 2. Fluid Tabs Switcher (Watermelon UI Inspired) */}
@@ -259,15 +243,7 @@ export function PathwaySection() {
                 >
                   Existing Business
                 </span>
-                <span
-                  className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full transition-colors ${
-                    activeTab === "existing-business"
-                      ? "bg-blue-50 text-blue-700 border border-blue-200/70"
-                      : "bg-slate-300/50 text-slate-500"
-                  }`}
-                >
-                  Scale
-                </span>
+             
               </span>
             </button>
 
@@ -301,77 +277,10 @@ export function PathwaySection() {
                 >
                   New Business
                 </span>
-                <span
-                  className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full transition-colors ${
-                    activeTab === "new-venture"
-                      ? "bg-blue-50 text-blue-700 border border-blue-200/70"
-                      : "bg-slate-300/50 text-slate-500"
-                  }`}
-                >
-                  Launch
-                </span>
+               
               </span>
             </button>
           </div>
-
-          {/* Dynamic Audience Stage Overview Card */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.24 }}
-              className="mt-6 w-full max-w-4xl rounded-2xl bg-white border border-slate-200/90 p-4 sm:p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-            >
-              <div className="flex items-start sm:items-center gap-3">
-                <div className="h-9 w-9 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                  {activeTab === "existing-business" ? (
-                    <Building2 className="h-4 w-4" />
-                  ) : (
-                    <Rocket className="h-4 w-4" />
-                  )}
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
-                      {activeTab === "existing-business"
-                        ? "ESTABLISHED OPERATIONS"
-                        : "FOUNDER & VENTURE PATH"}
-                    </span>
-                    <span className="text-xs font-semibold text-slate-800">
-                      {activeTab === "existing-business"
-                        ? "Revenue Acceleration & Alignment"
-                        : "Zero-to-One Launch Sequence"}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-xs sm:text-sm text-slate-600">
-                    {activeTab === "existing-business"
-                      ? "Fix what slows growth. Realign positioning, eliminate wasteful ad spend, and build a high-converting digital engine."
-                      : "Turn your vision into a launch-ready business with market positioning, high-trust brand identity, and scalable web infrastructure."}
-                  </p>
-                </div>
-              </div>
-
-              <div className="shrink-0 flex items-center gap-2 w-full md:w-auto pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
-                <Link
-                  href={
-                    activeTab === "existing-business"
-                      ? "/grow-your-business"
-                      : "/launch-your-business"
-                  }
-                  className="inline-flex w-full md:w-auto items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-600 transition-colors"
-                >
-                  <span>
-                    {activeTab === "existing-business"
-                      ? "Explore Growth Trajectory"
-                      : "Explore Launch Trajectory"}
-                  </span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
         </div>
 
         {/* 3. Dynamic Services Grid (Clean Bento Layout Matching Top Flow) */}
