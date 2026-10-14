@@ -9,131 +9,129 @@ interface PartnerLogo {
 
 const PARTNERS: PartnerLogo[] = [
   {
-    name: "Nexus Mortgage Group",
+    name: "Acme Technologies",
     svg: (
-      <svg className="h-8 sm:h-9 w-auto fill-current" viewBox="0 0 160 36">
-        <path d="M6 26L14 8h5l8 18h-4.5l-2-4.5H12.5L10.5 26H6zm7.8-8h5.4L16.5 12h-.3l-2.4 6z" />
-        <path d="M30 8h4.5l8 11.5V8H47v18h-4.5l-8-11.5V26H30V8z" />
-        <path d="M51 8h13v3.5h-8.5v3.5h7.5v3.5h-7.5V22.5h8.5V26H51V8z" />
-        <path d="M68 8h4.5l4 7 4-7H85l-6.5 10 7 8h-5l-4.5-5.5L71.5 26H67l7-8.5L68 8z" />
-        <path d="M88 20.5c0-3.5 2.5-6 6.5-6s6.5 2.5 6.5 6v5.5h-4v-5.5c0-1.5-1-2.5-2.5-2.5s-2.5 1-2.5 2.5v5.5h-4V20.5z" />
-        <path d="M106 8h4.5v18h-4.5V8z" />
-        <path d="M115 22c1 1 2.5 1.5 4.5 1.5 2.5 0 4-1 4-2.5 0-1.5-1-2-3.5-2.5l-2-.5c-3.5-.8-5-2.5-5-5 0-3 2.5-5 6.5-5s6 2 6 4.5h-4c0-1-1-1.5-2-1.5s-2 .5-2 1.5c0 1 .8 1.5 2.8 2l2 .5c3.8.9 5.2 2.5 5.2 5.5 0 3.5-2.5 5.5-7 5.5-3.5 0-6.5-1.5-7-4.5h4.5z" />
-        <text x="5" y="34" fontSize="6.5" letterSpacing="3.5" fontFamily="monospace" fill="currentColor" opacity="0.8">
-          MORTGAGE GROUP
+      <svg className="h-8 sm:h-9 w-auto" viewBox="0 0 140 36" fill="none">
+        <path d="M16 6L28 13V27L16 34L4 27V13L16 6Z" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M16 6V20M28 13L16 20M4 13L16 20" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+        <circle cx="16" cy="20" r="2.2" fill="currentColor" />
+        <text x="36" y="22" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2.5" fill="currentColor">
+          ACME
+        </text>
+        <text x="36" y="30" fontSize="5.5" fontWeight="600" letterSpacing="1.8" fontFamily="monospace" fill="currentColor" opacity="0.75">
+          TECHNOLOGIES
         </text>
       </svg>
     ),
   },
   {
-    name: "JC Recovery",
+    name: "Vertex Dynamics",
     svg: (
-      <svg className="h-8 sm:h-9 w-auto fill-current" viewBox="0 0 140 36">
-        {/* Classical Pediment & Pillars Emblem */}
-        <path d="M4 12l16-8 16 8v2H4v-2zm4 4h4v14H8V16zm8 0h4v14h-4V16zm8 0h4v14h-4V16zm8 0h4v14h-4V16zM4 30h32v2H4v-2z" opacity="0.85" />
-        <text x="44" y="20" fontSize="13" fontWeight="800" fontFamily="serif" letterSpacing="1.5" fill="currentColor">
-          JC
+      <svg className="h-8 sm:h-9 w-auto" viewBox="0 0 145 36" fill="none">
+        <path d="M6 28L18 8L30 28H6Z" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M12 28L18 18L24 28" fill="currentColor" opacity="0.35" />
+        <circle cx="18" cy="8" r="1.8" fill="currentColor" />
+        <circle cx="6" cy="28" r="1.8" fill="currentColor" />
+        <circle cx="30" cy="28" r="1.8" fill="currentColor" />
+        <text x="38" y="22" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2" fill="currentColor">
+          VERTEX
         </text>
-        <text x="44" y="30" fontSize="7.5" fontWeight="600" letterSpacing="2.5" fontFamily="sans-serif" fill="currentColor" opacity="0.85">
-          RECOVERY
+        <text x="38" y="30" fontSize="5.5" fontWeight="600" letterSpacing="1.6" fontFamily="monospace" fill="currentColor" opacity="0.75">
+          DYNAMICS
         </text>
       </svg>
     ),
   },
   {
-    name: "Triad Recovery Center",
+    name: "Nova Studios",
     svg: (
-      <svg className="h-8 sm:h-9 w-auto fill-current" viewBox="0 0 170 36">
-        {/* Delta Triad Triangle Icon */}
-        <polygon points="18,4 32,28 4,28" fill="none" stroke="currentColor" strokeWidth="2.5" />
-        <polygon points="18,11 27,26 9,26" fill="currentColor" opacity="0.4" />
-        <text x="38" y="20" fontSize="13" fontWeight="900" fontFamily="serif" letterSpacing="3" fill="currentColor">
-          TRIAD
+      <svg className="h-8 sm:h-9 w-auto" viewBox="0 0 135 36" fill="none">
+        <circle cx="17" cy="19" r="12" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+        <path d="M17 10C17 15 13 19 8 19C13 19 17 23 17 28C17 23 21 19 26 19C21 19 17 15 17 10Z" fill="currentColor" />
+        <text x="36" y="22" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2.5" fill="currentColor">
+          NOVA
         </text>
-        <text x="38" y="29" fontSize="6" fontWeight="600" letterSpacing="1.5" fontFamily="monospace" fill="currentColor" opacity="0.8">
-          RECOVERY CENTER · NC
+        <text x="36" y="30" fontSize="5.5" fontWeight="600" letterSpacing="2" fontFamily="monospace" fill="currentColor" opacity="0.75">
+          STUDIOS
         </text>
       </svg>
     ),
   },
   {
-    name: "Emory Healthcare",
+    name: "Pulse Systems",
     svg: (
-      <svg className="h-8 sm:h-9 w-auto fill-current" viewBox="0 0 130 36">
-        {/* Stylized 'E' Monogram */}
-        <rect x="4" y="6" width="22" height="24" rx="4" fill="none" stroke="currentColor" strokeWidth="2.5" />
-        <path d="M10 12h11M10 18h8M10 24h11" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        <text x="34" y="21" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2" fill="currentColor">
-          EMORY
+      <svg className="h-8 sm:h-9 w-auto" viewBox="0 0 145 36" fill="none">
+        <path d="M5 19H11L14 11L18 27L22 13L25 22L27 19H31" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="18" cy="19" r="13" stroke="currentColor" strokeWidth="1.6" opacity="0.3" />
+        <text x="38" y="22" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2" fill="currentColor">
+          PULSE
         </text>
-        <text x="34" y="29" fontSize="5.5" fontWeight="600" letterSpacing="1.8" fontFamily="monospace" fill="currentColor" opacity="0.75">
-          RESEARCH &amp; HEALTH
+        <text x="38" y="30" fontSize="5.5" fontWeight="600" letterSpacing="1.8" fontFamily="monospace" fill="currentColor" opacity="0.75">
+          SYSTEMS
         </text>
       </svg>
     ),
   },
   {
-    name: "Recovery Services of Connecticut",
+    name: "Apex Global",
     svg: (
-      <svg className="h-8 sm:h-9 w-auto fill-current" viewBox="0 0 175 36">
-        {/* Anchor & Crest Emblem */}
-        <circle cx="16" cy="18" r="13" fill="none" stroke="currentColor" strokeWidth="1.8" strokeDasharray="2 2" />
-        <path d="M16 10v14M11 15h10M11 21c1.5 2 3.5 3 5 3s3.5-1 5-3" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-        <text x="34" y="16" fontSize="7" fontWeight="700" letterSpacing="1" fontFamily="sans-serif" fill="currentColor">
-          RECOVERY
+      <svg className="h-8 sm:h-9 w-auto" viewBox="0 0 135 36" fill="none">
+        <path d="M6 25L17 10L28 25" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M11 25L17 16L23 25" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
+        <polygon points="17,6 20,10 14,10" fill="currentColor" />
+        <text x="36" y="22" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2" fill="currentColor">
+          APEX
         </text>
-        <text x="34" y="24" fontSize="7" fontWeight="700" letterSpacing="1" fontFamily="sans-serif" fill="currentColor">
-          SERVICES OF
-        </text>
-        <text x="34" y="31" fontSize="5.5" fontWeight="600" letterSpacing="1.5" fontFamily="monospace" fill="currentColor" opacity="0.8">
-          CONNECTICUT
+        <text x="36" y="30" fontSize="5.5" fontWeight="600" letterSpacing="2" fontFamily="monospace" fill="currentColor" opacity="0.75">
+          GLOBAL
         </text>
       </svg>
     ),
   },
   {
-    name: "Ocean State",
+    name: "Stratos Ventures",
     svg: (
-      <svg className="h-8 sm:h-9 w-auto fill-current" viewBox="0 0 135 36">
-        {/* Circular Compass Seal */}
-        <circle cx="17" cy="18" r="13" fill="none" stroke="currentColor" strokeWidth="2" />
-        <polygon points="17,8 20,17 17,15 14,17" fill="currentColor" />
-        <polygon points="17,28 20,19 17,21 14,19" fill="currentColor" opacity="0.5" />
-        <text x="37" y="21" fontSize="11" fontWeight="800" fontFamily="sans-serif" letterSpacing="1.2" fill="currentColor">
-          OCEAN STATE
+      <svg className="h-8 sm:h-9 w-auto" viewBox="0 0 150 36" fill="none">
+        <rect x="5" y="10" width="22" height="4" rx="2" fill="currentColor" opacity="0.4" />
+        <rect x="9" y="17" width="22" height="4" rx="2" fill="currentColor" opacity="0.7" />
+        <rect x="13" y="24" width="22" height="4" rx="2" fill="currentColor" />
+        <text x="40" y="22" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2" fill="currentColor">
+          STRATOS
         </text>
-        <text x="37" y="29" fontSize="6" fontWeight="600" letterSpacing="2" fontFamily="monospace" fill="currentColor" opacity="0.75">
-          VENTURES &amp; LABS
+        <text x="40" y="30" fontSize="5.5" fontWeight="600" letterSpacing="1.8" fontFamily="monospace" fill="currentColor" opacity="0.75">
+          VENTURES
         </text>
       </svg>
     ),
   },
   {
-    name: "Grillers Mediterranean Kitchen",
+    name: "Lumina Analytics",
     svg: (
-      <svg className="h-8 sm:h-9 w-auto fill-current" viewBox="0 0 170 36">
-        {/* Knife / Grill Cross Motif */}
-        <path d="M4 17h16M7 14l-3 3 3 3" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-        <text x="24" y="21" fontSize="13" fontWeight="900" fontFamily="sans-serif" letterSpacing="1.5" fill="currentColor">
-          GRILLERS
+      <svg className="h-8 sm:h-9 w-auto" viewBox="0 0 145 36" fill="none">
+        <circle cx="14" cy="19" r="9" stroke="currentColor" strokeWidth="2" />
+        <circle cx="22" cy="19" r="9" stroke="currentColor" strokeWidth="2" />
+        <path d="M18 12.5C19.5 14.3 20.3 16.6 20.3 19C20.3 21.4 19.5 23.7 18 25.5C16.5 23.7 15.7 21.4 15.7 19C15.7 16.6 16.5 14.3 18 12.5Z" fill="currentColor" opacity="0.3" />
+        <text x="38" y="22" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2" fill="currentColor">
+          LUMINA
         </text>
-        <text x="24" y="30" fontSize="5.5" fontWeight="700" letterSpacing="1.5" fontFamily="sans-serif" fill="currentColor" opacity="0.8">
-          MEDITERRANEAN KITCHEN
+        <text x="38" y="30" fontSize="5.5" fontWeight="600" letterSpacing="1.8" fontFamily="monospace" fill="currentColor" opacity="0.75">
+          ANALYTICS
         </text>
       </svg>
     ),
   },
   {
-    name: "Kids Academy",
+    name: "Zenith Capital",
     svg: (
-      <svg className="h-8 sm:h-9 w-auto fill-current" viewBox="0 0 130 36">
-        {/* Star & Playful Arc */}
-        <path d="M14 6l2.5 5 5.5.8-4 3.9 1 5.3-5-2.6-5 2.6 1-5.3-4-3.9 5.5-.8z" fill="currentColor" opacity="0.85" />
-        <text x="28" y="19" fontSize="11" fontWeight="800" fontFamily="sans-serif" letterSpacing="1.5" fill="currentColor">
-          KIDS
+      <svg className="h-8 sm:h-9 w-auto" viewBox="0 0 145 36" fill="none">
+        <polygon points="17,6 27,19 17,32 7,19" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
+        <line x1="17" y1="10" x2="17" y2="28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <line x1="10" y1="19" x2="24" y2="19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" opacity="0.5" />
+        <text x="36" y="22" fontSize="13" fontWeight="800" fontFamily="sans-serif" letterSpacing="2.2" fill="currentColor">
+          ZENITH
         </text>
-        <text x="28" y="28" fontSize="6.5" fontWeight="700" letterSpacing="2" fontFamily="monospace" fill="currentColor" opacity="0.8">
-          ACADEMY
+        <text x="36" y="30" fontSize="5.5" fontWeight="600" letterSpacing="1.8" fontFamily="monospace" fill="currentColor" opacity="0.75">
+          CAPITAL
         </text>
       </svg>
     ),
