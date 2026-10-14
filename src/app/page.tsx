@@ -23,7 +23,7 @@ export default function Home() {
         <SystemSection />
       </div>
 
-      {/* 4. Choose Your Path (Watermelon Pathway Cards) */}
+      {/* 4. What We Offer (Dynamic Services with Existing & New Business Tabs) */}
       <PathwaySection />
 
       {/* 5. For Existing Businesses (Watermelon Split Transformation Card) */}
