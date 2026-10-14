@@ -118,7 +118,7 @@ export function TestimonialsSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: idx * 0.1 }}
-              className="relative flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-navy-50/40 p-7 lg:p-8 shadow-2xs transition-all duration-300 hover:border-blue-400/50 hover:bg-[var(--background)] hover:shadow-lg"
+              className="relative flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-navy-50/40 p-7 lg:p-8 shadow-none transition-all duration-300 hover:border-blue-400/50 hover:bg-[var(--background)] hover:shadow-lg"
             >
               <div>
                 {/* 5 Stars Rating & Quote Icon */}

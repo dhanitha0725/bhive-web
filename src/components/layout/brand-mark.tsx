@@ -13,7 +13,7 @@ export function BrandMark({ inverted = false }: { inverted?: boolean }) {
         className={`mr-1 inline-grid size-6.5 place-items-center text-sm font-black tracking-[-0.08em] ${
           inverted
             ? "bg-white text-[#0b4cc4]"
-            : "bg-[#0b4cc4] text-white shadow-xs"
+            : "bg-[#0b4cc4] text-white"
         }`}
         style={{ borderRadius: "var(--radius-btn, 6px)" }}
       >

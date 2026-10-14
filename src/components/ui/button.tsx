@@ -6,11 +6,11 @@ import type { ComponentProps } from "react";
 type Variant = "primary" | "dark" | "white" | "outline" | "text" | "navy" | "honey";
 
 const styles: Record<Variant, string> = {
-  primary: "bg-[#0b4cc4] text-white hover:bg-[#083da0] shadow-xs",
-  dark: "bg-[#0a0a0b] text-white hover:bg-[#23282f] shadow-xs",
-  white: "bg-white text-[#0b4cc4] hover:bg-[#eef4ff] shadow-xs",
-  navy: "bg-[#0b4cc4] text-white hover:bg-[#083da0] shadow-xs",
-  honey: "bg-[#0b4cc4] text-white hover:bg-[#083da0] shadow-xs",
+  primary: "bg-[#0b4cc4] text-white hover:bg-[#083da0]",
+  dark: "bg-[#0a0a0b] text-white hover:bg-[#23282f]",
+  white: "bg-white text-[#0b4cc4] hover:bg-[#eef4ff]",
+  navy: "bg-[#0b4cc4] text-white hover:bg-[#083da0]",
+  honey: "bg-[#0b4cc4] text-white hover:bg-[#083da0]",
   outline:
     "border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--muted)]",
   text: "text-[#0b4cc4] underline decoration-2 underline-offset-4 hover:text-[#083da0]",

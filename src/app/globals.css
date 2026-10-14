@@ -33,8 +33,8 @@
   --radius-card: 12px;
   --radius-badge: 9999px;
 
-  --shadow-sm: 0 1px 2px rgb(10 37 79 / 6%);
-  --shadow-md: 0 4px 12px rgb(10 37 79 / 8%);
+  --shadow-sm: none;
+  --shadow-md: none;
 
   --font-display: var(--font-inter), sans-serif;
   --font-body: var(--font-inter), sans-serif;
@@ -182,7 +182,7 @@ a {
 
 .card-base {
   border-radius: var(--radius-card, 12px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
   background-color: var(--background);
   border-color: var(--border);
 }

@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 
 const control =
-  "w-full rounded-[var(--radius-btn,6px)] border border-[var(--border)] bg-[var(--background)] px-3.5 py-2.5 text-base text-[var(--foreground)] shadow-xs placeholder:text-[var(--muted-foreground)]/60 focus:border-[var(--ring)] focus:outline-none focus:ring-3 focus:ring-[var(--ring)]/20 aria-[invalid=true]:border-red-600 transition-colors";
+  "w-full rounded-[var(--radius-btn,6px)] border border-[var(--border)] bg-[var(--background)] px-3.5 py-2.5 text-base text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/60 focus:border-[var(--ring)] focus:outline-none focus:ring-3 focus:ring-[var(--ring)]/20 aria-[invalid=true]:border-red-600 transition-colors";
 
 export function Input({ className = "", ...props }: ComponentProps<"input">) {
   return <input className={`${control} ${className}`} {...props} />;

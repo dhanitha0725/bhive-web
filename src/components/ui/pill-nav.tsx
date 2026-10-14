@@ -297,7 +297,7 @@ const PillNav: React.FC<PillNavProps> = ({
             ref={(el) => {
               logoRef.current = el;
             }}
-            className="rounded-full px-4 py-2 inline-flex items-center justify-center overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.12)] transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)] shrink-0"
+            className="rounded-full px-4 py-2 inline-flex items-center justify-center overflow-hidden shadow-none transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)] shrink-0"
             style={{
               height: "var(--nav-h)",
               width: "auto",
@@ -319,7 +319,7 @@ const PillNav: React.FC<PillNavProps> = ({
             ref={(el) => {
               logoRef.current = el;
             }}
-            className="rounded-full px-4 py-2 inline-flex items-center justify-center overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.12)] transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)] shrink-0"
+            className="rounded-full px-4 py-2 inline-flex items-center justify-center overflow-hidden shadow-none transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)] shrink-0"
             style={{
               height: "var(--nav-h)",
               width: "auto",
@@ -337,7 +337,7 @@ const PillNav: React.FC<PillNavProps> = ({
 
         <div
           ref={navItemsRef}
-          className="relative items-center rounded-full hidden md:flex ml-2 shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
+          className="relative items-center rounded-full hidden md:flex ml-2 shadow-none"
           style={{
             height: "var(--nav-h)",
             background: "var(--base, #000)",
@@ -440,7 +440,7 @@ const PillNav: React.FC<PillNavProps> = ({
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"
           aria-expanded={isMobileMenuOpen}
-          className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 relative shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
+          className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 relative shadow-none"
           style={{
             width: "var(--nav-h)",
             height: "var(--nav-h)",
@@ -460,7 +460,7 @@ const PillNav: React.FC<PillNavProps> = ({
 
       <div
         ref={mobileMenuRef}
-        className="md:hidden absolute top-[calc(var(--nav-h)+10px)] left-2 right-2 rounded-[24px] shadow-[0_12px_40px_rgba(0,0,0,0.18)] z-[998] origin-top p-2"
+        className="md:hidden absolute top-[calc(var(--nav-h)+10px)] left-2 right-2 rounded-[24px] shadow-none z-[998] origin-top p-2"
         style={{
           ...cssVars,
           background: "var(--base, #f0f0f0)",
@@ -483,7 +483,7 @@ const PillNav: React.FC<PillNavProps> = ({
             };
 
             const linkClasses =
-              "block py-3 px-4 text-[14px] font-semibold tracking-wider uppercase rounded-[50px] transition-all duration-200 ease-[cubic-bezier(0.25,0.1,0.25,1)] text-center shadow-xs";
+              "block py-3 px-4 text-[14px] font-semibold tracking-wider uppercase rounded-[50px] transition-all duration-200 ease-[cubic-bezier(0.25,0.1,0.25,1)] text-center";
 
             return (
               <li key={item.href}>

@@ -18,7 +18,7 @@ import {
 /* -------------------------------------------------------------------------- */
 function ResearchIllustration() {
   return (
-    <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-50/60 via-slate-50 to-white border border-slate-200/80 p-5 flex flex-col justify-between overflow-hidden shadow-inner">
+    <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-50/60 via-slate-50 to-white border border-slate-200/80 p-5 flex flex-col justify-between overflow-hidden">
       {/* Background Radar Grid */}
       <svg
         className="absolute inset-0 w-full h-full opacity-40 pointer-events-none"
@@ -41,7 +41,7 @@ function ResearchIllustration() {
 
       {/* Top Header Card */}
       <div className="relative z-10 flex items-center justify-between">
-        <div className="flex items-center gap-2 rounded-full bg-white/90 border border-slate-200 px-3 py-1 shadow-sm backdrop-blur-sm">
+        <div className="flex items-center gap-2 rounded-full bg-white/90 border border-slate-200 px-3 py-1 backdrop-blur-sm">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
@@ -57,7 +57,7 @@ function ResearchIllustration() {
 
       {/* Center Data Cards */}
       <div className="relative z-10 space-y-2.5 my-auto">
-        <div className="rounded-xl bg-white/95 border border-slate-200/90 p-3 shadow-sm transition-transform hover:scale-[1.01]">
+        <div className="rounded-xl bg-white/95 border border-slate-200/90 p-3 transition-transform hover:scale-[1.01]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="h-6 w-6 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
@@ -74,7 +74,7 @@ function ResearchIllustration() {
           </div>
         </div>
 
-        <div className="rounded-xl bg-white/95 border border-slate-200/90 p-3 shadow-sm transition-transform hover:scale-[1.01]">
+        <div className="rounded-xl bg-white/95 border border-slate-200/90 p-3 transition-transform hover:scale-[1.01]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="h-6 w-6 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
@@ -106,7 +106,7 @@ function ResearchIllustration() {
 /* -------------------------------------------------------------------------- */
 function PlanIllustration() {
   return (
-    <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-50/60 via-slate-50 to-white border border-slate-200/80 p-5 flex flex-col justify-between overflow-hidden shadow-inner">
+    <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-50/60 via-slate-50 to-white border border-slate-200/80 p-5 flex flex-col justify-between overflow-hidden">
       {/* Background Architectural Grid */}
       <svg
         className="absolute inset-0 w-full h-full opacity-35 pointer-events-none"
@@ -122,7 +122,7 @@ function PlanIllustration() {
 
       {/* Top Header Card */}
       <div className="relative z-10 flex items-center justify-between">
-        <div className="flex items-center gap-2 rounded-full bg-white/90 border border-slate-200 px-3 py-1 shadow-sm backdrop-blur-sm">
+        <div className="flex items-center gap-2 rounded-full bg-white/90 border border-slate-200 px-3 py-1 backdrop-blur-sm">
           <span className="h-2 w-2 rounded-full bg-blue-600"></span>
           <span className="text-[11px] font-mono font-semibold text-slate-700 tracking-wide">
             ROADMAP BLUEPRINT
@@ -136,7 +136,7 @@ function PlanIllustration() {
       {/* Connected 3-Step Milestone Pipeline */}
       <div className="relative z-10 space-y-2.5 my-auto">
         {/* Phase 1 */}
-        <div className="flex items-center gap-3 rounded-xl bg-white/95 border border-slate-200/90 p-2.5 shadow-sm">
+        <div className="flex items-center gap-3 rounded-xl bg-white/95 border border-slate-200/90 p-2.5">
           <div className="h-7 w-7 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center shrink-0">
             <CheckCircle2 className="h-4 w-4" />
           </div>
@@ -154,7 +154,7 @@ function PlanIllustration() {
         </div>
 
         {/* Phase 2 */}
-        <div className="flex items-center gap-3 rounded-xl bg-white/95 border border-blue-200 p-2.5 shadow-sm ring-1 ring-blue-500/20">
+        <div className="flex items-center gap-3 rounded-xl bg-white/95 border border-blue-200 p-2.5 ring-1 ring-blue-500/20">
           <div className="h-7 w-7 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center shrink-0 font-mono text-xs font-bold">
             02
           </div>
@@ -202,10 +202,10 @@ function PlanIllustration() {
 /* -------------------------------------------------------------------------- */
 function StrategyIllustration() {
   return (
-    <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-50/60 via-slate-50 to-white border border-slate-200/80 p-5 flex flex-col justify-between overflow-hidden shadow-inner">
+    <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-50/60 via-slate-50 to-white border border-slate-200/80 p-5 flex flex-col justify-between overflow-hidden">
       {/* Top Header Card */}
       <div className="relative z-10 flex items-center justify-between">
-        <div className="flex items-center gap-2 rounded-full bg-white/90 border border-slate-200 px-3 py-1 shadow-sm backdrop-blur-sm">
+        <div className="flex items-center gap-2 rounded-full bg-white/90 border border-slate-200 px-3 py-1 backdrop-blur-sm">
           <Target className="h-3.5 w-3.5 text-blue-600" />
           <span className="text-[11px] font-mono font-semibold text-slate-700 tracking-wide">
             POSITIONING MATRIX
@@ -217,7 +217,7 @@ function StrategyIllustration() {
       </div>
 
       {/* 2x2 Positioning Matrix Graphic */}
-      <div className="relative z-10 my-auto h-40 w-full rounded-xl bg-white/95 border border-slate-200/90 p-4 shadow-sm flex flex-col justify-between">
+      <div className="relative z-10 my-auto h-40 w-full rounded-xl bg-white/95 border border-slate-200/90 p-4 flex flex-col justify-between">
         {/* Axis Crosshairs */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-full border-t border-dashed border-slate-200" />
@@ -254,7 +254,7 @@ function StrategyIllustration() {
           </svg>
 
           {/* BHive Position (Top Right) */}
-          <div className="absolute top-1 right-3 flex items-center gap-2 bg-blue-50/90 border border-blue-300 rounded-full px-2.5 py-1 shadow-sm">
+          <div className="absolute top-1 right-3 flex items-center gap-2 bg-blue-50/90 border border-blue-300 rounded-full px-2.5 py-1">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
@@ -286,10 +286,10 @@ function StrategyIllustration() {
 /* -------------------------------------------------------------------------- */
 function ExecutionIllustration() {
   return (
-    <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-50/60 via-slate-50 to-white border border-slate-200/80 p-5 flex flex-col justify-between overflow-hidden shadow-inner">
+    <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-50/60 via-slate-50 to-white border border-slate-200/80 p-5 flex flex-col justify-between overflow-hidden">
       {/* Top Header Card */}
       <div className="relative z-10 flex items-center justify-between">
-        <div className="flex items-center gap-2 rounded-full bg-white/90 border border-slate-200 px-3 py-1 shadow-sm backdrop-blur-sm">
+        <div className="flex items-center gap-2 rounded-full bg-white/90 border border-slate-200 px-3 py-1 backdrop-blur-sm">
           <Rocket className="h-3.5 w-3.5 text-blue-600" />
           <span className="text-[11px] font-mono font-semibold text-slate-700 tracking-wide">
             GROWTH VELOCITY
@@ -302,7 +302,7 @@ function ExecutionIllustration() {
       </div>
 
       {/* Center Metrics & Growth Curve */}
-      <div className="relative z-10 my-auto rounded-xl bg-white/95 border border-slate-200/90 p-4 shadow-sm">
+      <div className="relative z-10 my-auto rounded-xl bg-white/95 border border-slate-200/90 p-4">
         <div className="flex items-center justify-between mb-2">
           <div>
             <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
@@ -472,7 +472,7 @@ export function SystemSection() {
             {SYSTEM_STEPS.map((step) => (
               <ScrollStackItem
                 key={step.id}
-                itemClassName="min-h-[440px] md:min-h-[400px] p-6 sm:p-8 lg:p-10 bg-white border border-slate-200/90 shadow-[0_12px_36px_-10px_rgba(10,37,79,0.08),0_2px_6px_-1px_rgba(10,37,79,0.04)] hover:border-blue-300 transition-colors"
+                itemClassName="min-h-[440px] md:min-h-[400px] p-6 sm:p-8 lg:p-10 bg-white border border-slate-200/90 shadow-none hover:border-blue-300 transition-colors"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center h-full">
                   {/* Left Column: Minimal & Clean Content */}

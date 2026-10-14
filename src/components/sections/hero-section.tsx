@@ -132,7 +132,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: -14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 backdrop-blur-md px-4 py-1.5 shadow-sm"
+              className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 backdrop-blur-md px-4 py-1.5"
             >
               <Sparkles className="h-3.5 w-3.5 text-white/90" />
               <span className="text-xs sm:text-sm font-semibold text-white/95">
@@ -196,7 +196,7 @@ export function HeroSection() {
               onMouseLeave={() => setIsPaused(false)}
             >
               {/* Frosted Glass Outer Container */}
-              <div className="rounded-[26px] sm:rounded-[30px] bg-white/20 backdrop-blur-2xl p-2 sm:p-3 border border-white/40 shadow-[0_20px_50px_rgba(0,35,110,0.22)]">
+              <div className="rounded-[26px] sm:rounded-[30px] bg-white/20 backdrop-blur-2xl p-2 sm:p-3 border border-white/40 shadow-none">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={activeCard.id}
@@ -204,7 +204,7 @@ export function HeroSection() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -12, scale: 0.99 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-2xl sm:rounded-[24px] bg-white p-6 sm:p-8 md:p-9 text-slate-900 border border-white/90 shadow-xl text-left"
+                    className="rounded-2xl sm:rounded-[24px] bg-white p-6 sm:p-8 md:p-9 text-slate-900 border border-white/90 shadow-none text-left"
                   >
                     <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
                       {/* Left Column: Pathway Badge, Title, Description, and Desktop CTA */}
@@ -236,7 +236,7 @@ export function HeroSection() {
                                 ? setStrategyDialogOpen(true)
                                 : setAuditDialogOpen(true)
                             }
-                            className={`group inline-flex items-center justify-center gap-2.5 rounded-xl ${activeCard.buttonClass} px-7 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-md hover:shadow-lg`}
+                            className={`group inline-flex items-center justify-center gap-2.5 rounded-xl ${activeCard.buttonClass} px-7 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-none hover:shadow-lg`}
                           >
                             <span>{activeCard.buttonText}</span>
                             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -272,7 +272,7 @@ export function HeroSection() {
                               ? setStrategyDialogOpen(true)
                               : setAuditDialogOpen(true)
                           }
-                          className={`group inline-flex w-full items-center justify-center gap-2.5 rounded-xl ${activeCard.buttonClass} px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-md hover:shadow-lg`}
+                          className={`group inline-flex w-full items-center justify-center gap-2.5 rounded-xl ${activeCard.buttonClass} px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-none hover:shadow-lg`}
                         >
                           <span>{activeCard.buttonText}</span>
                           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />

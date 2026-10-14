@@ -212,7 +212,7 @@ export function PathwaySection() {
 
         {/* 2. Fluid Tabs Switcher (Watermelon UI Inspired) */}
         <div className="flex flex-col items-center mb-12">
-          <div className="relative inline-flex items-center p-1.5 rounded-full bg-slate-200/70 border border-slate-300/80 shadow-inner">
+          <div className="relative inline-flex items-center p-1.5 rounded-full bg-slate-200/70 border border-slate-300/80">
             {/* Existing Business Tab */}
             <button
               type="button"
@@ -223,7 +223,7 @@ export function PathwaySection() {
                 <motion.div
                   layoutId="offer-active-tab-indicator"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  className="absolute inset-0 rounded-full bg-white shadow-[0_2px_12px_rgba(10,37,79,0.08)] border border-slate-200/90"
+                  className="absolute inset-0 rounded-full bg-white shadow-none border border-slate-200/90"
                 />
               )}
               <span className="relative z-10 flex items-center gap-2">
@@ -257,7 +257,7 @@ export function PathwaySection() {
                 <motion.div
                   layoutId="offer-active-tab-indicator"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  className="absolute inset-0 rounded-full bg-white shadow-[0_2px_12px_rgba(10,37,79,0.08)] border border-slate-200/90"
+                  className="absolute inset-0 rounded-full bg-white shadow-none border border-slate-200/90"
                 />
               )}
               <span className="relative z-10 flex items-center gap-2">
@@ -309,7 +309,7 @@ export function PathwaySection() {
               return (
                 <article
                   key={service.slug}
-                  className={`${colSpanClass} group relative flex flex-col justify-between rounded-2xl bg-white border border-slate-200/90 p-6 sm:p-7 shadow-[0_10px_30px_-10px_rgba(10,37,79,0.06),0_2px_6px_-1px_rgba(10,37,79,0.03)] hover:border-blue-400/80 hover:shadow-[0_16px_40px_-8px_rgba(10,37,79,0.12)] transition-all duration-300`}
+                  className={`${colSpanClass} group relative flex flex-col justify-between rounded-2xl bg-white border border-slate-200/90 p-6 sm:p-7 shadow-none hover:border-blue-400/80 hover:shadow-[0_16px_40px_-8px_rgba(10,37,79,0.12)] transition-all duration-300`}
                 >
                   <div>
                     {/* Card Header: Step Tag + Telemetry Math Indicator */}
@@ -331,7 +331,7 @@ export function PathwaySection() {
 
                     {/* Service Title with Icon */}
                     <div className="mt-4 flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-slate-50 border border-slate-200/90 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200 shadow-2xs">
+                      <div className="h-9 w-9 rounded-xl bg-slate-50 border border-slate-200/90 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
                         <Icon className="h-4 w-4" />
                       </div>
                       <h3 className="text-xl sm:text-2xl font-bold font-display text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
@@ -413,7 +413,7 @@ export function PathwaySection() {
         </AnimatePresence>
 
         {/* 4. Bottom Directional Callout Card */}
-        <div className="mt-14 rounded-2xl bg-gradient-to-br from-white via-blue-50/30 to-slate-50 border border-slate-200/90 p-6 sm:p-8 shadow-sm">
+        <div className="mt-14 rounded-2xl bg-gradient-to-br from-white via-blue-50/30 to-slate-50 border border-slate-200/90 p-6 sm:p-8 shadow-none">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div>
               <div className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">
@@ -441,7 +441,7 @@ export function PathwaySection() {
                 <>
                   <Link
                     href="/free-growth-audit"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition-all active:scale-[0.98]"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-all active:scale-[0.98]"
                   >
                     <span>Get Free Growth Audit</span>
                     <ArrowRight className="h-4 w-4" />
@@ -457,7 +457,7 @@ export function PathwaySection() {
                 <>
                   <Link
                     href="/business-guidance-call"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition-all active:scale-[0.98]"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-all active:scale-[0.98]"
                   >
                     <span>Book Guidance Call</span>
                     <ArrowRight className="h-4 w-4" />

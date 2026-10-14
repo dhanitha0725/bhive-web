@@ -44,7 +44,7 @@ export function InsightsSection() {
               key={item.slug}
               y={20}
               delay={idx * 100}
-              className="group flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-[var(--background)] p-7 shadow-2xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400/60 hover:shadow-xl"
+              className="group flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-[var(--background)] p-7 shadow-none transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400/60 hover:shadow-xl"
             >
               <div>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
