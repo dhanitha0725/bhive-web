@@ -6,10 +6,144 @@ import { Section } from "@/components/ui/section";
 import type { CaseStudy } from "@/content/case-studies";
 import type { Insight } from "@/content/insights";
 
-export function PageHero({eyebrow,title,body,primary,secondary}:{eyebrow:string;title:string;body:string;primary:{label:string;href:string};secondary?:{label:string;href:string}}){return <Section className="bg-navy-600 text-white"><Container><p className="eyebrow eyebrow-light">{eyebrow}</p><h1 className="display mt-4 max-w-4xl">{title}</h1><p className="mt-6 max-w-2xl text-lg text-navy-100">{body}</p><div className="mt-8 flex flex-wrap gap-3"><LinkButton href={primary.href} variant="white">{primary.label}</LinkButton>{secondary?<LinkButton href={secondary.href} variant="outline" className="border-white text-white hover:bg-white/10">{secondary.label}</LinkButton>:null}</div></Container></Section>}
-export function SectionTitle({eyebrow,title,body}:{eyebrow:string;title:string;body?:string}){return <div className="max-w-3xl"><p className="eyebrow">{eyebrow}</p><h2 className="heading-2 mt-3">{title}</h2>{body?<p className="mt-4 text-muted-foreground">{body}</p>:null}</div>}
-export function SystemSteps({steps}:{steps:Array<{title:string;body:string}>}){return <ol className="mt-10 grid gap-3 lg:grid-cols-3">{steps.map((step,index)=><li key={step.title} className="relative border-l-2 border-blue-500 bg-navy-50 p-5"><span className="font-mono text-xs text-blue-700">{String(index+1).padStart(2,"0")}</span><h3 className="mt-2 font-display text-xl font-semibold">{step.title}</h3><p className="mt-2 text-sm text-muted-foreground">{step.body}</p></li>)}</ol>}
-export function CaseCard({item}:{item:CaseStudy}){return <Card className="flex h-full flex-col border-navy-100"><p className="eyebrow">{item.isDemo?"Concept case study · ":""}{item.industry}</p><h3 className="mt-3 font-display text-2xl font-semibold">{item.client}</h3><p className="mt-4 text-sm text-muted-foreground"><strong className="text-navy-600">Challenge: </strong>{item.challenge}</p><p className="mt-3 text-sm text-muted-foreground"><strong className="text-navy-600">Transformation: </strong>{item.transformation}</p><div className="mt-5 flex flex-wrap gap-2">{item.scope.map((scope)=><span key={scope} className="rounded bg-navy-50 px-2 py-1 text-xs font-medium text-navy-600">{scope}</span>)}</div><Link href={`/work/${item.slug}`} className="mt-6 text-sm font-semibold text-blue-700 underline">View case study</Link></Card>}
-export function InsightCard({item}:{item:Insight}){return <article className="border-t border-navy-200 pt-5"><p className="eyebrow">{item.pillar.replaceAll("-"," ")}</p><h3 className="mt-2 font-display text-2xl font-semibold"><Link href={`/insights/${item.slug}`}>{item.title}</Link></h3><p className="mt-3 text-sm text-muted-foreground">{item.excerpt}</p><p className="mt-4 font-mono text-xs text-muted-foreground">{item.readingTime} · {item.date}</p></article>}
-export function FinalCta(){return <Section className="bg-navy-600 text-white"><Container><div className="max-w-3xl"><p className="eyebrow eyebrow-light">Start here</p><h2 className="heading-2 mt-3 text-white">Bring us the business problem.</h2><p className="mt-4 text-navy-100">Whether you are strengthening an existing business or building something new, start by understanding what needs to happen next.</p><div className="mt-7 flex flex-wrap gap-3"><LinkButton href="/grow-your-business" variant="white">Grow My Business</LinkButton><LinkButton href="/launch-your-business" variant="outline" className="border-white text-white hover:bg-white/10">Launch My Business</LinkButton></div></div></Container></Section>}
-export function Faqs({items}:{items:Array<{q:string;a:string}>}){return <div className="mt-8 divide-y border-y">{items.map((item)=><details key={item.q} className="group py-4"><summary className="cursor-pointer list-none pr-8 font-semibold text-navy-600">{item.q}<span className="float-right text-blue-700 group-open:rotate-45">+</span></summary><p className="mt-3 max-w-3xl text-muted-foreground">{item.a}</p></details>)}</div>}
+export function PageHero({
+  eyebrow,
+  title,
+  body,
+  primary,
+  secondary,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  primary: { label: string; href: string };
+  secondary?: { label: string; href: string };
+}) {
+  return (
+    <Section className="bg-navy-600 text-white">
+      <Container>
+        <p className="eyebrow eyebrow-light">{eyebrow}</p>
+        <h1 className="display mt-4 max-w-4xl">{title}</h1>
+        <p className="mt-6 max-w-2xl text-lg text-navy-100">{body}</p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <LinkButton href={primary.href} variant="white">
+            {primary.label}
+          </LinkButton>
+          {secondary ? (
+            <LinkButton href={secondary.href} variant="outline" className="border-white text-white hover:bg-white/10">
+              {secondary.label}
+            </LinkButton>
+          ) : null}
+        </div>
+      </Container>
+    </Section>
+  );
+}
+export function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title: string; body?: string }) {
+  return (
+    <div className="max-w-3xl">
+      <p className="eyebrow">{eyebrow}</p>
+      <h2 className="heading-2 mt-3">{title}</h2>
+      {body ? <p className="mt-4 text-muted-foreground">{body}</p> : null}
+    </div>
+  );
+}
+export function SystemSteps({ steps }: { steps: Array<{ title: string; body: string }> }) {
+  return (
+    <ol className="mt-10 grid gap-3 lg:grid-cols-3">
+      {steps.map((step, index) => (
+        <li key={step.title} className="relative border-l-2 border-blue-500 bg-navy-50 p-5">
+          <span className="font-mono text-xs text-blue-700">{String(index + 1).padStart(2, "0")}</span>
+          <h3 className="mt-2 font-display text-xl font-semibold">{step.title}</h3>
+          <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+export function CaseCard({ item }: { item: CaseStudy }) {
+  return (
+    <Card className="flex h-full flex-col border-navy-100">
+      <p className="eyebrow">
+        {item.isDemo ? "Concept case study · " : ""}
+        {item.industry}
+      </p>
+      <h3 className="mt-3 font-display text-2xl font-semibold">{item.client}</h3>
+      <p className="mt-4 text-sm text-muted-foreground">
+        <strong className="text-navy-600">Challenge: </strong>
+        {item.challenge}
+      </p>
+      <p className="mt-3 text-sm text-muted-foreground">
+        <strong className="text-navy-600">Transformation: </strong>
+        {item.transformation}
+      </p>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {item.scope.map((scope) => (
+          <span key={scope} className="rounded bg-navy-50 px-2 py-1 text-xs font-medium text-navy-600">
+            {scope}
+          </span>
+        ))}
+      </div>
+      <Link href={`/work/${item.slug}`} className="mt-6 text-sm font-semibold text-blue-700 underline">
+        View case study
+      </Link>
+    </Card>
+  );
+}
+export function InsightCard({ item }: { item: Insight }) {
+  return (
+    <article className="border-t border-navy-200 pt-5">
+      <p className="eyebrow">{item.pillar.replaceAll("-", " ")}</p>
+      <h3 className="mt-2 font-display text-2xl font-semibold">
+        <Link href={`/insights/${item.slug}`}>{item.title}</Link>
+      </h3>
+      <p className="mt-3 text-sm text-muted-foreground">{item.excerpt}</p>
+      <p className="mt-4 font-mono text-xs text-muted-foreground">
+        {item.readingTime} · {item.date}
+      </p>
+    </article>
+  );
+}
+export function FinalCta() {
+  return (
+    <Section className="bg-navy-600 text-white">
+      <Container>
+        <div className="max-w-3xl">
+          <p className="eyebrow eyebrow-light">Start here</p>
+          <h2 className="heading-2 mt-3 text-white">Bring us the business problem.</h2>
+          <p className="mt-4 text-navy-100">
+            Whether you are strengthening an existing business or building something new, start by understanding what
+            needs to happen next.
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <LinkButton href="/grow-your-business" variant="white">
+              Grow My Business
+            </LinkButton>
+            <LinkButton
+              href="/launch-your-business"
+              variant="outline"
+              className="border-white text-white hover:bg-white/10"
+            >
+              Launch My Business
+            </LinkButton>
+          </div>
+        </div>
+      </Container>
+    </Section>
+  );
+}
+export function Faqs({ items }: { items: Array<{ q: string; a: string }> }) {
+  return (
+    <div className="mt-8 divide-y border-y">
+      {items.map((item) => (
+        <details key={item.q} className="group py-4">
+          <summary className="cursor-pointer list-none pr-8 font-semibold text-navy-600">
+            {item.q}
+            <span className="float-right text-blue-700 group-open:rotate-45">+</span>
+          </summary>
+          <p className="mt-3 max-w-3xl text-muted-foreground">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  );
+}

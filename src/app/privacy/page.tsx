@@ -1,2 +1,26 @@
 // Placeholder legal copy — requires professional legal review before launch.
-import{Container}from"@/components/ui/container";import{Section}from"@/components/ui/section";export default function Privacy(){return <Section><Container className="max-w-3xl"><h1 className="heading-1">Privacy</h1><div className="prose-measure mt-8 grid gap-5 text-muted-foreground"><p>BHive collects the details submitted through its forms so it can respond to requests. This may include contact information, business context and referral information.</p><p>Analytics may be configured later to understand how the site is used. Information is not sold. Retention, cookie and third-party service practices must be confirmed before launch.</p><p>To ask about information submitted through this site, use the contact form when a response channel is configured.</p></div></Container></Section>}
+import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
+export default function Privacy() {
+  return (
+    <Section>
+      <Container className="max-w-3xl">
+        <h1 className="heading-1">Privacy</h1>
+        <div className="prose-measure mt-8 grid gap-5 text-muted-foreground">
+          <p>
+            BHive collects the details submitted through its forms so it can respond to requests. This may include
+            contact information, business context and referral information.
+          </p>
+          <p>
+            Analytics may be configured later to understand how the site is used. Information is not sold. Retention,
+            cookie and third-party service practices must be confirmed before launch.
+          </p>
+          <p>
+            To ask about information submitted through this site, use the contact form when a response channel is
+            configured.
+          </p>
+        </div>
+      </Container>
+    </Section>
+  );
+}

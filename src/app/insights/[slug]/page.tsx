@@ -1,3 +1,52 @@
-import type {Metadata}from"next";import{notFound}from"next/navigation";import{getInsight,insights,pillars}from"@/content/insights";import{Container}from"@/components/ui/container";import{Section}from"@/components/ui/section";import{FinalCta}from"@/components/sections/marketing";import{createMetadata}from"@/seo/metadata";
-export function generateStaticParams(){return insights.filter(x=>x.published).map(x=>({slug:x.slug}));}export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const x=getInsight((await params).slug);return x?createMetadata({title:x.title,description:x.excerpt,path:`/insights/${x.slug}`}):{};}
-export default async function Insight({params}:{params:Promise<{slug:string}>}){const x=getInsight((await params).slug);if(!x)notFound();return <><article><Section className="bg-navy-600 text-white"><Container className="max-w-4xl"><a href={`/insights/category/${x.pillar}`} className="eyebrow eyebrow-light">{pillars[x.pillar]}</a><h1 className="display mt-4">{x.title}</h1><p className="mt-5 text-navy-100">{x.excerpt}</p><p className="mt-5 font-mono text-xs text-navy-200">{x.date} · {x.readingTime}</p></Container></Section><Section><Container className="max-w-3xl"><div className="grid gap-6 text-lg leading-8 text-neutral-700">{x.content.map(p=><p key={p}>{p}</p>)}</div><a href={`/services/${x.relatedService}`} className="mt-10 inline-block border-l-2 border-blue-500 pl-4 font-semibold text-navy-600">Explore the related service</a></Container></Section></article><FinalCta/></>}
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getInsight, insights, pillars } from "@/content/insights";
+import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
+import { FinalCta } from "@/components/sections/marketing";
+import { createMetadata } from "@/seo/metadata";
+export function generateStaticParams() {
+  return insights.filter((x) => x.published).map((x) => ({ slug: x.slug }));
+}
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const x = getInsight((await params).slug);
+  return x ? createMetadata({ title: x.title, description: x.excerpt, path: `/insights/${x.slug}` }) : {};
+}
+export default async function Insight({ params }: { params: Promise<{ slug: string }> }) {
+  const x = getInsight((await params).slug);
+  if (!x) notFound();
+  return (
+    <>
+      <article>
+        <Section className="bg-navy-600 text-white">
+          <Container className="max-w-4xl">
+            <a href={`/insights/category/${x.pillar}`} className="eyebrow eyebrow-light">
+              {pillars[x.pillar]}
+            </a>
+            <h1 className="display mt-4">{x.title}</h1>
+            <p className="mt-5 text-navy-100">{x.excerpt}</p>
+            <p className="mt-5 font-mono text-xs text-navy-200">
+              {x.date} · {x.readingTime}
+            </p>
+          </Container>
+        </Section>
+        <Section>
+          <Container className="max-w-3xl">
+            <div className="grid gap-6 text-lg leading-8 text-neutral-700">
+              {x.content.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+            <a
+              href={`/services/${x.relatedService}`}
+              className="mt-10 inline-block border-l-2 border-blue-500 pl-4 font-semibold text-navy-600"
+            >
+              Explore the related service
+            </a>
+          </Container>
+        </Section>
+      </article>
+      <FinalCta />
+    </>
+  );
+}

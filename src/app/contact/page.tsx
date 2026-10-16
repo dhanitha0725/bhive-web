@@ -1,1 +1,41 @@
-import{Container}from"@/components/ui/container";import{Section}from"@/components/ui/section";import{LinkButton}from"@/components/ui/button";import{PageHero,SectionTitle}from"@/components/sections/marketing";import{LeadForm}from"@/components/forms/lead-form";export default function Contact(){return <><PageHero eyebrow="Contact" title="Tell us what you are trying to build or fix." body="Choose the path that fits, or send a general enquiry. No contact details are displayed until they are verified and configured." primary={{label:"Send an enquiry",href:"#form"}}/><Section><Container><div className="grid gap-5 md:grid-cols-2"><div className="border p-6"><h2 className="heading-2">Existing business</h2><p className="mt-3 text-muted-foreground">Something is not working the way it should.</p><LinkButton href="/grow-your-business" className="mt-5">Grow My Business</LinkButton></div><div className="border p-6"><h2 className="heading-2">Founder</h2><p className="mt-3 text-muted-foreground">I am building something new.</p><LinkButton href="/launch-your-business" className="mt-5">Launch My Business</LinkButton></div></div><div id="form" className="mx-auto mt-14 max-w-3xl"><SectionTitle eyebrow="General enquiry" title="Start with the situation."/><LeadForm type="general-contact"/></div></Container></Section></>}
+import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
+import { LinkButton } from "@/components/ui/button";
+import { PageHero, SectionTitle } from "@/components/sections/marketing";
+import { LeadForm } from "@/components/forms/lead-form";
+export default function Contact() {
+  return (
+    <>
+      <PageHero
+        eyebrow="Contact"
+        title="Tell us what you are trying to build or fix."
+        body="Choose the path that fits, or send a general enquiry. No contact details are displayed until they are verified and configured."
+        primary={{ label: "Send an enquiry", href: "#form" }}
+      />
+      <Section>
+        <Container>
+          <div className="grid gap-5 md:grid-cols-2">
+            <div className="border p-6">
+              <h2 className="heading-2">Existing business</h2>
+              <p className="mt-3 text-muted-foreground">Something is not working the way it should.</p>
+              <LinkButton href="/grow-your-business" className="mt-5">
+                Grow My Business
+              </LinkButton>
+            </div>
+            <div className="border p-6">
+              <h2 className="heading-2">Founder</h2>
+              <p className="mt-3 text-muted-foreground">I am building something new.</p>
+              <LinkButton href="/launch-your-business" className="mt-5">
+                Launch My Business
+              </LinkButton>
+            </div>
+          </div>
+          <div id="form" className="mx-auto mt-14 max-w-3xl">
+            <SectionTitle eyebrow="General enquiry" title="Start with the situation." />
+            <LeadForm type="general-contact" />
+          </div>
+        </Container>
+      </Section>
+    </>
+  );
+}

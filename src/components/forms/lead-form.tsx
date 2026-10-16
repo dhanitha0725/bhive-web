@@ -1,2 +1,59 @@
-"use client";import{useState}from"react";import{Button}from"@/components/ui/button";
-export function LeadForm({type}:{type:"growth-audit"|"business-guidance"|"general-contact"}){const [status,setStatus]=useState<string>();const fields=type==="growth-audit"?["name","businessName","email","phone","websiteOrSocialUrl","businessStage","mainChallenge"]:type==="business-guidance"?["name","email","phone","businessIdeaOrCategory","currentStage","biggestQuestion"]:["name","email","phone","business","website","enquiry","message"];const submit=async(e:React.FormEvent<HTMLFormElement>)=>{e.preventDefault();setStatus("Sending…");const form=new FormData(e.currentTarget);const data=Object.fromEntries(form) as Record<string,string|boolean>;data.consent=form.get("consent")==="on";const response=await fetch("/api/leads",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({type,data})});const json=await response.json();setStatus(response.ok?"Thanks — your validated request was received in development mode.":json.error);};return <form onSubmit={submit} className="mt-8 grid gap-4" noValidate>{fields.map(name=>name.includes("Challenge")||name==="message"||name==="biggestQuestion"?<label key={name} className="grid gap-2 text-sm font-semibold capitalize">{name.replaceAll(/([A-Z])/g," $1")}<textarea required name={name} className="min-h-28 rounded-md border p-3 font-normal"/></label>:<label key={name} className="grid gap-2 text-sm font-semibold capitalize">{name.replaceAll(/([A-Z])/g," $1")}<input required={!["phone","website","websiteOrSocialUrl"].includes(name)} name={name} type={name==="email"?"email":"text"} className="rounded-md border p-3 font-normal"/></label>)}<input name="honeypot" tabIndex={-1} autoComplete="off" className="hidden"/><label className="flex gap-3 text-sm"><input required name="consent" type="checkbox"/>I agree that BHive may use these details to respond to my request.</label><Button type="submit">Send request</Button>{status?<p role="status" className="text-sm text-muted-foreground">{status}</p>:null}</form>}
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+export function LeadForm({ type }: { type: "growth-audit" | "business-guidance" | "general-contact" }) {
+  const [status, setStatus] = useState<string>();
+  const fields =
+    type === "growth-audit"
+      ? ["name", "businessName", "email", "phone", "websiteOrSocialUrl", "businessStage", "mainChallenge"]
+      : type === "business-guidance"
+        ? ["name", "email", "phone", "businessIdeaOrCategory", "currentStage", "biggestQuestion"]
+        : ["name", "email", "phone", "business", "website", "enquiry", "message"];
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("Sending…");
+    const form = new FormData(e.currentTarget);
+    const data = Object.fromEntries(form) as Record<string, string | boolean>;
+    data.consent = form.get("consent") === "on";
+    const response = await fetch("/api/leads", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ type, data }),
+    });
+    const json = await response.json();
+    setStatus(response.ok ? "Thanks — your validated request was received in development mode." : json.error);
+  };
+  return (
+    <form onSubmit={submit} className="mt-8 grid gap-4" noValidate>
+      {fields.map((name) =>
+        name.includes("Challenge") || name === "message" || name === "biggestQuestion" ? (
+          <label key={name} className="grid gap-2 text-sm font-semibold capitalize">
+            {name.replaceAll(/([A-Z])/g, " $1")}
+            <textarea required name={name} className="min-h-28 rounded-md border p-3 font-normal" />
+          </label>
+        ) : (
+          <label key={name} className="grid gap-2 text-sm font-semibold capitalize">
+            {name.replaceAll(/([A-Z])/g, " $1")}
+            <input
+              required={!["phone", "website", "websiteOrSocialUrl"].includes(name)}
+              name={name}
+              type={name === "email" ? "email" : "text"}
+              className="rounded-md border p-3 font-normal"
+            />
+          </label>
+        ),
+      )}
+      <input name="honeypot" tabIndex={-1} autoComplete="off" className="hidden" />
+      <label className="flex gap-3 text-sm">
+        <input required name="consent" type="checkbox" />I agree that BHive may use these details to respond to my
+        request.
+      </label>
+      <Button type="submit">Send request</Button>
+      {status ? (
+        <p role="status" className="text-sm text-muted-foreground">
+          {status}
+        </p>
+      ) : null}
+    </form>
+  );
+}

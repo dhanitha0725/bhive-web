@@ -1,6 +1,63 @@
-export type Package = { id:string; name:string; label:string; for:string; outcome:string; capabilityGroups:string[]; featured?:boolean; published:boolean };
+export type Package = {
+  id: string;
+  name: string;
+  label: string;
+  for: string;
+  outcome: string;
+  capabilityGroups: string[];
+  featured?: boolean;
+  published: boolean;
+};
 export const packages: Package[] = [
-{id:"foundation-reset",name:"Foundation Reset",label:"Rebuild the base",for:"Businesses that need stronger positioning and clearer foundations before scaling marketing.",outcome:"A shared direction and a practical 90-day roadmap.",capabilityGroups:["Business & market review","Positioning refinement","Messaging foundation","Brand consistency review","Digital presence audit","90-day growth roadmap"],published:true},
-{id:"growth-engine",name:"Growth Engine",label:"Build momentum",for:"Businesses ready to connect strategy, marketing, content and digital experience.",outcome:"A coordinated system for creating and improving demand.",capabilityGroups:["Everything in Foundation Reset","Marketing strategy","Campaign architecture","Content strategy","Website conversion recommendations","Channel priorities","Optimisation framework"],featured:true,published:true},
-{id:"market-lead",name:"Market Lead",label:"Build for scale",for:"Businesses seeking a deeper strategic partnership and stronger market leadership.",outcome:"Ongoing direction that keeps execution tied to the next commercial priority.",capabilityGroups:["Everything in Growth Engine","Competitive positioning","Brand evolution","Digital execution","Multi-channel campaigns","Strategic advisory","Continuous optimisation"],published:true}
+  {
+    id: "foundation-reset",
+    name: "Foundation Reset",
+    label: "Rebuild the base",
+    for: "Businesses that need stronger positioning and clearer foundations before scaling marketing.",
+    outcome: "A shared direction and a practical 90-day roadmap.",
+    capabilityGroups: [
+      "Business & market review",
+      "Positioning refinement",
+      "Messaging foundation",
+      "Brand consistency review",
+      "Digital presence audit",
+      "90-day growth roadmap",
+    ],
+    published: true,
+  },
+  {
+    id: "growth-engine",
+    name: "Growth Engine",
+    label: "Build momentum",
+    for: "Businesses ready to connect strategy, marketing, content and digital experience.",
+    outcome: "A coordinated system for creating and improving demand.",
+    capabilityGroups: [
+      "Everything in Foundation Reset",
+      "Marketing strategy",
+      "Campaign architecture",
+      "Content strategy",
+      "Website conversion recommendations",
+      "Channel priorities",
+      "Optimisation framework",
+    ],
+    featured: true,
+    published: true,
+  },
+  {
+    id: "market-lead",
+    name: "Market Lead",
+    label: "Build for scale",
+    for: "Businesses seeking a deeper strategic partnership and stronger market leadership.",
+    outcome: "Ongoing direction that keeps execution tied to the next commercial priority.",
+    capabilityGroups: [
+      "Everything in Growth Engine",
+      "Competitive positioning",
+      "Brand evolution",
+      "Digital execution",
+      "Multi-channel campaigns",
+      "Strategic advisory",
+      "Continuous optimisation",
+    ],
+    published: true,
+  },
 ];

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import BlurText from "@/components/BlurText";
-import { services, type Service, type ServiceSlug } from "@/content/services";
+import { services, type ServiceSlug } from "@/content/services";
 import {
   Sparkles,
   CheckCircle2,

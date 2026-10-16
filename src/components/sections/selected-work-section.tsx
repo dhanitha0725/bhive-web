@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 export function SelectedWorkSection() {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [, setHoveredCard] = useState<string | null>(null);
 
   // We highlight the flagship case study as the large featured hero card,
   // and the remaining featured studies as sleek companion cards.
@@ -232,7 +232,6 @@ export function SelectedWorkSection() {
           {/* ========================================================= */}
           <div className="lg:col-span-5 xl:col-span-5 flex flex-col gap-6 lg:gap-8 justify-between">
             {companionCases.map((item, idx) => {
-              const isFirst = idx === 0;
               const isHospitality = item.slug === "haven-and-co";
 
               return (
