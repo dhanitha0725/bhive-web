@@ -10,18 +10,10 @@ export function SmoothScroll() {
     let disposed = false;
     let cleanup: (() => void) | undefined;
 
-    void Promise.all([
-      import("lenis"),
-      import("gsap"),
-      import("gsap/ScrollTrigger"),
-    ]).then(([lenisModule, gsapModule, triggerModule]) => {
+    void import("lenis").then((lenisModule) => {
       if (disposed) return;
 
       const Lenis = lenisModule.default;
-      const gsap = gsapModule.gsap;
-      const ScrollTrigger = triggerModule.ScrollTrigger;
-
-      gsap.registerPlugin(ScrollTrigger);
 
       const lenis = new Lenis({
         duration: 1.15,
@@ -37,27 +29,12 @@ export function SmoothScroll() {
         anchors: false,
       });
 
-      // Synchronize Lenis scroll with GSAP ScrollTrigger
-      const onScroll = () => {
-        ScrollTrigger.update();
+      let rafId: number;
+      const raf = (time: number) => {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
       };
-      lenis.on("scroll", onScroll);
-
-      // Connect GSAP ticker with Lenis requestAnimationFrame
-      const tick = (time: number) => {
-        lenis.raf(time * 1000);
-      };
-
-      gsap.ticker.add(tick);
-      gsap.ticker.lagSmoothing(0);
-
-      // Re-measure trigger positions once fonts/layout settle.
-      const refresh = () => ScrollTrigger.refresh();
-      window.addEventListener("load", refresh);
-      if (document.fonts?.ready) {
-        document.fonts.ready.then(refresh).catch(() => {});
-      }
-      const refreshTimer = window.setTimeout(refresh, 500);
+      rafId = requestAnimationFrame(raf);
 
       // Handle in-page hash links smoothly
       const handleAnchorClick = (e: MouseEvent) => {
@@ -78,12 +55,9 @@ export function SmoothScroll() {
       document.addEventListener("click", handleAnchorClick);
 
       cleanup = () => {
-        window.clearTimeout(refreshTimer);
-        window.removeEventListener("load", refresh);
+        cancelAnimationFrame(rafId);
         document.removeEventListener("click", handleAnchorClick);
-        lenis.off("scroll", onScroll);
         lenis.destroy();
-        gsap.ticker.remove(tick);
       };
     });
 

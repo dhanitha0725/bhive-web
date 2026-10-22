@@ -16,9 +16,11 @@ export default function Home() {
       {/* 2. Trusted Partners & Proof Grid (Proof Section) */}
       <TrustedPartnersSection />
 
-      {/* 3. The BHive System (How Our System Works - Perspective Carousel) */}
-      <div id="system">
-        <SystemSection />
+      {/* 3. Proven Outcomes (Measurable Commercial Growth) */}
+      <div id="outcomes">
+        <div id="system">
+          <SystemSection />
+        </div>
       </div>
 
       {/* 4. What We Offer (Dynamic Services with Existing & New Business Tabs) */}

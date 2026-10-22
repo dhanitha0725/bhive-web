@@ -142,7 +142,7 @@ export default function Grow() {
                 </ul>
                 <LinkButton
                   href="/contact"
-                  variant={item.featured ? "white" : "navy"}
+                  variant={item.featured ? "white" : "primary"}
                   className="mt-6"
                 >
                   Discuss {item.name}

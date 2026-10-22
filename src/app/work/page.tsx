@@ -19,9 +19,11 @@ export default function Work() {
             body="These are illustrative examples, clearly marked as concept case studies—not client claims or verified performance results."
           />
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
-            {caseStudies.map((x) => (
-              <CaseCard key={x.slug} item={x} />
-            ))}
+            {caseStudies
+              .filter((x) => x.published)
+              .map((x) => (
+                <CaseCard key={x.slug} item={x} />
+              ))}
           </div>
         </Container>
       </Section>

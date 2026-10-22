@@ -34,7 +34,6 @@ Package manager is npm (lockfile committed). Environment is Windows; repo uses L
 - **Next.js 16.3.4** App Router + **React 19.2.8**, TypeScript strict, `@/*` path alias
 - **Tailwind CSS v4** — CSS-first config; all tokens live in `src/app/globals.css`. There is no `tailwind.config`.
 - **framer-motion** — the single React animation library (canonical; do not add the `motion` package). `BlurText` imports from `framer-motion`.
-- **gsap** — used only inside `src/components/motion/smooth-scroll.tsx` (dynamic import) to sync Lenis with ScrollTrigger.
 - **lenis** — global smooth wheel scrolling, instantiated exactly once, skipped for `prefers-reduced-motion` and touch.
 - **lucide-react** icons, **zod** validation, **clsx + tailwind-merge** via `cn()` in `src/lib/utils.ts`.
 
@@ -116,4 +115,4 @@ To add content of an existing type, append a typed record to the relevant file; 
 
 - Lint, `tsc --noEmit`, and `next build` are expected to be clean; keep them that way.
 - Skills live in `.agents/skills/` (locked by `skills-lock.json`); MCP configs: `.mcp.json` (watermelon, vercel) and `.agents/mcp_config.json` (adds shadcn MCP).
-- Legacy cleanup already done: unused UI copies, starter SVGs, duplicate theme/theming files, `analytics/events` stub, and unused packages (`motion`, `@gsap/react`) were removed. Don't reintroduce them.
+- Legacy cleanup already done: unused UI copies, starter SVGs, duplicate theme/theming files, `analytics/events` stub, and unused packages (`gsap`, `motion`, `@gsap/react`) were removed. Don't reintroduce them.

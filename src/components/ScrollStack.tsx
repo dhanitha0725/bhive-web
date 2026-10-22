@@ -24,6 +24,7 @@ export interface ScrollStackItemProps {
 export interface ScrollStackProps {
   children?: ReactNode;
   className?: string;
+  innerClassName?: string;
   itemDistance?: number;
   itemStackDistance?: number;
   stackPosition?: number | string;
@@ -38,6 +39,7 @@ export interface ScrollStackProps {
   snap?: boolean;
   useWindowScroll?: boolean;
   onStackComplete?: () => void;
+  onActiveIndexChange?: (index: number) => void;
 }
 
 interface StackSettings {
@@ -54,6 +56,7 @@ interface StackSettings {
   smoothScroll: boolean;
   snap: boolean;
   onStackComplete?: () => void;
+  onActiveIndexChange?: (index: number) => void;
 }
 
 const resolveOffset = (value: number | string, size: number) => {
@@ -102,6 +105,7 @@ export const ScrollStackItem = ({ children, itemClassName = '', style }: ScrollS
 export const ScrollStack = ({
   children,
   className = '',
+  innerClassName = '',
   itemDistance = 100,
   itemStackDistance = 24,
   stackPosition = '15%',
@@ -115,7 +119,8 @@ export const ScrollStack = ({
   smoothScroll = true,
   snap = false,
   useWindowScroll = false,
-  onStackComplete
+  onStackComplete,
+  onActiveIndexChange
 }: ScrollStackProps) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -138,7 +143,8 @@ export const ScrollStack = ({
       holdDistance,
       smoothScroll,
       snap,
-      onStackComplete
+      onStackComplete,
+      onActiveIndexChange
     };
     scheduleRef.current?.();
   });
@@ -157,6 +163,7 @@ export const ScrollStack = ({
     let glide = 0;
     let rest = 0;
     let complete = false;
+    let lastActiveIndex = -1;
     let gliding = false;
     let pressed = false;
     let current = 0;
@@ -225,6 +232,18 @@ export const ScrollStack = ({
         const cover = Math.min(1, Math.max(0, (start - tops[j]) / span));
         for (let i = 0; i < j; i++) depths[i] += cover;
         lastCover = cover;
+      }
+
+      let activeIndex = 0;
+      for (let i = slots.length - 1; i >= 1; i--) {
+        if (depths[i - 1] >= 0.45) {
+          activeIndex = i;
+          break;
+        }
+      }
+      if (lastActiveIndex !== activeIndex) {
+        lastActiveIndex = activeIndex;
+        settings.onActiveIndexChange?.(activeIndex);
       }
 
       const dimStep = Math.min(Math.max(settings.dimAmount, 0), 1);
@@ -377,7 +396,7 @@ export const ScrollStack = ({
       ref={rootRef}
       className={`relative w-full ${useWindowScroll ? '' : 'h-full overflow-x-hidden overflow-y-auto'} ${className}`.trim()}
     >
-      <div ref={innerRef} className="relative px-[clamp(1rem,6%,5rem)]">
+      <div ref={innerRef} className={cn("relative px-[clamp(1rem,6%,5rem)]", innerClassName)}>
         {items.map((child, index) => {
           const gap = itemDistance - (items.length - index) * itemStackDistance;
           return (

@@ -14,8 +14,6 @@ import { Container } from "@/components/ui/container";
 import { Dialog } from "@/components/ui/dialog";
 import { LeadForm } from "@/components/forms/lead-form";
 
-const ROTATING_WORDS = ["Scale", "Launch", "Build", "Grow", "Transform"];
-
 const AUTOPLAY_INTERVAL = 6000; // 6 seconds per card switch
 
 interface HeroCardData {
@@ -66,20 +64,11 @@ const HERO_CARDS: HeroCardData[] = [
 ];
 
 export function HeroSection() {
-  const [wordIndex, setWordIndex] = useState(0);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [timerKey, setTimerKey] = useState(0);
   const [strategyDialogOpen, setStrategyDialogOpen] = useState(false);
   const [auditDialogOpen, setAuditDialogOpen] = useState(false);
-
-  // Rotating headline word
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, []);
 
   // Periodic card auto-switching with hover pause & modal pause
   useEffect(() => {
@@ -140,35 +129,15 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Main Display Headline (Marketing-focused, strictly 2 lines) */}
+            {/* Main Display Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-5 sm:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-[3.35rem] xl:text-[3.65rem] font-bold tracking-tight text-white leading-[1.18] max-w-6xl"
+              className="mt-5 sm:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-[3.35rem] xl:text-[3.75rem] font-bold tracking-tight text-white leading-[1.14] max-w-5xl"
             >
-              <span className="block sm:whitespace-nowrap">
-                <span>We</span>{" "}
-                {/* Clean Glass Word Capsule */}
-                <span className="relative inline-flex items-center justify-center rounded-full border border-white/60 bg-white/20 px-3 sm:px-5 py-0.5 backdrop-blur-md min-w-[120px] sm:min-w-[160px] md:min-w-[190px] h-[40px] sm:h-[50px] md:h-[58px] overflow-hidden align-middle mx-1 sm:mx-1.5">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={ROTATING_WORDS[wordIndex]}
-                      initial={{ y: 24, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -24, opacity: 0 }}
-                      transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-                      className="inline-block text-white font-bold tracking-tight whitespace-nowrap will-change-transform"
-                    >
-                      {ROTATING_WORDS[wordIndex]}
-                    </motion.span>
-                  </AnimatePresence>
-                </span>{" "}
-                <span>High-Impact</span>
-              </span>
-              <span className="block mt-1 sm:mt-2.5 sm:whitespace-nowrap">
-                Brands, Websites &amp; Growth Systems
-              </span>
+              <span className="block">From First Step to Fully Scaled.</span>
+              <span className="block mt-1 sm:mt-2 text-white/95">We’re With You.</span>
             </motion.h1>
 
             {/* Subtitle */}
@@ -178,12 +147,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               className="mt-4 sm:mt-5 max-w-3xl text-base sm:text-lg text-white/90 font-normal leading-relaxed"
             >
-              <span className="block sm:whitespace-nowrap">
-                From strategic branding and high-converting websites to paid ads and SEO—
-              </span>
-              <span className="block sm:whitespace-nowrap mt-0.5">
-                we build connected growth systems that turn vision into measurable revenue.
-              </span>
+              No cookie-cutter campaigns or chasing viral trends. We create tailored, authentic strategies that solve real challenges and drive real sales, whether you’re scaling an existing business or taking your very first step.
             </motion.p>
 
             {/* 3. FOCUSED AUTO-SWITCHING CARD CONTAINER */}

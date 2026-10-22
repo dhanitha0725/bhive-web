@@ -32,14 +32,12 @@ export function Footer() {
         { label: "Selected Work", href: "/work" },
         { label: "Insights & Articles", href: "/insights" },
         { label: "The BHive System", href: "/#system" },
-        { label: "How Our System Works", href: "/#system" },
       ],
     },
     {
       title: "Company",
       links: [
         { label: "About BHive", href: "/about" },
-        { label: "Our Approach", href: "/approach" },
         { label: "Contact Us", href: "/contact" },
         { label: "Privacy Policy", href: "/privacy" },
         { label: "Terms of Service", href: "/terms" },

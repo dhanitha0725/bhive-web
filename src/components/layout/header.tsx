@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import GooeyNav, { GooeyNavItem, GooeyNavProps } from "@/components/GooeyNav";
+import GooeyNav, { GooeyNavItem } from "@/components/GooeyNav";
 import { primaryNavigation } from "@/config/site";
 
 export function Header() {
@@ -52,6 +52,4 @@ export function Header() {
 }
 
 export default Header;
-export { GooeyNav };
-export type { GooeyNavItem, GooeyNavProps };
 

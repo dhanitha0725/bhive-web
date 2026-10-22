@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
@@ -22,7 +21,6 @@ import {
 } from "lucide-react";
 
 export function SelectedWorkSection() {
-  const [, setHoveredCard] = useState<string | null>(null);
 
   // We highlight the flagship case study as the large featured hero card,
   // and the remaining featured studies as sleek companion cards.
@@ -66,11 +64,7 @@ export function SelectedWorkSection() {
           {/* 1. LARGE HERO FLAGSHIP CARD (Northline Advisory)           */}
           {/* ========================================================= */}
           <Reveal y={24} delay={50} className="lg:col-span-7 xl:col-span-7 flex flex-col">
-            <div
-              className="group relative h-full flex flex-col"
-              onMouseEnter={() => setHoveredCard(flagship.slug)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
+            <div className="group relative h-full flex flex-col">
               <SpotlightCard
                 theme="light"
                 spotlightColor="rgba(11, 76, 196, 0.16)"
@@ -236,11 +230,7 @@ export function SelectedWorkSection() {
 
               return (
                 <Reveal key={item.slug} y={24} delay={150 + idx * 100} className="flex-1 flex flex-col">
-                  <div
-                    className="group relative h-full flex flex-col"
-                    onMouseEnter={() => setHoveredCard(item.slug)}
-                    onMouseLeave={() => setHoveredCard(null)}
-                  >
+                  <div className="group relative h-full flex flex-col">
                     <SpotlightCard
                       theme="light"
                       spotlightColor="rgba(11, 76, 196, 0.12)"
