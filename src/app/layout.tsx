@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { siteConfig } from "@/config/site";
+import { ConsultationProvider } from "@/components/providers/consultation-provider";
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -40,12 +41,14 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Header />
-        <SmoothScroll />
-        <main id="main-content" className="flex min-h-[60vh] flex-col">
-          {children}
-        </main>
-        <Footer />
+        <ConsultationProvider>
+          <Header />
+          <SmoothScroll />
+          <main id="main-content" className="flex min-h-[60vh] flex-col">
+            {children}
+          </main>
+          <Footer />
+        </ConsultationProvider>
       </body>
     </html>
   );

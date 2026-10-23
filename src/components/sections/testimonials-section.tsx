@@ -1,172 +1,108 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import { Container } from "@/components/ui/container";
-import BlurText from "@/components/BlurText";
-import {
-  Quote,
-  Star,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Quote } from "lucide-react";
 
-const testimonials = [
+// TODO: replace with verified client testimonials, real photos, and owner-approved quotes
+const TESTIMONIALS = [
   {
     id: 1,
-    heading: '"Transformed our client pipeline"',
+    name: "Kasun Jayawardena", // TODO: replace with real client data
+    role: "Founder & Director",
+    business: "Kandy Tea Exporters", // TODO: replace with real business
+    photoPlaceholder: "KJ", // TODO: replace with real photo
+    specificResult: "Generated 40+ direct export enquiries in our first 60 days",
     quote:
-      "We went from scattered consulting ops to a clean, positioned market authority. The commercial visibility and coherent brand architecture alone transformed our client pipeline.",
-    author: "Marcus Vance",
-    role: "Managing Partner",
-    company: "Northline Advisory",
-    initials: "MV",
-    color: "bg-blue-600",
+      "Before BHive, our website was like a ghost town. They restructured our offer, set up direct WhatsApp chat links, and targeted genuine buyers. We finally have consistent weekly enquiries.",
+    isPlaceholder: true,
   },
   {
     id: 2,
-    heading: '"Eliminated friction across the board"',
+    name: "Dilini Senanayake", // TODO: replace with real client data
+    role: "Managing Partner",
+    business: "Colombo Boutique Living", // TODO: replace with real business
+    photoPlaceholder: "DS", // TODO: replace with real photo
+    specificResult: "Direct bookings increased by 45% within three months",
     quote:
-      "The brand and booking journey overhaul eliminated friction across the board. Our prospective guests finally understand our luxury tier instantly without hesitation.",
-    author: "Elena Rostova",
-    role: "Founder & CEO",
-    company: "Haven & Co.",
-    initials: "ER",
-    color: "bg-navy-600",
+      "We were losing huge sums on booking commission platforms. BHive built a lightning-fast mobile booking page and a simple Instagram plan that brought guests straight to our WhatsApp.",
+    isPlaceholder: true,
   },
   {
     id: 3,
-    heading: '"Rowing in the exact same direction"',
+    name: "Mohamed Rilwan", // TODO: replace with real client data
+    role: "Managing Director",
+    business: "Apex Engineering Supplies", // TODO: replace with real business
+    photoPlaceholder: "MR", // TODO: replace with real photo
+    specificResult: "Closed three major commercial contracts without discounting",
     quote:
-      "BHive structured our communication around clear service lines. Our marketing, brand, and sales touchpoints are finally rowing in the exact same commercial direction.",
-    author: "David Kelling",
-    role: "Head of Growth",
-    company: "Vertex Works",
-    initials: "DK",
-    color: "bg-navy-800",
-  },
-  {
-    id: 4,
-    heading: '"Saved us months of costly rework"',
-    quote:
-      "Building in the right order saved us months of rework. Having positioning, brand, and launch architecture mapped out before writing copy gave our entire team total clarity.",
-    author: "Sarah Chen",
-    role: "Co-Founder",
-    company: "Arclight Labs",
-    initials: "SC",
-    color: "bg-neutral-800",
+      "Having a professional brand identity and clear service packages stopped customers from treating us like cheap contractors. Our sales conversations are ten times easier now.",
+    isPlaceholder: true,
   },
 ];
 
 export function TestimonialsSection() {
-  const [startIndex, setStartIndex] = useState(0);
-
-  const nextTestimonial = () => {
-    setStartIndex((prev) => (prev + 2 >= testimonials.length ? 0 : prev + 2));
-  };
-
-  const prevTestimonial = () => {
-    setStartIndex((prev) => (prev - 2 < 0 ? Math.max(0, testimonials.length - 2) : prev - 2));
-  };
-
-  const visibleTestimonials = [
-    testimonials[startIndex],
-    testimonials[(startIndex + 1) % testimonials.length],
-  ];
-
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-[var(--background)] text-[var(--foreground)] transition-colors duration-200">
-      <Container>
-        {/* Header (Centered & Balanced) */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700">
-            <span>CLIENT STORIES</span>
-          </div>
-          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-[40px] font-semibold leading-[1.10]">
-            <BlurText
-              text="Trusted by leaders who value commercial clarity."
-              animateBy="words"
-              direction="bottom"
-              delay={70}
-              className="justify-center"
-            />
+    <section className="relative w-full py-16 sm:py-20 lg:py-24 bg-slate-50/70 text-slate-900 border-b border-slate-200">
+      <Container className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+          <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold uppercase tracking-wider">
+            Owner Feedback
+          </span>
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[42px] font-semibold font-display tracking-tight text-slate-900 leading-[1.15]">
+            What business owners say about working with BHive
           </h2>
-
-          {/* Carousel Controls (44px touch target) */}
-          <div className="mt-6 flex items-center justify-center gap-2.5">
-            <button
-              onClick={prevTestimonial}
-              aria-label="Previous testimonials"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-navy-50 text-[var(--foreground)] transition-all hover:bg-blue-600 hover:text-white active:scale-[0.95]"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              onClick={nextTestimonial}
-              aria-label="Next testimonials"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-navy-50 text-[var(--foreground)] transition-all hover:bg-blue-600 hover:text-white active:scale-[0.95]"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
+          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            Practical marketing solutions built around real business owners who need results, not theories.
+          </p>
         </div>
 
-        {/* Testimonials Grid (Watermelon testimonials-1 card adaptation) */}
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {visibleTestimonials.map((item, idx) => (
-            <motion.div
-              key={`${item.id}-${startIndex}`}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: idx * 0.1 }}
-              className="relative flex flex-col justify-between rounded-[18px] border border-[var(--border)] bg-navy-50/40 p-6 shadow-none transition-all duration-300 hover:border-blue-400/50 hover:bg-[var(--background)] hover:shadow-lg"
+        {/* Testimonials Grid (Max 3 items) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {TESTIMONIALS.map((item) => (
+            <div
+              key={item.id}
+              className="flex flex-col justify-between rounded-[22px] bg-white border border-slate-200 p-6 sm:p-7 shadow-sm transition-all duration-200 hover:shadow-md hover:border-slate-300"
             >
               <div>
-                {/* 5 Stars Rating & Quote Icon */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-blue-600">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-4 w-4 fill-blue-600 text-blue-600"
-                      />
-                    ))}
-                  </div>
-                  <Quote className="h-5 w-5 text-muted-foreground/30" />
-                </div>
-
-                <h3 className="mt-4 font-display text-[17px] sm:text-lg font-semibold text-[var(--foreground)] tracking-[-0.374px] leading-[1.24]">
-                  {item.heading}
-                </h3>
-
-                <p className="mt-3 text-sm sm:text-[17px] text-muted-foreground leading-[1.47] tracking-[-0.374px]">
-                  {item.quote}
+                <Quote className="h-8 w-8 text-blue-200 mb-4" />
+                <p className="text-sm sm:text-base text-slate-700 leading-relaxed italic">
+                  &ldquo;{item.quote}&rdquo;
                 </p>
+
+                {/* Specific Result Highlight */}
+                <div className="mt-4 rounded-xl bg-blue-50/80 p-3 border border-blue-100">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-700 block mb-0.5">
+                    Specific Result
+                  </span>
+                  <span className="text-xs sm:text-sm font-medium text-slate-900">
+                    {item.specificResult}
+                  </span>
+                </div>
               </div>
 
-              {/* Author Details */}
-              <div className="mt-8 flex items-center gap-3.5 pt-6 border-t border-[var(--border)]">
-                <div
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${item.color} font-display text-xs font-semibold text-white`}
-                >
-                  {item.initials}
+              {/* Author & Photo Placeholder */}
+              <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#0066cc] to-blue-800 text-white font-semibold text-sm shadow-sm">
+                  {/* TODO: replace photo avatar with next/image once real photos provided */}
+                  {item.photoPlaceholder}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-[var(--foreground)]">
-                    {item.author}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {item.role},{" "}
-                    <span className="font-semibold text-[var(--foreground)]">
-                      {item.company}
-                    </span>
+                  <h4 className="text-sm font-semibold text-slate-900">
+                    {item.name}
+                  </h4>
+                  <p className="text-xs text-slate-500">
+                    {item.role}, {item.business}
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </Container>
     </section>
   );
 }
+
+export default TestimonialsSection;

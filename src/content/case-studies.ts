@@ -3,86 +3,62 @@ export type CaseStudy = {
   client: string;
   industry: string;
   challenge: string;
-  transformation: string;
-  scope: string[];
-  process: string[];
+  whatWeDid: string;
   result: string;
-  services: string[];
+  scope: string[];
   featured: boolean;
   published: boolean;
-  isDemo: true;
+  isDemo: boolean;
 };
+
+// TODO: replace with real verified client case studies once approved by owner
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "northline-advisory",
-    client: "Northline Advisory",
-    industry: "Business consulting",
+    slug: "retail-brand-growth",
+    client: "Local Retailer (Example Case)", // TODO: replace with real client name
+    industry: "Retail & Consumer Goods",
     challenge:
-      "Strong expertise, weak positioning. Services were difficult to understand and the digital presence lacked authority.",
-    transformation:
-      "Reframed complex consulting services into a clear commercial proposition and unified brand experience.",
-    scope: ["Strategy", "Positioning", "Brand", "Website"],
-    process: [
-      "Diagnosed the existing offer and customer questions",
-      "Defined a sharper proposition and service architecture",
-      "Built the identity and website around decision-making",
-    ],
-    result: "A clearer way for prospective clients to understand the offer and take the next step.",
-    services: ["business-strategy", "brand-strategy-identity", "web-design-development"],
+      "Relying heavily on a physical showroom and sporadic Facebook posts with few online enquiries.",
+    whatWeDid:
+      "Built a fast mobile product showcase website, established a weekly content calendar, and set up direct WhatsApp checkout links.",
+    result:
+      "Steady stream of weekly WhatsApp enquiries and clear online catalog for customers across Sri Lanka.",
+    scope: ["Brand & Identity", "Website", "Content & Social"],
     featured: true,
     published: true,
     isDemo: true,
   },
   {
-    slug: "haven-and-co",
-    client: "Haven & Co.",
-    industry: "Hospitality",
-    challenge: "A premium service had an inconsistent identity and a fragmented booking journey.",
-    transformation: "Built a coherent premium identity and simplified the path from discovery to enquiry.",
-    scope: ["Brand Strategy", "Identity", "Web Experience", "Content Direction"],
-    process: ["Mapped guest decision points", "Aligned message and visual direction", "Structured the enquiry journey"],
-    result: "A more coherent experience across the moments that shape confidence.",
-    services: ["brand-strategy-identity", "web-design-development", "content-social-launch"],
+    slug: "hospitality-booking-growth",
+    client: "Boutique Stay (Example Case)", // TODO: replace with real client name
+    industry: "Tourism & Hospitality",
+    challenge:
+      "High commission fees paid to booking platforms and inconsistent social media presentation.",
+    whatWeDid:
+      "Refreshed brand photography direction, created a direct booking inquiry funnel, and targeted local weekend travelers.",
+    result:
+      "Direct guest reservations increased significantly, saving thousands in platform commission fees.",
+    scope: ["Marketing Strategy", "Website", "Brand & Identity"],
     featured: true,
     published: true,
     isDemo: true,
   },
   {
-    slug: "vertex-works",
-    client: "Vertex Works",
-    industry: "B2B services",
-    challenge: "Rapid growth created inconsistent messaging, scattered marketing and unclear service architecture.",
-    transformation:
-      "Restructured communication around clear service lines and connected marketing to business priorities.",
-    scope: ["Business Strategy", "Marketing Strategy", "Web", "Content"],
-    process: [
-      "Audited market-facing materials",
-      "Defined service hierarchy and messages",
-      "Built a usable channel framework",
-    ],
-    result: "A shared system for explaining services and directing marketing effort.",
-    services: ["business-strategy", "marketing-strategy", "web-design-development", "content-social-launch"],
+    slug: "b2b-services-growth",
+    client: "Commercial Services Firm (Example Case)", // TODO: replace with real client name
+    industry: "B2B & Professional Services",
+    challenge:
+      "Clients did not understand the difference between service tiers, leading to constant price haggling.",
+    whatWeDid:
+      "Clarified business positioning into 3 distinct packages with clear deliverables and pricing guidance.",
+    result:
+      "Faster sales conversations and higher average project value with less client hesitation.",
+    scope: ["Business Strategy", "Marketing Strategy"],
     featured: true,
-    published: true,
-    isDemo: true,
-  },
-  {
-    slug: "arclight-labs",
-    client: "Arclight Labs",
-    industry: "Specialist technology",
-    challenge: "A technical offer needed a credible market story before launch.",
-    transformation: "Turned a specialist proposition into a clear launch narrative and digital foundation.",
-    scope: ["Positioning", "Identity", "Launch Strategy", "Website"],
-    process: [
-      "Clarified the audience and proposition",
-      "Created verbal and visual system",
-      "Planned the launch journey",
-    ],
-    result: "A launch-ready system connecting the offer, identity and first conversations.",
-    services: ["business-strategy", "brand-strategy-identity", "marketing-strategy", "web-design-development"],
-    featured: false,
     published: true,
     isDemo: true,
   },
 ];
-export const getCaseStudy = (slug: string) => caseStudies.find((item) => item.slug === slug && item.published);
+
+export const getCaseStudy = (slug: string) =>
+  caseStudies.find((item) => item.slug === slug && item.published);

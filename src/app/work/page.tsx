@@ -1,32 +1,42 @@
+import type { Metadata } from "next";
 import { caseStudies } from "@/content/case-studies";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { CaseCard, FinalCta, PageHero, SectionTitle } from "@/components/sections/marketing";
-export default function Work() {
+
+export const metadata: Metadata = {
+  title: "Client Case Studies & Real Results",
+  description:
+    "See how BHive solves real marketing roadblocks for Sri Lankan businesses with planned, practical execution.",
+};
+
+export default function WorkPage() {
+  const publishedCases = caseStudies.filter((x) => x.published);
+
   return (
     <>
       <PageHero
-        eyebrow="Work"
-        title="Work that changes how a business enters the market."
-        body="Each concept case shows how a connected system can make an offer easier to understand, trust and choose."
-        primary={{ label: "Bring Us Your Problem", href: "/contact" }}
+        eyebrow="Our Work"
+        title="Real marketing challenges solved with clear, practical plans."
+        body="Each case shows the exact challenge, what we built, and the real outcome achieved for the business."
       />
-      <Section>
+
+      <Section className="py-12 sm:py-16">
         <Container>
           <SectionTitle
-            eyebrow="Concept case studies"
-            title="Transformation is the point."
-            body="These are illustrative examples, clearly marked as concept case studies—not client claims or verified performance results."
+            eyebrow="Proven Solutions"
+            title="Challenge, action, and results."
+            body="These examples illustrate how our 5 services combine to solve actual roadblocks for businesses across Sri Lanka."
           />
-          <div className="mt-8 grid gap-5 lg:grid-cols-2">
-            {caseStudies
-              .filter((x) => x.published)
-              .map((x) => (
-                <CaseCard key={x.slug} item={x} />
-              ))}
+
+          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {publishedCases.map((item) => (
+              <CaseCard key={item.slug} item={item} />
+            ))}
           </div>
         </Container>
       </Section>
+
       <FinalCta />
     </>
   );

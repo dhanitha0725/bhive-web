@@ -1,67 +1,65 @@
-# BHive Information Architecture
+# BHive Information Architecture (Minimal Conversion Flow)
 
-## Final route map
+## Core Value Proposition
+- **Headline**: More customers for your business. Marketing that is planned, not guessed.
+- **Audience**: Small and medium business owners in Sri Lanka.
+- **Primary Conversion Action**: Single global CTA across the entire site — **"Get Free Growth Consultation"** (triggers the Consultation modal with WhatsApp primary action + short LeadForm).
 
-| Route | Purpose | Primary conversion | Notes |
+---
+
+## Route Map
+
+| Route | Purpose | Primary Conversion | Notes |
 | --- | --- | --- | --- |
-| `/` | Shared authority, orientation, audience selection | Audience-path selection | Server-rendered homepage |
-| `/grow-your-business` | Existing-business growth funnel | Growth audit | Includes packages and relevant proof |
-| `/launch-your-business` | Founder launch funnel | Guidance call | Connected launch sequence |
-| `/services` | Service-system overview | Relevant audience path/contact | Shows connection between capabilities |
-| `/services/business-strategy` | Positioning and business architecture | Conversation | Service schema + breadcrumbs |
-| `/services/brand-strategy-identity` | Brand strategy and identity | Conversation | Service schema + breadcrumbs |
-| `/services/marketing-strategy` | Marketing architecture | Conversation | Service schema + breadcrumbs |
-| `/services/web-design-development` | Digital experience/infrastructure | Conversation | Service schema + breadcrumbs |
-| `/services/content-social-launch` | Content and launch | Conversation | Service schema + breadcrumbs |
-| `/work` | Published proof library | Case-study exploration | Empty state if no published records |
-| `/work/[slug]` | Individual published case study | Related service/contact | Generated only from published records |
-| `/insights` | Strategic editorial hub | Read an insight / service exploration | Five pillars |
-| `/insights/[slug]` | Individual published article | Related service/insight | Article schema |
-| `/insights/category/[slug]` | Crawlable insight-pillar archive | Read insight | Five fixed pillar slugs |
-| `/about` | BHive point of view and operating model | Start a conversation | No invented team history |
-| `/contact` | General conversation form | Contact submission | Provider-backed adapter |
-| `/free-growth-audit` | Growth Audit lead form | Audit submission | No unconditional 24-hour guarantee |
-| `/business-guidance-call` | Founder Guidance lead form | Guidance submission | Calendar handoff only if configured |
-| `/privacy` | Privacy policy | — | Legal text must be owner-approved |
-| `/terms` | Terms if legally required | — | Omit from public nav until supplied |
-| `not-found.tsx` | Clear recovery page | Return home/contact | Must be branded and index-safe |
+| `/` | Streamlined 10-section conversion home | Get Free Growth Consultation / WhatsApp | Fast, mobile-first, no WebGL |
+| `/services` | 5 core services with deep section anchors | Get Free Growth Consultation / WhatsApp | Single unified page, anchors `#business-strategy`, `#brand-identity`, etc. |
+| `/work` | Proof library of real/illustrative case studies | Read case study / Get Consultation | Challenge → What we did → Result |
+| `/work/[slug]` | Individual case study breakdown | Get Free Growth Consultation | 3-part format: Challenge, What We Did, Result |
+| `/about` | Short story, team section & 3 principles | Get Free Growth Consultation | Practical business-builder mindset |
+| `/contact` | Direct communication hub | WhatsApp button + unified LeadForm | Email & phone support island-wide |
+| `/privacy` | Privacy policy | — | Plain terms on lead data handling |
+| `/terms` | General terms of service | — | Client engagement terms |
+| `not-found.tsx` | Index-safe 404 recovery | Return Home / Services | Branded recovery experience |
 
-## Navigation model
+---
 
-Desktop header: wordmark/logo, Services (accessible mega-menu), Work, Insights, About, Contact, then a Navy “Start a Conversation” CTA. The services menu contains the two audience routes followed by the five service routes. Mobile uses a focus-managed dialog or sliding panel with the same links and at least 44px targets; no essential hover behavior.
+## Permanent Redirects (`next.config.ts`)
 
-Footer groups: Navigate, Services, Audience paths, Insight pillars, Contact, Social (only known destinations), and Legal. Footer routes remain crawlable HTML links.
-
-## Page architectures
-
-### Existing-business funnel
-
-Hero → recognizable growth problems → target transformation → BHive diagnostic/growth system → audit offer → package recommendations → published relevant cases → process → FAQ → final CTA.
-
-### Founder funnel
-
-Hero → launch uncertainty/problem framing → guidance call → Venture Launch System → chronology: clarity → positioning → brand strategy → visual identity → marketing → digital infrastructure → content/launch → initial growth system → capabilities/deliverables → published relevant proof → FAQ → final CTA.
-
-### Link rules
-
-- Homepage audience cards link to the respective real route.
-- Insights link to related services and posts.
-- Services link to matching published case studies.
-- Case studies link to services and relevant audience route.
-- Audience pages link to the appropriate lead magnet.
-- Breadcrumbs appear on services, work detail, insights detail, and category archives.
-
-## SEO map
-
-Every page receives unique title, description, canonical URL, Open Graph/Twitter metadata, semantic landmarks, one logical H1, and descriptive image alternative text. Implement `robots.ts`, `sitemap.ts`, favicon/app icons, 404, and metadata generation centrally. Dynamic work and insight metadata must derive from validated published content only.
-
-| Route class | Structured data | Sitemap rule |
+| Legacy Route | Destination | Status |
 | --- | --- | --- |
-| Home | Organization + WebSite | Always |
-| Services | Service + BreadcrumbList | Always |
-| Work detail | BreadcrumbList + semantically valid CreativeWork/Article style schema | Published only |
-| Insight detail | Article + BreadcrumbList | Published only |
-| Insight categories | BreadcrumbList | Always for defined pillars |
+| `/grow-your-business` | `/` | 308 Permanent |
+| `/launch-your-business` | `/` | 308 Permanent |
+| `/free-growth-audit` | `/contact` | 308 Permanent |
+| `/business-guidance-call` | `/contact` | 308 Permanent |
+| `/insights/category/:slug*` | `/` | 308 Permanent |
+| `/services/:slug` | `/services#:slug` | 308 Permanent |
 
-No LocalBusiness address/location fields, ratings, prices, or metrics will be emitted without verified source data. Branded `ImageResponse` Open Graph images can be generated for static and dynamic pages once the canonical site URL and logo treatment are confirmed.
+---
 
+## Homepage Order (`src/app/page.tsx`)
+
+1. **Hero**: Headline, subline, single CTA ("Get Free Growth Consultation") + small WhatsApp link, trust indicator (*"Free. No obligation."*). Fast CSS backdrop.
+2. **Logo & Stat Strip**: Slim bar with 3 stat counters / verified placeholders (`// TODO: replace with real data`).
+3. **Problem**: 4 owner pains (*"Posting regularly, but no enquiries"*, *"Website looks good, nobody buys"*, *"Wasting money on random ad boosts"*, *"Unpredictable sales from month to month"*).
+4. **Outcomes**: 4 compact blocks in owner language (*More customer enquiries*, *Stronger brand*, *Website that actually sells*, *Steady repeat buyers*).
+5. **Services**: 5 plain-named cards (*Business Strategy*, *Brand & Identity*, *Marketing Strategy*, *Website*, *Content & Social*) linking to `/services#<slug>`.
+6. **How It Works**: 3 steps (*Message us* → *We review your marketing* → *Short call with a clear plan*).
+7. **Work**: 3 case cards in Challenge → What we did → Result format.
+8. **Testimonials**: Owner name, photo placeholder, business, and specific result. Placed directly before final CTA.
+9. **FAQ**: Accordion covering pricing, timelines, process, and language support (*Sinhala, Tamil, English*).
+10. **Final CTA**: Single primary CTA ("Get Free Growth Consultation") + WhatsApp action button.
+
+---
+
+## Consultation & Lead Flow
+
+- **Trigger**: Every CTA across the website triggers the global `ConsultationDialog`.
+- **Dialog Content**:
+  - Primary Action: **"Chat on WhatsApp"** button (`https://wa.me/94770000000?text=...`)
+  - Divider: *"or send a quick note"*
+  - Form: **`LeadForm`** with fields: `name`, `whatsappNumber`, `businessName`, `whatYouNeed` (textarea).
+  - Validation: Strict client & server-side Zod validation with inline error messaging.
+  - Honeypot: Anti-bot silent trap.
+  - Rate Limiting: Max 5 submissions per 10 minutes per IP.
+  - Notifications: Dispatcher for Resend Email, Telegram Bot, Google Sheets, with complete console logging fallback so no lead is ever lost.
+  - Future Extensibility: `whatsAppCloudApiAdapter` interface reserved with `// TODO: Wire WhatsApp Cloud API`.

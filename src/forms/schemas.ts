@@ -1,29 +1,34 @@
 import { z } from "zod";
-const optionalText = z.string().trim().max(500).optional().or(z.literal(""));
-const contact = z.object({
-  name: z.string().trim().min(2, "Enter your name.").max(100),
-  email: z.string().trim().email("Enter a valid email address."),
-  phone: optionalText,
-  honeypot: z.literal("").optional(),
+
+export const consultationLeadSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "Please enter your name.")
+    .max(100, "Name is too long."),
+  whatsappNumber: z
+    .string()
+    .trim()
+    .min(8, "Please enter a valid WhatsApp phone number.")
+    .max(25, "Phone number is too long.")
+    .regex(
+      /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/,
+      "Please enter a valid phone number (e.g. 077 123 4567 or +94 77 123 4567)."
+    ),
+  businessName: z
+    .string()
+    .trim()
+    .min(2, "Please enter your business or project name.")
+    .max(150, "Business name is too long."),
+  whatYouNeed: z
+    .string()
+    .trim()
+    .min(10, "Please share a few words about what you want to achieve or fix.")
+    .max(2000, "Message is too long."),
+  honeypot: z.string().max(0, "Bot detected.").optional().default(""),
 });
-export const growthAuditSchema = contact.extend({
-  businessName: z.string().trim().min(2, "Enter your business name.").max(150),
-  websiteOrSocialUrl: optionalText,
-  businessStage: z.string().trim().min(1, "Select your business stage."),
-  mainChallenge: z.string().trim().min(10, "Tell us a little more about the challenge.").max(1500),
-  consent: z.boolean().optional(),
-});
-export const guidanceCallSchema = contact.extend({
-  businessIdeaOrCategory: z.string().trim().min(2, "Tell us what you are building.").max(200),
-  currentStage: z.string().trim().min(1, "Select your current stage."),
-  biggestQuestion: z.string().trim().min(10, "Tell us your biggest question.").max(1500),
-});
-export const generalContactSchema = contact.extend({
-  business: optionalText,
-  website: optionalText,
-  enquiry: z.string().trim().min(1, "Select what you are contacting us about."),
-  message: z.string().trim().min(10, "Tell us a little more about the challenge.").max(1500),
-  consent: z.boolean().optional(),
-});
-export type GrowthAuditInput = z.infer<typeof growthAuditSchema>;
-export type GuidanceCallInput = z.infer<typeof guidanceCallSchema>;
+
+export type ConsultationLeadInput = z.infer<typeof consultationLeadSchema>;
+
+// Backward compatibility alias for any existing imports
+export const leadSchema = consultationLeadSchema;
