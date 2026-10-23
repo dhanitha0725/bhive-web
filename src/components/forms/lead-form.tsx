@@ -27,28 +27,34 @@ export function LeadForm({ type }: { type: "growth-audit" | "business-guidance" 
     <form onSubmit={submit} className="mt-8 grid gap-4" noValidate>
       {fields.map((name) =>
         name.includes("Challenge") || name === "message" || name === "biggestQuestion" ? (
-          <label key={name} className="grid gap-2 text-sm font-semibold capitalize">
+          <label key={name} className="grid gap-2 text-[14px] font-semibold tracking-[-0.224px] text-slate-800 capitalize">
             {name.replaceAll(/([A-Z])/g, " $1")}
-            <textarea required name={name} className="min-h-28 rounded-md border p-3 font-normal" />
+            <textarea
+              required
+              name={name}
+              className="min-h-28 rounded-[18px] border border-[#e0e0e0] bg-white p-4 font-normal text-[17px] leading-[1.47] text-slate-900 focus-visible:outline-2 focus-visible:outline-[#0071e3] focus-visible:outline-offset-2"
+            />
           </label>
         ) : (
-          <label key={name} className="grid gap-2 text-sm font-semibold capitalize">
+          <label key={name} className="grid gap-2 text-[14px] font-semibold tracking-[-0.224px] text-slate-800 capitalize">
             {name.replaceAll(/([A-Z])/g, " $1")}
             <input
               required={!["phone", "website", "websiteOrSocialUrl"].includes(name)}
               name={name}
               type={name === "email" ? "email" : "text"}
-              className="rounded-md border p-3 font-normal"
+              className="h-11 rounded-full border border-[#e0e0e0] bg-white px-5 py-2.5 font-normal text-[17px] text-slate-900 focus-visible:outline-2 focus-visible:outline-[#0071e3] focus-visible:outline-offset-2"
             />
           </label>
         ),
       )}
       <input name="honeypot" tabIndex={-1} autoComplete="off" className="hidden" />
-      <label className="flex gap-3 text-sm">
-        <input required name="consent" type="checkbox" />I agree that BHive may use these details to respond to my
-        request.
+      <label className="flex items-center gap-3 text-sm text-slate-600">
+        <input required name="consent" type="checkbox" className="h-4 w-4 rounded accent-[#0066cc]" />
+        I agree that BHive may use these details to respond to my request.
       </label>
-      <Button type="submit">Send request</Button>
+      <div className="pt-2">
+        <Button type="submit">Send request</Button>
+      </div>
       {status ? (
         <p role="status" className="text-sm text-muted-foreground">
           {status}

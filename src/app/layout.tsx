@@ -33,10 +33,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${fontInter.variable} ${fontMono.variable}`}>
-      <body className="min-h-screen bg-white text-[#0a0a0b] antialiased">
+      <body className="min-h-screen bg-white text-[#1d1d1f] antialiased">
         <a
           href="#main-content"
-          className="sr-only fixed left-4 top-4 z-50 rounded-md bg-[#0b4cc4] px-4 py-3 text-sm font-semibold text-white focus:not-sr-only"
+          className="sr-only fixed left-4 top-4 z-50 rounded-full bg-[#0066cc] px-[22px] py-[11px] text-[15px] font-normal text-white focus:not-sr-only"
         >
           Skip to content
         </a>

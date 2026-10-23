@@ -75,14 +75,14 @@ export function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-[var(--background)] text-[var(--foreground)] transition-colors duration-200">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[var(--background)] text-[var(--foreground)] transition-colors duration-200">
       <Container>
         {/* Header (Centered & Balanced) */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700">
             <span>CLIENT STORIES</span>
           </div>
-          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-[2.6rem] font-bold">
+          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-[40px] font-semibold leading-[1.10]">
             <BlurText
               text="Trusted by leaders who value commercial clarity."
               animateBy="words"
@@ -92,19 +92,19 @@ export function TestimonialsSection() {
             />
           </h2>
 
-          {/* Carousel Controls */}
+          {/* Carousel Controls (44px touch target) */}
           <div className="mt-6 flex items-center justify-center gap-2.5">
             <button
               onClick={prevTestimonial}
               aria-label="Previous testimonials"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] bg-navy-50 text-[var(--foreground)] transition-colors hover:bg-blue-600 hover:text-white"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-navy-50 text-[var(--foreground)] transition-all hover:bg-blue-600 hover:text-white active:scale-[0.95]"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={nextTestimonial}
               aria-label="Next testimonials"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] bg-navy-50 text-[var(--foreground)] transition-colors hover:bg-blue-600 hover:text-white"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-navy-50 text-[var(--foreground)] transition-all hover:bg-blue-600 hover:text-white active:scale-[0.95]"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -112,14 +112,14 @@ export function TestimonialsSection() {
         </div>
 
         {/* Testimonials Grid (Watermelon testimonials-1 card adaptation) */}
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
           {visibleTestimonials.map((item, idx) => (
             <motion.div
               key={`${item.id}-${startIndex}`}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: idx * 0.1 }}
-              className="relative flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-navy-50/40 p-7 lg:p-8 shadow-none transition-all duration-300 hover:border-blue-400/50 hover:bg-[var(--background)] hover:shadow-lg"
+              className="relative flex flex-col justify-between rounded-[18px] border border-[var(--border)] bg-navy-50/40 p-6 shadow-none transition-all duration-300 hover:border-blue-400/50 hover:bg-[var(--background)] hover:shadow-lg"
             >
               <div>
                 {/* 5 Stars Rating & Quote Icon */}
@@ -135,11 +135,11 @@ export function TestimonialsSection() {
                   <Quote className="h-5 w-5 text-muted-foreground/30" />
                 </div>
 
-                <h3 className="mt-4 font-display text-lg font-bold text-[var(--foreground)]">
+                <h3 className="mt-4 font-display text-[17px] sm:text-lg font-semibold text-[var(--foreground)] tracking-[-0.374px] leading-[1.24]">
                   {item.heading}
                 </h3>
 
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                <p className="mt-3 text-sm sm:text-[17px] text-muted-foreground leading-[1.47] tracking-[-0.374px]">
                   {item.quote}
                 </p>
               </div>
@@ -147,12 +147,12 @@ export function TestimonialsSection() {
               {/* Author Details */}
               <div className="mt-8 flex items-center gap-3.5 pt-6 border-t border-[var(--border)]">
                 <div
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${item.color} font-display text-xs font-bold text-white`}
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${item.color} font-display text-xs font-semibold text-white`}
                 >
                   {item.initials}
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[var(--foreground)]">
+                  <p className="text-sm font-semibold text-[var(--foreground)]">
                     {item.author}
                   </p>
                   <p className="text-xs text-muted-foreground">

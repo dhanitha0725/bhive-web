@@ -22,7 +22,7 @@ export function Header() {
         {/* Brand Logo */}
         <Link
           href="/"
-          className="flex items-center pl-3.5 pr-2 py-1.5 rounded-full transition-transform duration-200 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-[#0b4cc4]"
+          className="flex items-center pl-3.5 pr-2 py-1.5 rounded-full transition-transform duration-200 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-[#0071e3]"
           aria-label="BHive Home"
         >
           <img
@@ -37,7 +37,7 @@ export function Header() {
           items={navItems}
           activeIndex={activeIndex >= 0 ? activeIndex : undefined}
           theme="light"
-          color="#3068f9"
+          color="#0066cc"
           activeTextColor="#ffffff"
           size="md"
           frame={false}

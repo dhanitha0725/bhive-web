@@ -134,7 +134,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-5 sm:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-[3.35rem] xl:text-[3.75rem] font-bold tracking-tight text-white leading-[1.14] max-w-5xl"
+              className="mt-5 sm:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-semibold tracking-[-0.28px] text-white leading-[1.07] max-w-5xl"
             >
               <span className="block">From First Step to Fully Scaled.</span>
               <span className="block mt-1 sm:mt-2 text-white/95">We’re With You.</span>
@@ -145,7 +145,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="mt-4 sm:mt-5 max-w-3xl text-base sm:text-lg text-white/90 font-normal leading-relaxed"
+              className="mt-4 sm:mt-5 max-w-3xl text-base sm:text-[17px] text-white/90 font-normal leading-[1.47] tracking-[-0.374px]"
             >
               No cookie-cutter campaigns or chasing viral trends. We create tailored, authentic strategies that solve real challenges and drive real sales, whether you’re scaling an existing business or taking your very first step.
             </motion.p>
@@ -160,7 +160,7 @@ export function HeroSection() {
               onMouseLeave={() => setIsPaused(false)}
             >
               {/* Frosted Glass Outer Container */}
-              <div className="rounded-[26px] sm:rounded-[30px] bg-white/20 backdrop-blur-2xl p-2 sm:p-3 border border-white/40 shadow-none">
+              <div className="rounded-[22px] sm:rounded-[26px] bg-white/20 backdrop-blur-2xl p-2 sm:p-2.5 border border-white/40 shadow-none">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={activeCard.id}
@@ -168,25 +168,25 @@ export function HeroSection() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -12, scale: 0.99 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-2xl sm:rounded-[24px] bg-white p-6 sm:p-8 md:p-9 text-slate-900 border border-white/90 shadow-none text-left"
+                    className="rounded-[18px] sm:rounded-[22px] bg-white p-6 sm:p-8 md:p-8 text-slate-900 border border-white/90 shadow-none text-left"
                   >
                     <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
                       {/* Left Column: Pathway Badge, Title, Description, and Desktop CTA */}
                       <div className="order-1 lg:col-span-7 flex flex-col justify-between">
                         <div>
                           {/* Pathway Tag */}
-                          <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/85 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+                          <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/85 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700">
                             <activeCard.icon className="h-3.5 w-3.5 text-blue-600" />
                             <span>{activeCard.badge}</span>
                           </div>
 
                           {/* Title */}
-                          <h3 className="mt-3.5 text-xl sm:text-2xl md:text-3xl font-bold font-display text-slate-900 tracking-tight leading-snug">
+                          <h3 className="mt-3.5 text-xl sm:text-2xl md:text-[28px] font-semibold font-display text-slate-900 tracking-[0.196px] leading-[1.14]">
                             {activeCard.title}
                           </h3>
 
                           {/* Description */}
-                          <p className="mt-2 text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed">
+                          <p className="mt-2 text-sm sm:text-[17px] text-slate-600 leading-[1.47] tracking-[-0.374px]">
                             {activeCard.description}
                           </p>
                         </div>
@@ -200,7 +200,7 @@ export function HeroSection() {
                                 ? setStrategyDialogOpen(true)
                                 : setAuditDialogOpen(true)
                             }
-                            className={`group inline-flex items-center justify-center gap-2.5 rounded-xl ${activeCard.buttonClass} px-7 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-none hover:shadow-lg`}
+                            className={`group inline-flex items-center justify-center gap-2.5 rounded-full ${activeCard.buttonClass} px-7 py-3.5 text-[15px] sm:text-[17px] font-normal text-white transition-all duration-150 active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[#0071e3]`}
                           >
                             <span>{activeCard.buttonText}</span>
                             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -209,8 +209,8 @@ export function HeroSection() {
                       </div>
 
                       {/* Right Column: Deliverables / Checklist highlights card */}
-                      <div className="order-2 lg:col-span-5 bg-slate-50/90 rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-slate-100 flex flex-col justify-center space-y-3">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                      <div className="order-2 lg:col-span-5 bg-slate-50/90 rounded-[18px] p-5 sm:p-6 border border-slate-100 flex flex-col justify-center space-y-3">
+                        <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
                           Included in this session · 100% Free
                         </div>
                         <div className="space-y-3 text-xs sm:text-sm text-slate-700">
@@ -236,7 +236,7 @@ export function HeroSection() {
                               ? setStrategyDialogOpen(true)
                               : setAuditDialogOpen(true)
                           }
-                          className={`group inline-flex w-full items-center justify-center gap-2.5 rounded-xl ${activeCard.buttonClass} px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-none hover:shadow-lg`}
+                          className={`group inline-flex w-full items-center justify-center gap-2.5 rounded-full ${activeCard.buttonClass} px-6 py-3.5 text-[15px] sm:text-[17px] font-normal text-white transition-all duration-150 active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[#0071e3]`}
                         >
                           <span>{activeCard.buttonText}</span>
                           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />

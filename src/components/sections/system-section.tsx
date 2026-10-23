@@ -73,29 +73,29 @@ function OutcomeRow({
     <motion.div
       ref={rowRef}
       style={{ opacity, scale }}
-      className="relative will-change-transform py-10 sm:py-14 lg:py-20"
+      className="relative will-change-transform py-8 sm:py-12 lg:py-14"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Text Column */}
         <div
-          className={`lg:col-span-5 flex flex-col justify-center space-y-4 sm:space-y-6 ${
+          className={`lg:col-span-5 flex flex-col justify-center space-y-4 sm:space-y-5 ${
             isEven ? "lg:order-1" : "lg:order-2"
           }`}
         >
           {/* Eyebrow: Number + OUTCOME label */}
           <div className="flex items-center gap-3">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-[0.25em] text-blue-600 uppercase">
+            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-blue-600 uppercase">
               {outcome.number} &nbsp; OUTCOME
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="text-3xl sm:text-4xl lg:text-[2.65rem] font-bold font-display tracking-tight text-slate-900 leading-[1.18]">
+          <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-semibold font-display tracking-[-0.374px] text-slate-900 leading-[1.47]">
             {outcome.title}
           </h3>
 
           {/* Description */}
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-xl">
+          <p className="text-base sm:text-[17px] text-slate-600 leading-[1.47] tracking-[-0.374px] font-normal max-w-xl">
             {outcome.description}
           </p>
         </div>
@@ -107,7 +107,7 @@ function OutcomeRow({
           }`}
         >
           <div
-            className={`relative rounded-3xl sm:rounded-[36px] overflow-hidden p-6 sm:p-10 lg:p-12 ${outcome.containerBg} ${outcome.containerBorder} flex items-center justify-center`}
+            className={`relative rounded-[18px] sm:rounded-[24px] overflow-hidden p-6 sm:p-8 lg:p-10 ${outcome.containerBg} ${outcome.containerBorder} flex items-center justify-center`}
           >
             {outcome.visual}
           </div>
@@ -832,11 +832,11 @@ const OUTCOMES_DATA: OutcomeItem[] = [
 /* -------------------------------------------------------------------------- */
 export function OutcomesSection() {
   return (
-    <section className="relative w-full py-20 sm:py-28 lg:py-36 bg-white text-slate-900 border-b border-slate-200 overflow-hidden">
+    <section className="relative w-full py-12 sm:py-16 lg:py-20 bg-white text-slate-900 border-b border-slate-200 overflow-hidden">
       <Container className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Section Header: Clean, spacious, centered headline in Light Theme */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 sm:mb-24">
-          <h2 className="text-3xl sm:text-4xl lg:text-[3.15rem] font-bold font-display tracking-tight text-slate-900 leading-[1.15]">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-semibold font-display tracking-tight text-slate-900 leading-[1.10]">
             <BlurText
               text="Measurable outcomes that compound commercial growth"
               animateBy="words"
@@ -846,7 +846,7 @@ export function OutcomesSection() {
             />
           </h2>
 
-          <p className="mt-4 sm:mt-5 text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl">
+          <p className="mt-4 sm:mt-5 text-base sm:text-[17px] text-slate-600 font-normal leading-[1.47] tracking-[-0.374px] max-w-2xl">
             We don’t settle for vanity metrics or superficial redesigns. Here is the concrete business
             impact we engineer for scaling brands and visionary founders.
           </p>

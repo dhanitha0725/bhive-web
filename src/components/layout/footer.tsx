@@ -46,7 +46,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0a0a0b] pb-0 pt-16 text-white">
+    <footer className="bg-[#0a0a0b] py-16 text-white">
       <Container>
         {/* Top Section: Brand Story & Diagnostic Callout */}
         <div className="grid gap-10 border-b border-white/10 pb-14 lg:grid-cols-12">
@@ -64,12 +64,12 @@ export function Footer() {
           </div>
 
           {/* Quick Growth Audit CTA Card */}
-          <div className="flex flex-col justify-between rounded-xl border border-white/15 bg-white/5 p-6 lg:col-span-6">
+          <div className="flex flex-col justify-between rounded-[18px] border border-white/15 bg-white/5 p-6 lg:col-span-6">
             <div>
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-white">
                 Growth Readiness Audit
               </p>
-              <h3 className="mt-2 text-lg font-bold text-white">
+              <h3 className="mt-2 text-lg font-semibold text-white">
                 Find out what is slowing your business growth.
               </h3>
               <p className="mt-1 text-sm text-neutral-300">
@@ -81,7 +81,7 @@ export function Footer() {
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <Link
                 href="/free-growth-audit"
-                className="group inline-flex items-center gap-2 rounded-md bg-[#0b4cc4] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#083da0] active:scale-[0.98]"
+                className="group inline-flex items-center gap-2 rounded-full bg-[#0066cc] px-[22px] py-[11px] text-xs sm:text-sm font-normal text-white transition-all hover:bg-[#0055b3] active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[#0071e3]"
               >
                 <span>Take Free Audit</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
@@ -89,7 +89,7 @@ export function Footer() {
 
               <Link
                 href="/business-guidance-call"
-                className="inline-flex items-center gap-2 rounded-md border border-white/20 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-white/10 active:scale-[0.98]"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-[22px] py-[11px] text-xs sm:text-sm font-normal text-white transition-all hover:bg-white/10 active:scale-[0.95]"
               >
                 <span>Book 15-Min Call</span>
               </Link>
@@ -101,15 +101,15 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 py-12 md:grid-cols-4">
           {footerColumns.map((col) => (
             <div key={col.title}>
-              <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-400">
+              <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-400">
                 {col.title}
               </h4>
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-4 space-y-2">
                 {col.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-neutral-300 transition-colors hover:text-white hover:underline underline-offset-4"
+                      className="text-[15px] sm:text-[17px] text-neutral-300 transition-colors hover:text-white hover:underline underline-offset-4 leading-[2.2]"
                     >
                       {link.label}
                     </Link>

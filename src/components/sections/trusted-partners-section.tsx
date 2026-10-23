@@ -159,7 +159,7 @@ export function TrustedPartnersSection() {
   }, []);
 
   return (
-    <section className="relative w-full border-b border-slate-200 bg-white pt-14 pb-16 sm:pt-16 sm:pb-20 text-slate-900 overflow-hidden">
+    <section className="relative w-full border-b border-slate-200 bg-white py-12 sm:py-16 lg:py-20 text-slate-900 overflow-hidden">
       {/* Subtle Grid Background matching the reference layout */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.4]"
@@ -172,7 +172,7 @@ export function TrustedPartnersSection() {
       <Container className="relative z-10 mx-auto px-4 sm:px-6 max-w-6xl">
         {/* 1. Header Eyebrow */}
         <div className="text-center">
-          <p className="font-mono text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-slate-500 uppercase">
+          <p className="font-mono text-xs font-semibold tracking-[0.2em] text-[#7a7a7a] uppercase">
             TRUSTED BY LEADING BRANDS
           </p>
         </div>

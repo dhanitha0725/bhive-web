@@ -30,7 +30,7 @@ export function SelectedWorkSection() {
     .slice(0, 2);
 
   return (
-    <section className="relative py-24 lg:py-32 bg-gradient-to-b from-navy-50/50 via-white to-navy-50/30 text-[var(--foreground)] overflow-hidden">
+    <section className="relative py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-navy-50/50 via-white to-navy-50/30 text-[var(--foreground)] overflow-hidden">
       {/* Subtle background ambient grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.4] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_40%,#000_20%,transparent_100%)]"
@@ -43,11 +43,11 @@ export function SelectedWorkSection() {
 
       <Container className="relative z-10">
         {/* Section Header (Centered & Balanced) */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto pb-10 border-b border-[var(--border)]">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto pb-8 border-b border-[var(--border)]">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-700 text-xs font-mono font-medium tracking-wide">
             SELECTED WORK & PROOF
           </div>
-          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-5xl font-bold">
+          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-[40px] font-semibold leading-[1.10]">
             <BlurText
               text="Proof through transformation."
               animateBy="words"
@@ -71,12 +71,12 @@ export function SelectedWorkSection() {
                 spotlightSize={520}
                 borderGlow={0.8}
                 proximity={120}
-                className="h-full flex flex-col justify-between rounded-3xl border border-blue-200/70 hover:border-blue-500/80 bg-white/95 backdrop-blur-sm p-6 sm:p-8 lg:p-9 shadow-none hover:shadow-[0_20px_48px_-10px_rgba(11,76,196,0.18)] transition-all duration-300 hover:-translate-y-1.5"
+                className="h-full flex flex-col justify-between rounded-[18px] border border-blue-200/70 hover:border-blue-500/80 bg-white/95 backdrop-blur-sm p-6 shadow-none hover:shadow-[0_20px_48px_-10px_rgba(11,76,196,0.18)] transition-all duration-300 hover:-translate-y-1.5"
               >
                 {/* Full-card accessible overlay link */}
                 <Link
                   href={`/work/${flagship.slug}`}
-                  className="absolute inset-0 z-20 rounded-3xl"
+                  className="absolute inset-0 z-20 rounded-[18px]"
                   aria-label={`View ${flagship.client} case study`}
                 />
 
@@ -100,10 +100,10 @@ export function SelectedWorkSection() {
 
                 {/* Core Idea (Clear & Punchy) */}
                 <div className="relative z-10 mt-6">
-                  <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--foreground)] group-hover:text-blue-600 transition-colors">
+                  <h3 className="font-display text-2xl sm:text-3xl lg:text-[34px] font-semibold tracking-[-0.374px] text-[var(--foreground)] group-hover:text-blue-600 transition-colors leading-[1.47]">
                     {flagship.client}
                   </h3>
-                  <p className="mt-3 text-base sm:text-lg text-muted-foreground font-medium leading-relaxed max-w-xl">
+                  <p className="mt-3 text-base sm:text-[17px] text-muted-foreground font-normal leading-[1.47] tracking-[-0.374px] max-w-xl">
                     Reframed complex advisory services into an authoritative commercial proposition and unified digital authority engine.
                   </p>
                 </div>
@@ -237,12 +237,12 @@ export function SelectedWorkSection() {
                       spotlightSize={380}
                       borderGlow={0.65}
                       proximity={100}
-                      className="h-full flex flex-col justify-between rounded-3xl border border-[var(--border)] hover:border-blue-400/80 bg-white/90 backdrop-blur-sm p-6 sm:p-7 shadow-none hover:shadow-[0_16px_36px_-8px_rgba(11,76,196,0.14)] transition-all duration-300 hover:-translate-y-1"
+                      className="h-full flex flex-col justify-between rounded-[18px] border border-[var(--border)] hover:border-blue-400/80 bg-white/90 backdrop-blur-sm p-6 shadow-none hover:shadow-[0_16px_36px_-8px_rgba(11,76,196,0.14)] transition-all duration-300 hover:-translate-y-1"
                     >
                       {/* Full-card accessible overlay link */}
                       <Link
                         href={`/work/${item.slug}`}
-                        className="absolute inset-0 z-20 rounded-3xl"
+                        className="absolute inset-0 z-20 rounded-[18px]"
                         aria-label={`View ${item.client} case study`}
                       />
 
@@ -266,11 +266,11 @@ export function SelectedWorkSection() {
                         </div>
 
                         {/* Title & Concise Idea */}
-                        <h3 className="mt-4 font-display text-xl sm:text-2xl font-bold tracking-tight text-[var(--foreground)] group-hover:text-blue-600 transition-colors">
+                        <h3 className="mt-4 font-display text-xl sm:text-[21px] font-semibold tracking-[0.231px] leading-[1.19] text-[var(--foreground)] group-hover:text-blue-600 transition-colors">
                           {item.client}
                         </h3>
 
-                        <p className="mt-2 text-sm text-muted-foreground font-medium leading-relaxed line-clamp-2">
+                        <p className="mt-2 text-sm sm:text-[17px] text-muted-foreground font-normal leading-[1.47] tracking-[-0.374px] line-clamp-2">
                           {item.transformation}
                         </p>
                       </div>
@@ -349,7 +349,7 @@ export function SelectedWorkSection() {
         </div>
 
         {/* Section Bottom Reassurance Bar */}
-        <div className="mt-12 rounded-2xl border border-[var(--border)] bg-white/60 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="mt-12 rounded-[18px] border border-[var(--border)] bg-white/60 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 text-blue-600">
               <Layers className="h-4 w-4" />

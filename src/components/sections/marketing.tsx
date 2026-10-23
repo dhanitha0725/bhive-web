@@ -24,7 +24,7 @@ export function PageHero({
       <Container>
         <p className="eyebrow eyebrow-light">{eyebrow}</p>
         <h1 className="display mt-4 max-w-4xl">{title}</h1>
-        <p className="mt-6 max-w-2xl text-lg text-navy-100">{body}</p>
+        <p className="mt-6 max-w-2xl text-base sm:text-[17px] leading-[1.47] tracking-[-0.374px] text-navy-100">{body}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <LinkButton href={primary.href} variant="white">
             {primary.label}
@@ -44,18 +44,18 @@ export function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title:
     <div className="max-w-3xl">
       <p className="eyebrow">{eyebrow}</p>
       <h2 className="heading-2 mt-3">{title}</h2>
-      {body ? <p className="mt-4 text-muted-foreground">{body}</p> : null}
+      {body ? <p className="mt-4 text-base sm:text-[17px] leading-[1.47] tracking-[-0.374px] text-muted-foreground">{body}</p> : null}
     </div>
   );
 }
 export function SystemSteps({ steps }: { steps: Array<{ title: string; body: string }> }) {
   return (
-    <ol className="mt-10 grid gap-3 lg:grid-cols-3">
+    <ol className="mt-10 grid gap-4 lg:grid-cols-3">
       {steps.map((step, index) => (
-        <li key={step.title} className="relative border-l-2 border-blue-500 bg-navy-50 p-5">
+        <li key={step.title} className="relative rounded-[18px] border-l-4 border-blue-600 bg-navy-50 p-6">
           <span className="font-mono text-xs text-blue-700">{String(index + 1).padStart(2, "0")}</span>
-          <h3 className="mt-2 font-display text-xl font-semibold">{step.title}</h3>
-          <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
+          <h3 className="mt-2 font-display text-xl font-semibold tracking-[-0.374px]">{step.title}</h3>
+          <p className="mt-2 text-sm sm:text-[17px] text-muted-foreground leading-[1.47] tracking-[-0.374px]">{step.body}</p>
         </li>
       ))}
     </ol>
@@ -63,28 +63,28 @@ export function SystemSteps({ steps }: { steps: Array<{ title: string; body: str
 }
 export function CaseCard({ item }: { item: CaseStudy }) {
   return (
-    <Card className="flex h-full flex-col border-navy-100">
+    <Card className="flex h-full flex-col border-navy-100 rounded-[18px] p-6">
       <p className="eyebrow">
         {item.isDemo ? "Concept case study · " : ""}
         {item.industry}
       </p>
-      <h3 className="mt-3 font-display text-2xl font-semibold">{item.client}</h3>
-      <p className="mt-4 text-sm text-muted-foreground">
+      <h3 className="mt-3 font-display text-2xl font-semibold tracking-[-0.374px]">{item.client}</h3>
+      <p className="mt-4 text-sm sm:text-[17px] text-muted-foreground leading-[1.47] tracking-[-0.374px]">
         <strong className="text-navy-600">Challenge: </strong>
         {item.challenge}
       </p>
-      <p className="mt-3 text-sm text-muted-foreground">
+      <p className="mt-3 text-sm sm:text-[17px] text-muted-foreground leading-[1.47] tracking-[-0.374px]">
         <strong className="text-navy-600">Transformation: </strong>
         {item.transformation}
       </p>
       <div className="mt-5 flex flex-wrap gap-2">
         {item.scope.map((scope) => (
-          <span key={scope} className="rounded bg-navy-50 px-2 py-1 text-xs font-medium text-navy-600">
+          <span key={scope} className="rounded-full bg-navy-50 px-2.5 py-1 text-xs font-medium text-navy-600">
             {scope}
           </span>
         ))}
       </div>
-      <Link href={`/work/${item.slug}`} className="mt-6 text-sm font-semibold text-blue-700 underline">
+      <Link href={`/work/${item.slug}`} className="mt-6 text-sm sm:text-[17px] font-normal text-blue-700 underline underline-offset-4 hover:text-blue-800 active:scale-[0.95] inline-block">
         View case study
       </Link>
     </Card>
@@ -94,10 +94,10 @@ export function InsightCard({ item }: { item: Insight }) {
   return (
     <article className="border-t border-navy-200 pt-5">
       <p className="eyebrow">{item.pillar.replaceAll("-", " ")}</p>
-      <h3 className="mt-2 font-display text-2xl font-semibold">
+      <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.374px]">
         <Link href={`/insights/${item.slug}`}>{item.title}</Link>
       </h3>
-      <p className="mt-3 text-sm text-muted-foreground">{item.excerpt}</p>
+      <p className="mt-3 text-sm sm:text-[17px] text-muted-foreground leading-[1.47] tracking-[-0.374px]">{item.excerpt}</p>
       <p className="mt-4 font-mono text-xs text-muted-foreground">
         {item.readingTime} · {item.date}
       </p>
@@ -111,7 +111,7 @@ export function FinalCta() {
         <div className="max-w-3xl">
           <p className="eyebrow eyebrow-light">Start here</p>
           <h2 className="heading-2 mt-3 text-white">Bring us the business problem.</h2>
-          <p className="mt-4 text-navy-100">
+          <p className="mt-4 text-[17px] leading-[1.47] tracking-[-0.374px] text-navy-100">
             Whether you are strengthening an existing business or building something new, start by understanding what
             needs to happen next.
           </p>

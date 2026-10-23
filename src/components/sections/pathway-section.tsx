@@ -190,17 +190,17 @@ export function PathwaySection() {
   return (
     <section
       id="what-we-offer"
-      className="relative w-full py-20 lg:py-28 bg-slate-50/60 text-slate-900 border-b border-slate-200 transition-colors duration-200"
+      className="relative w-full py-12 sm:py-16 lg:py-20 bg-slate-50/60 text-slate-900 border-b border-slate-200 transition-colors duration-200"
     >
       <Container className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* 1. Section Header (Centered & Balanced) */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-14">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700">
             <Sparkles className="h-3.5 w-3.5 text-blue-600" />
             <span>WHAT WE OFFER</span>
           </div>
 
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] font-bold font-display tracking-tight text-slate-900 leading-[1.16]">
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[40px] font-semibold font-display tracking-tight text-slate-900 leading-[1.10]">
             <BlurText
               text="Commercial capabilities built to grow."
               animateBy="words"
@@ -319,38 +319,38 @@ export function PathwaySection() {
               return (
                 <article
                   key={service.slug}
-                  className={`${colSpanClass} group relative flex flex-col justify-between rounded-2xl bg-white border border-slate-200/90 p-6 sm:p-7 shadow-none hover:border-blue-400/80 hover:shadow-[0_16px_40px_-8px_rgba(10,37,79,0.12)] transition-all duration-300`}
+                  className={`${colSpanClass} group relative flex flex-col justify-between rounded-[18px] bg-white border border-slate-200/90 p-6 shadow-none hover:border-blue-400/80 hover:shadow-[0_16px_40px_-8px_rgba(10,37,79,0.12)] transition-all duration-300`}
                 >
                   <div>
                     {/* Card Header: Step Tag + Telemetry Math Indicator */}
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-blue-600 bg-blue-50 border border-blue-100 rounded px-2 py-0.5 tracking-wider">
+                        <span className="font-mono text-xs font-semibold text-blue-600 bg-blue-50 border border-blue-100 rounded px-2 py-0.5 tracking-wider">
                           STEP {config.step}
                         </span>
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
                           {service.eyebrow}
                         </span>
                       </div>
 
                       {/* Math/Telemetry Tag (Matching System Section) */}
-                      <span className="font-mono text-[10px] sm:text-[11px] font-bold text-blue-700 bg-blue-50/90 border border-blue-200/80 rounded px-2 py-0.5 tracking-tight truncate">
+                      <span className="font-mono text-[10px] sm:text-[11px] font-semibold text-blue-700 bg-blue-50/90 border border-blue-200/80 rounded px-2 py-0.5 tracking-tight truncate">
                         {telemetry}
                       </span>
                     </div>
 
                     {/* Service Title with Icon */}
                     <div className="mt-4 flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-slate-50 border border-slate-200/90 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
+                      <div className="h-9 w-9 rounded-lg bg-slate-50 border border-slate-200/90 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
                         <Icon className="h-4 w-4" />
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold font-display text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                      <h3 className="text-xl sm:text-[21px] font-semibold font-display text-slate-900 tracking-[0.231px] leading-[1.19] group-hover:text-blue-600 transition-colors">
                         {service.name}
                       </h3>
                     </div>
 
                     {/* High-Level Overview */}
-                    <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                    <p className="mt-3 text-sm sm:text-[17px] text-slate-600 leading-[1.47] tracking-[-0.374px]">
                       {service.summary}
                     </p>
 
@@ -423,10 +423,10 @@ export function PathwaySection() {
         </AnimatePresence>
 
         {/* 4. Bottom Directional Callout Card */}
-        <div className="mt-14 rounded-2xl bg-gradient-to-br from-white via-blue-50/30 to-slate-50 border border-slate-200/90 p-6 sm:p-8 shadow-none">
+        <div className="mt-12 rounded-[18px] bg-gradient-to-br from-white via-blue-50/30 to-slate-50 border border-slate-200/90 p-6 sm:p-8 shadow-none">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div>
-              <div className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-blue-600 uppercase tracking-wider mb-2">
                 <Check className="h-3.5 w-3.5 stroke-[3]" />
                 <span>
                   {activeTab === "existing-business"
@@ -434,12 +434,12 @@ export function PathwaySection() {
                     : "VENTURE BLUEPRINT READY"}
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-display text-slate-900 tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-semibold font-display text-slate-900 tracking-tight">
                 {activeTab === "existing-business"
                   ? "Unsure which capabilities your business needs first?"
                   : "Ready to launch with the right sequence from day one?"}
               </h3>
-              <p className="mt-1.5 text-sm text-slate-600 max-w-2xl leading-relaxed">
+              <p className="mt-1.5 text-sm sm:text-[17px] text-slate-600 max-w-2xl leading-[1.47] tracking-[-0.374px]">
                 {activeTab === "existing-business"
                   ? "Get an independent diagnostic of your brand, positioning, website conversion rate, and marketing efficiency. Zero guesswork."
                   : "Walk through your concept, target audience, and initial commercial roadmap with a specialist before committing capital."}
@@ -451,14 +451,14 @@ export function PathwaySection() {
                 <>
                   <Link
                     href="/free-growth-audit"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-all active:scale-[0.98]"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#0066cc] px-[22px] py-[11px] text-[15px] sm:text-[17px] font-normal text-white hover:bg-[#0055b3] transition-all duration-150 active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[#0071e3]"
                   >
                     <span>Get Free Growth Audit</span>
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                   <Link
                     href="/grow-your-business"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-[#0066cc] bg-white px-[22px] py-[11px] text-[15px] sm:text-[17px] font-normal text-[#0066cc] hover:bg-[#0066cc]/5 transition-colors duration-150 active:scale-[0.95]"
                   >
                     <span>Growth Packages</span>
                   </Link>
@@ -467,14 +467,14 @@ export function PathwaySection() {
                 <>
                   <Link
                     href="/business-guidance-call"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-all active:scale-[0.98]"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#0066cc] px-[22px] py-[11px] text-[15px] sm:text-[17px] font-normal text-white hover:bg-[#0055b3] transition-all duration-150 active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[#0071e3]"
                   >
                     <span>Book Guidance Call</span>
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                   <Link
                     href="/launch-your-business"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-[#0066cc] bg-white px-[22px] py-[11px] text-[15px] sm:text-[17px] font-normal text-[#0066cc] hover:bg-[#0066cc]/5 transition-colors duration-150 active:scale-[0.95]"
                   >
                     <span>Launch Blueprint</span>
                   </Link>
