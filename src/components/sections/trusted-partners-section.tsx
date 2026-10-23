@@ -3,6 +3,7 @@
 import React from "react";
 import { Container } from "@/components/ui/container";
 import { TrendingUp, Users, CheckCircle } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
 // TODO: replace with real verified client counters and logos once approved by owner
 const STAT_COUNTERS = [
@@ -27,6 +28,10 @@ const STAT_COUNTERS = [
 ];
 
 export function TrustedPartnersSection() {
+  if (!siteConfig.showProof) {
+    return null;
+  }
+
   return (
     <section className="relative w-full border-b border-slate-200 bg-slate-50 py-7 sm:py-8">
       <Container className="max-w-6xl mx-auto px-4 sm:px-6">

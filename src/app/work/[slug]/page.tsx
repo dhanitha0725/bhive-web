@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { caseStudies, getCaseStudy } from "@/content/case-studies";
+import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { FinalCta, PageHero, SectionTitle } from "@/components/sections/marketing";
@@ -18,13 +19,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const x = getCaseStudy(resolvedParams.slug);
-  return x
-    ? createMetadata({
-        title: `${x.client} Case Study`,
-        description: x.result,
-        path: `/work/${x.slug}`,
-      })
-    : {};
+  if (!x) return {};
+
+  const baseMeta = createMetadata({
+    title: `${x.client} Case Study`,
+    description: x.result,
+    path: `/work/${x.slug}`,
+  });
+
+  // If proof is disabled, ensure demo case studies are marked as noindex
+  if (!siteConfig.showProof) {
+    return {
+      ...baseMeta,
+      robots: { index: false, follow: false },
+    };
+  }
+
+  return baseMeta;
 }
 
 export default async function CaseStudyDetailPage({

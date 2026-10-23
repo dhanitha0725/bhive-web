@@ -1,4 +1,8 @@
 import type { NextConfig } from "next";
+import { validateEnv } from "./src/lib/env";
+
+// Validate environment and siteConfig on startup / build
+validateEnv();
 
 const nextConfig: NextConfig = {
   turbopack: {

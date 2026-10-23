@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/config/site";
 import { MessageCircle, Award, ShoppingCart, Repeat } from "lucide-react";
 
 interface OutcomeItem {
@@ -101,10 +102,12 @@ export function OutcomesSection() {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs sm:text-sm font-medium text-blue-700">
-                  <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-                  <span>Target outcome: {item.concreteMetric}</span>
-                </div>
+                {siteConfig.showProof && (
+                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs sm:text-sm font-medium text-blue-700">
+                    <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                    <span>Target outcome: {item.concreteMetric}</span>
+                  </div>
+                )}
               </div>
             );
           })}

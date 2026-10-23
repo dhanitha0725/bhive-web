@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { consultationLeadSchema } from "@/forms/schemas";
-import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle, MessageSquare } from "lucide-react";
+import { getWhatsAppUrl } from "@/config/site";
 
 interface LeadFormProps {
   onSuccess?: () => void;
@@ -136,9 +137,20 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
       />
 
       {serverError && (
-        <div className="flex items-start gap-2.5 rounded-lg border border-red-200 bg-red-50 p-3.5 text-sm text-red-700">
-          <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-          <span>{serverError}</span>
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800 space-y-3">
+          <div className="flex items-start gap-2.5">
+            <AlertCircle className="h-5 w-5 shrink-0 text-red-600 mt-0.5" />
+            <span className="font-medium">{serverError}</span>
+          </div>
+          <a
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] px-4 py-2.5 text-sm font-semibold text-white transition-all shadow-sm"
+          >
+            <MessageSquare className="h-4 w-4 fill-white stroke-none" />
+            <span>Message Us Directly on WhatsApp</span>
+          </a>
         </div>
       )}
 
@@ -270,9 +282,15 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
         </button>
       </div>
 
-      <p className="text-center text-xs text-slate-500 pt-1">
-        Free. No obligation. We will review your business and reply directly.
-      </p>
+      {/* Consent Line & Guarantees */}
+      <div className="space-y-1.5 pt-1 text-center">
+        <p className="text-xs text-slate-500 leading-relaxed">
+          By submitting this form, you agree that BHive may contact you via WhatsApp or phone regarding your growth consultation. Your information is never sold or shared with third-party advertisers.
+        </p>
+        <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
+          Free · No Obligation · Reply Within 24h
+        </p>
+      </div>
     </form>
   );
 }

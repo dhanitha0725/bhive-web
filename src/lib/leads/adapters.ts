@@ -15,12 +15,19 @@ export interface WhatsAppCloudApiAdapter {
   sendTemplateNotification(lead: ConsultationLeadInput): Promise<boolean>;
 }
 
+export function maskPhoneNumber(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length <= 3) return "***";
+  const lastThree = digits.slice(-3);
+  return `*******${lastThree}`;
+}
+
 // TODO: Replace with live WhatsApp Business Cloud API credentials when client configures Meta Developer App
 export const whatsAppCloudApiAdapter: WhatsAppCloudApiAdapter = {
   async sendTemplateNotification(lead: ConsultationLeadInput) {
     console.info(
       "[WhatsApp Cloud API Adapter - TODO] Notification queued for:",
-      lead.whatsappNumber
+      maskPhoneNumber(lead.whatsappNumber)
     );
     return true;
   },
@@ -28,21 +35,28 @@ export const whatsAppCloudApiAdapter: WhatsAppCloudApiAdapter = {
 
 /**
  * Dispatches notifications across configured channels.
- * Always logs the full payload to console so leads are never lost.
+ * Masks phone number in server logs (last 3 digits only).
+ * Never logs full message body in production.
  */
 export async function dispatchLeadNotification(
   lead: ConsultationLeadInput,
   meta: { ip?: string; userAgent?: string; timestamp: string }
 ): Promise<LeadDispatcherResult> {
   const result: LeadDispatcherResult = { errors: [] };
+  const isProd = process.env.NODE_ENV === "production";
 
-  // Always log lead details so no lead is lost silently
+  const maskedPhone = maskPhoneNumber(lead.whatsappNumber);
+  const loggedMessage = isProd
+    ? `[REDACTED in production, length: ${lead.whatYouNeed.length} chars]`
+    : lead.whatYouNeed;
+
+  // Masked audit log so privacy is preserved and no full body is logged in production
   console.info("================ NEW BHIVE LEAD ================");
   console.info("Timestamp:", meta.timestamp);
   console.info("Name:", lead.name);
-  console.info("WhatsApp:", lead.whatsappNumber);
+  console.info("WhatsApp:", maskedPhone);
   console.info("Business:", lead.businessName);
-  console.info("What they need:", lead.whatYouNeed);
+  console.info("What they need:", loggedMessage);
   console.info("IP / Meta:", meta.ip || "unknown");
   console.info("================================================");
 
@@ -91,8 +105,7 @@ export async function dispatchLeadNotification(
       result.errors.push(`Email exception: ${(err as Error).message}`);
     }
   } else {
-    // Note: In development or unconfigured state, this is expected
-    result.errors.push("RESEND_API_KEY not configured. Lead recorded in console.");
+    result.errors.push("RESEND_API_KEY not configured.");
   }
 
   // 2. Telegram Bot Notification (if configured)
@@ -131,6 +144,8 @@ export async function dispatchLeadNotification(
       console.error("[Telegram Dispatch Exception]:", err);
       result.errors.push(`Telegram exception: ${(err as Error).message}`);
     }
+  } else {
+    result.errors.push("Telegram bot not configured.");
   }
 
   // 3. Google Sheets Webhook (if configured)
@@ -161,6 +176,8 @@ export async function dispatchLeadNotification(
       console.error("[Google Sheets Dispatch Exception]:", err);
       result.errors.push(`Sheets exception: ${(err as Error).message}`);
     }
+  } else {
+    result.errors.push("Google Sheets webhook not configured.");
   }
 
   return result;

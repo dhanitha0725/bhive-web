@@ -13,7 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/privacy",
     "/terms",
-    ...caseStudies.filter((x) => x.published).map((x) => `/work/${x.slug}`),
+    ...(siteConfig.showProof
+      ? caseStudies.filter((x) => x.published).map((x) => `/work/${x.slug}`)
+      : []),
   ];
 
   return paths.map((path) => ({

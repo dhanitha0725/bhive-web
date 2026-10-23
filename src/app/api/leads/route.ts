@@ -56,11 +56,31 @@ export async function POST(request: Request) {
     const timestamp = new Date().toISOString();
 
     // 5. Dispatch lead to notifications (Email, Telegram, Sheets)
-    await dispatchLeadNotification(lead, {
+    const dispatchResult = await dispatchLeadNotification(lead, {
       ip,
       userAgent,
       timestamp,
     });
+
+    const channelSucceeded = Boolean(
+      dispatchResult.emailSent ||
+      dispatchResult.telegramSent ||
+      dispatchResult.sheetsAppended
+    );
+
+    if (!channelSucceeded) {
+      console.error(
+        "[POST /api/leads error]: No notification channel succeeded.",
+        dispatchResult.errors
+      );
+      return NextResponse.json(
+        {
+          error:
+            "Unable to deliver your request right now. Please message us directly on WhatsApp.",
+        },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       ok: true,

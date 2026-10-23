@@ -4,9 +4,14 @@ import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { caseStudies } from "@/content/case-studies";
+import { siteConfig } from "@/config/site";
 import { ArrowUpRight } from "lucide-react";
 
 export function SelectedWorkSection() {
+  if (!siteConfig.showProof) {
+    return null;
+  }
+
   const cases = caseStudies.filter((x) => x.published).slice(0, 3);
 
   return (

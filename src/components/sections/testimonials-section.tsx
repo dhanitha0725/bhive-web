@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/config/site";
 import { Quote } from "lucide-react";
 
 // TODO: replace with verified client testimonials, real photos, and owner-approved quotes
@@ -42,6 +43,10 @@ const TESTIMONIALS = [
 ];
 
 export function TestimonialsSection() {
+  if (!siteConfig.showProof) {
+    return null;
+  }
+
   return (
     <section className="relative w-full py-16 sm:py-20 lg:py-24 bg-slate-50/70 text-slate-900 border-b border-slate-200">
       <Container className="max-w-6xl mx-auto px-4 sm:px-6">
