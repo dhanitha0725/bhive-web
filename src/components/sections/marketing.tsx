@@ -7,7 +7,7 @@ import { Section } from "@/components/ui/section";
 import type { CaseStudy } from "@/content/case-studies";
 import type { Insight } from "@/content/insights";
 import { useConsultation } from "@/components/providers/consultation-provider";
-import { getWhatsAppUrl } from "@/config/site";
+import { WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { MessageSquare, ArrowRight, ArrowUpRight } from "lucide-react";
 
 export function PageHero({
@@ -40,22 +40,20 @@ export function PageHero({
           <div className="mt-8 flex flex-wrap items-center gap-3.5">
             <button
               type="button"
-              onClick={openConsultation}
+              onClick={(e) => openConsultation("page_hero", e.currentTarget)}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0066cc] hover:bg-blue-50 px-6 py-3.5 text-sm sm:text-base font-semibold transition-all active:scale-[0.97] shadow-sm"
             >
               <span>Get Free Growth Consultation</span>
               <ArrowRight className="h-4 w-4" />
             </button>
 
-            <a
-              href={getWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppLink
+              location="page_hero"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3.5 text-sm sm:text-base font-medium text-white hover:bg-white/10 transition-all active:scale-[0.97]"
             >
               <MessageSquare className="h-4 w-4 text-emerald-300" />
               <span>WhatsApp Us</span>
-            </a>
+            </WhatsAppLink>
           </div>
         )}
       </Container>
@@ -209,22 +207,20 @@ export function FinalCta() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
             <button
               type="button"
-              onClick={openConsultation}
+              onClick={(e) => openConsultation("marketing_final_cta", e.currentTarget)}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0a254f] hover:bg-blue-50 px-7 py-3.5 text-base font-semibold transition-all active:scale-[0.97]"
             >
               <span>Get Free Growth Consultation</span>
               <ArrowRight className="h-4 w-4" />
             </button>
 
-            <a
-              href={getWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppLink
+              location="marketing_final_cta"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-base font-medium text-white hover:bg-white/10 transition-all active:scale-[0.97]"
             >
               <MessageSquare className="h-4 w-4 text-emerald-400" />
               <span>WhatsApp Us</span>
-            </a>
+            </WhatsAppLink>
           </div>
         </div>
       </Container>

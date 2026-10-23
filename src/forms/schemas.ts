@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { normalizePhoneNumber } from "../lib/phone.ts";
 
 export const consultationLeadSchema = z.object({
   name: z
@@ -9,12 +10,15 @@ export const consultationLeadSchema = z.object({
   whatsappNumber: z
     .string()
     .trim()
-    .min(8, "Please enter a valid WhatsApp phone number.")
+    .min(8, "Please enter a valid phone number.")
     .max(25, "Phone number is too long.")
-    .regex(
-      /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/,
-      "Please enter a valid phone number (e.g. 077 123 4567 or +94 77 123 4567)."
-    ),
+    .refine((val) => {
+      const result = normalizePhoneNumber(val);
+      return result.valid;
+    }, {
+      message:
+        "Please enter a valid phone number (e.g. 077 123 4567, +94 77 123 4567, or 94771234567).",
+    }),
   businessName: z
     .string()
     .trim()
@@ -26,6 +30,13 @@ export const consultationLeadSchema = z.object({
     .min(10, "Please share a few words about what you want to achieve or fix.")
     .max(2000, "Message is too long."),
   honeypot: z.string().max(0, "Bot detected.").optional().default(""),
+  // Analytics attribution metadata
+  utm_source: z.string().trim().max(200).optional(),
+  utm_medium: z.string().trim().max(200).optional(),
+  utm_campaign: z.string().trim().max(200).optional(),
+  utm_term: z.string().trim().max(200).optional(),
+  utm_content: z.string().trim().max(200).optional(),
+  referrer: z.string().trim().max(500).optional(),
 });
 
 export type ConsultationLeadInput = z.infer<typeof consultationLeadSchema>;

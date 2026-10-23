@@ -1,6 +1,13 @@
-// Placeholder legal copy — requires professional legal review before launch.
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
+import { createMetadata } from "@/seo/metadata";
+
+export const metadata = createMetadata({
+  title: "Terms of Service | BHive",
+  description: "Terms and conditions for using the BHive website and services.",
+  path: "/terms",
+});
+
 export default function Terms() {
   return (
     <Section>

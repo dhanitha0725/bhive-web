@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { FinalCta, PageHero, SectionTitle } from "@/components/sections/marketing";
+import { createMetadata } from "@/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "About BHive | Practical Marketing in Sri Lanka",
   description:
     "Learn about BHive. We are business builders who help Sri Lankan businesses grow with planned, practical marketing.",
-};
+  path: "/about",
+});
 
 // TODO: replace with real team member names, photos, and roles once provided
 const TEAM_MEMBERS = [

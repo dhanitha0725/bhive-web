@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import { services } from "@/content/services";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { PageHero, FinalCta } from "@/components/sections/marketing";
+import { createMetadata } from "@/seo/metadata";
 import { Check } from "lucide-react";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Marketing Services for Sri Lankan Businesses",
   description:
     "Explore our 5 core services: Business Strategy, Brand & Identity, Marketing Strategy, Website, and Content & Social.",
-};
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (

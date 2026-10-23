@@ -8,6 +8,14 @@ import { SelectedWorkSection } from "@/components/sections/selected-work-section
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { FaqSection } from "@/components/sections/faq-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
+import { createMetadata } from "@/seo/metadata";
+
+export const metadata = createMetadata({
+  title: "BHive — Marketing for Sri Lankan Businesses",
+  description:
+    "Helping small and medium businesses in Sri Lanka get more customers with planned, practical marketing. Strategy, branding, web development, content, and growth.",
+  path: "/",
+});
 
 export default function Home() {
   return (

@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
 import { caseStudies } from "@/content/case-studies";
 import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { CaseCard, FinalCta, PageHero, SectionTitle } from "@/components/sections/marketing";
+import { createMetadata } from "@/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Client Case Studies & Work",
   description:
     "See how BHive solves real marketing roadblocks for Sri Lankan businesses with planned, practical execution.",
-};
+  path: "/work",
+  noIndex: !siteConfig.showProof,
+});
 
 export default function WorkPage() {
   const publishedCases = caseStudies.filter((x) => x.published);

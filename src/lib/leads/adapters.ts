@@ -76,6 +76,8 @@ export async function dispatchLeadNotification(
         <blockquote style="background:#f4f4f5;padding:12px;border-left:4px solid #0066cc;">
           ${escapeHtml(lead.whatYouNeed).replace(/\n/g, "<br/>")}
         </blockquote>
+        <p><strong>Attribution:</strong> Source: ${escapeHtml(lead.utm_source || "direct")} | Medium: ${escapeHtml(lead.utm_medium || "-")} | Campaign: ${escapeHtml(lead.utm_campaign || "-")}</p>
+        <p><strong>Referrer:</strong> ${escapeHtml(lead.referrer || "none")}</p>
         <p style="font-size:12px;color:#71717a;">Submitted at: ${meta.timestamp} from IP: ${meta.ip || "unknown"}</p>
       `;
 
@@ -119,6 +121,8 @@ export async function dispatchLeadNotification(
         `📱 *WhatsApp:* [${escapeTg(lead.whatsappNumber)}](https://wa.me/${cleanPhone(lead.whatsappNumber)})\n` +
         `🏢 *Business:* ${escapeTg(lead.businessName)}\n\n` +
         `💬 *What they need:*\n${escapeTg(lead.whatYouNeed)}\n\n` +
+        `🔗 *Source:* ${escapeTg(lead.utm_source || "direct")} | *Campaign:* ${escapeTg(lead.utm_campaign || "-")}\n` +
+        `🌐 *Referrer:* ${escapeTg(lead.referrer || "none")}\n` +
         `🕒 _${escapeTg(meta.timestamp)}_`;
 
       const tgUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
@@ -161,6 +165,10 @@ export async function dispatchLeadNotification(
           whatsappNumber: lead.whatsappNumber,
           businessName: lead.businessName,
           whatYouNeed: lead.whatYouNeed,
+          utm_source: lead.utm_source || "",
+          utm_medium: lead.utm_medium || "",
+          utm_campaign: lead.utm_campaign || "",
+          referrer: lead.referrer || "",
           ip: meta.ip || "unknown",
         }),
       });

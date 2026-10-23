@@ -113,7 +113,7 @@ export function PathwaySection() {
 
           <button
             type="button"
-            onClick={openConsultation}
+            onClick={(e) => openConsultation("pathway", e.currentTarget)}
             className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0066cc] hover:bg-blue-50 px-6 py-3.5 text-sm sm:text-base font-semibold transition-all duration-150 active:scale-[0.97] shadow-sm"
           >
             <span>Get Free Growth Consultation</span>

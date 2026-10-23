@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { siteConfig } from "@/config/site";
+import { createMetadata } from "@/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Privacy Policy | BHive",
   description:
     "How BHive collects, processes, and protects your consultation request data.",
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

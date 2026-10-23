@@ -3,7 +3,12 @@
 import React, { useState } from "react";
 import { consultationLeadSchema } from "@/forms/schemas";
 import { CheckCircle2, Loader2, AlertCircle, MessageSquare } from "lucide-react";
-import { getWhatsAppUrl } from "@/config/site";
+import { WhatsAppLink } from "@/components/ui/whatsapp-link";
+import {
+  getUtmAndReferrer,
+  trackLeadSubmitSuccess,
+  trackLeadSubmitError,
+} from "@/lib/analytics";
 
 interface LeadFormProps {
   onSuccess?: () => void;
@@ -70,10 +75,16 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
     setIsSubmitting(true);
 
     try {
+      const utmInfo = getUtmAndReferrer();
+      const payload = {
+        ...formData,
+        ...utmInfo,
+      };
+
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json().catch(() => ({}));
@@ -86,18 +97,21 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           }
           setErrors(fieldErrors);
         }
-        throw new Error(data.error || "Unable to send request. Please try again.");
+        const errorMsg = data.error || "Unable to send request. Please message us on WhatsApp directly.";
+        trackLeadSubmitError(errorMsg);
+        throw new Error(errorMsg);
       }
 
+      trackLeadSubmitSuccess();
       setIsSuccess(true);
       if (onSuccess) {
         onSuccess();
       }
     } catch (err) {
-      setServerError(
+      const msg =
         (err as Error).message ||
-          "Failed to submit. Please message us on WhatsApp directly."
-      );
+        "Failed to submit. Please message us on WhatsApp directly.";
+      setServerError(msg);
     } finally {
       setIsSubmitting(false);
     }
@@ -142,15 +156,13 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
             <AlertCircle className="h-5 w-5 shrink-0 text-red-600 mt-0.5" />
             <span className="font-medium">{serverError}</span>
           </div>
-          <a
-            href={getWhatsAppUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            location="form_error"
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] px-4 py-2.5 text-sm font-semibold text-white transition-all shadow-sm"
           >
             <MessageSquare className="h-4 w-4 fill-white stroke-none" />
             <span>Message Us Directly on WhatsApp</span>
-          </a>
+          </WhatsAppLink>
         </div>
       )}
 
@@ -171,7 +183,7 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           value={formData.name}
           onChange={handleChange}
           disabled={isSubmitting}
-          className={`w-full rounded-full border bg-white px-4 py-2.5 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
+          className={`w-full rounded-full border bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
             errors.name ? "border-red-400 ring-1 ring-red-400" : "border-slate-300"
           }`}
         />
@@ -197,7 +209,7 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           value={formData.whatsappNumber}
           onChange={handleChange}
           disabled={isSubmitting}
-          className={`w-full rounded-full border bg-white px-4 py-2.5 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
+          className={`w-full rounded-full border bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
             errors.whatsappNumber ? "border-red-400 ring-1 ring-red-400" : "border-slate-300"
           }`}
         />
@@ -225,7 +237,7 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           value={formData.businessName}
           onChange={handleChange}
           disabled={isSubmitting}
-          className={`w-full rounded-full border bg-white px-4 py-2.5 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
+          className={`w-full rounded-full border bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
             errors.businessName ? "border-red-400 ring-1 ring-red-400" : "border-slate-300"
           }`}
         />
@@ -253,7 +265,7 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           value={formData.whatYouNeed}
           onChange={handleChange}
           disabled={isSubmitting}
-          className={`w-full rounded-[14px] border bg-white p-3.5 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
+          className={`w-full rounded-[14px] border bg-white p-3.5 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
             errors.whatYouNeed ? "border-red-400 ring-1 ring-red-400" : "border-slate-300"
           }`}
         />

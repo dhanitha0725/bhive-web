@@ -1,16 +1,18 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { PageHero } from "@/components/sections/marketing";
 import { LeadForm } from "@/components/forms/lead-form";
-import { siteConfig, getWhatsAppUrl } from "@/config/site";
+import { siteConfig } from "@/config/site";
+import { WhatsAppLink } from "@/components/ui/whatsapp-link";
+import { createMetadata } from "@/seo/metadata";
 import { MessageSquare, Mail, Phone, ShieldCheck } from "lucide-react";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Contact BHive | Get Your Free Growth Consultation",
   description:
     "Get in touch with BHive. Message us on WhatsApp or send a message to get your free marketing consultation.",
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
@@ -38,15 +40,13 @@ export default function ContactPage() {
                   Send us a message right now. We typically reply in under an hour during regular Sri Lankan business hours.
                 </p>
 
-                <a
-                  href={getWhatsAppUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <WhatsAppLink
+                  location="contact_page"
                   className="mt-5 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] px-6 py-3.5 text-base font-semibold text-white transition-all active:scale-[0.98] shadow-sm"
                 >
                   <MessageSquare className="h-5 w-5 fill-white stroke-none" />
                   <span>Open WhatsApp Chat</span>
-                </a>
+                </WhatsAppLink>
               </div>
 
               {/* Contact Information */}

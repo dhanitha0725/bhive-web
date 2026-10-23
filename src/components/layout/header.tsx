@@ -3,10 +3,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import GooeyNav, { GooeyNavItem } from "@/components/GooeyNav";
+import dynamic from "next/dynamic";
+import type { GooeyNavItem } from "@/components/GooeyNav";
 import { primaryNavigation } from "@/config/site";
 import { useConsultation } from "@/components/providers/consultation-provider";
 import { MessageSquare } from "lucide-react";
+
+const GooeyNav = dynamic(() => import("@/components/GooeyNav"), {
+  ssr: false,
+  loading: () => null,
+});
 
 export function Header() {
   const pathname = usePathname();
@@ -75,7 +81,7 @@ export function Header() {
         {/* Persistent CTA Button */}
         <button
           type="button"
-          onClick={openConsultation}
+          onClick={(e) => openConsultation("header", e.currentTarget)}
           className="inline-flex items-center gap-1.5 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-all duration-150 active:scale-[0.96] shadow-sm shrink-0"
         >
           <MessageSquare className="h-3.5 w-3.5 hidden xs:block" />

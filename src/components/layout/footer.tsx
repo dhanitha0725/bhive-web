@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { BrandMark } from "./brand-mark";
-import { getWhatsAppUrl } from "@/config/site";
+import { WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { useConsultation } from "@/components/providers/consultation-provider";
 import { MessageSquare } from "lucide-react";
 
@@ -33,21 +33,19 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={openConsultation}
+              onClick={(e) => openConsultation("footer", e.currentTarget)}
               className="inline-flex items-center gap-2 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white px-5 py-3 text-sm font-medium transition-all active:scale-[0.96]"
             >
               <MessageSquare className="h-4 w-4" />
               <span>Get Free Growth Consultation</span>
             </button>
 
-            <a
-              href={getWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppLink
+              location="footer"
               className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 text-sm font-medium text-white hover:bg-white/10 transition-all active:scale-[0.96]"
             >
               <span>WhatsApp Us</span>
-            </a>
+            </WhatsAppLink>
           </div>
         </div>
 

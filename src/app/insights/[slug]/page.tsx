@@ -18,11 +18,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const x = getInsight(resolvedParams.slug);
+  const isNoIndex = insights.filter((item) => item.published).length < 3;
   return x
     ? createMetadata({
         title: x.title,
         description: x.excerpt,
         path: `/insights/${x.slug}`,
+        noIndex: isNoIndex,
       })
     : {};
 }

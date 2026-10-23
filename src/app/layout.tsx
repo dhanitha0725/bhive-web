@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { MobileStickyCta } from "@/components/layout/mobile-sticky-cta";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { siteConfig } from "@/config/site";
 import { ConsultationProvider } from "@/components/providers/consultation-provider";
@@ -19,11 +21,33 @@ const fontMono = JetBrains_Mono({
   display: "swap",
 });
 
+const siteUrl = siteConfig.url || "https://bhive.lk";
+const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
+const plausibleScriptUrl =
+  process.env.NEXT_PUBLIC_PLAUSIBLE_SCRIPT_URL ||
+  "https://plausible.io/js/script.js";
+
 export const metadata: Metadata = {
-  title: { default: siteConfig.name, template: `%s | ${siteConfig.name}` },
+  title: {
+    default: `${siteConfig.name} — Marketing for Sri Lankan Businesses`,
+    template: `%s | ${siteConfig.name}`,
+  },
   description: siteConfig.description,
-  metadataBase: siteConfig.url ? new URL(siteConfig.url) : undefined,
-  alternates: siteConfig.url ? { canonical: "/" } : undefined,
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: `${siteConfig.name} — Marketing for Sri Lankan Businesses`,
+    description: siteConfig.description,
+    url: siteUrl,
+    siteName: siteConfig.name,
+    locale: "en_LK",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} — Marketing for Sri Lankan Businesses`,
+    description: siteConfig.description,
+  },
   robots: { index: true, follow: true },
 };
 
@@ -32,8 +56,43 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteUrl,
+    logo: `${siteUrl}/logo.png`,
+    description: siteConfig.description,
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "LK",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: `+${siteConfig.whatsappNumber}`,
+      contactType: "customer support",
+      availableLanguage: ["English", "Sinhala"],
+    },
+  };
+
   return (
     <html lang="en" className={`${fontInter.variable} ${fontMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+        {plausibleDomain && (
+          <Script
+            defer
+            data-domain={plausibleDomain}
+            src={plausibleScriptUrl}
+            strategy="afterInteractive"
+          />
+        )}
+      </head>
       <body className="min-h-screen bg-white text-[#1d1d1f] antialiased">
         <a
           href="#main-content"
@@ -44,10 +103,11 @@ export default function RootLayout({
         <ConsultationProvider>
           <Header />
           <SmoothScroll />
-          <main id="main-content" className="flex min-h-[60vh] flex-col">
+          <main id="main-content" className="flex min-h-[60vh] flex-col pb-20 sm:pb-0">
             {children}
           </main>
           <Footer />
+          <MobileStickyCta />
         </ConsultationProvider>
       </body>
     </html>
