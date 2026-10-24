@@ -96,22 +96,69 @@ export function HeroSection() {
             </ConsultationTriggerButton>
           </div>
 
-          {/* Generously Spaced Understated Micro Trust Line */}
-          <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-[13px] text-neutral-500 font-normal">
-            <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
-              Free 15-minute consultation
-            </span>
-            <span className="text-neutral-300 hidden sm:inline">•</span>
-            <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
-              No commercial obligation
-            </span>
-            <span className="text-neutral-300 hidden sm:inline">•</span>
-            <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
-              Direct WhatsApp response
-            </span>
+          {/* Client Proof Section */}
+          <div className="mt-14 sm:mt-16 pt-1">
+            {/* Secondary Font Label */}
+            <p className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.18em] text-neutral-400 font-medium">
+              Trusted by clients &amp; growing businesses
+            </p>
+
+            {/* Dummy Client Logos */}
+            <div className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-12 gap-y-4">
+              {/* Halcyon */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <span className="font-serif italic text-[18px] sm:text-[20px] text-neutral-700 tracking-wide">
+                  Halcyon
+                </span>
+              </div>
+
+              {/* VERTEX */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <svg className="h-3.5 w-3.5 text-neutral-600" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 22 20 2 20" />
+                </svg>
+                <span className="font-sans font-bold text-[13px] sm:text-[14px] tracking-[0.24em] text-neutral-700 uppercase">
+                  VERTEX
+                </span>
+              </div>
+
+              {/* loopwork */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <svg className="h-4 w-4 text-neutral-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.267-8-12.362-8-5.096 0-5.096 8 0 8 5.095 0 7.267-8 12.362-8z" />
+                </svg>
+                <span className="font-sans font-semibold text-[15px] sm:text-[16px] tracking-tight text-neutral-700">
+                  loopwork
+                </span>
+              </div>
+
+              {/* Nimbus */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <svg className="h-4 w-4 text-neutral-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                  <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                </svg>
+                <span className="font-sans font-medium text-[16px] sm:text-[17px] tracking-normal text-neutral-700">
+                  Nimbus
+                </span>
+              </div>
+
+              {/* FORMA */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <span className="font-sans font-black text-[13px] sm:text-[14px] tracking-[0.22em] text-neutral-700 uppercase">
+                  FORMA
+                </span>
+              </div>
+
+              {/* arcline */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <svg className="h-3.5 w-3.5 text-neutral-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M4 20A16 16 0 0 1 20 4" />
+                </svg>
+                <span className="font-sans font-medium text-[15px] sm:text-[16px] tracking-wide text-neutral-700 lowercase">
+                  arcline
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </Container>
