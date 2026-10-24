@@ -8,6 +8,7 @@ import { MobileStickyCta } from "@/components/layout/mobile-sticky-cta";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { siteConfig } from "@/config/site";
 import { ConsultationProvider } from "@/components/providers/consultation-provider";
+import { GradientProvider } from "@/components/ui/gradient-controls";
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -100,15 +101,17 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <ConsultationProvider>
-          <Header />
-          <SmoothScroll />
-          <main id="main-content" className="flex min-h-[60vh] flex-col pb-20 sm:pb-0">
-            {children}
-          </main>
-          <Footer />
-          <MobileStickyCta />
-        </ConsultationProvider>
+        <GradientProvider>
+          <ConsultationProvider>
+            <Header />
+            <SmoothScroll />
+            <main id="main-content" className="flex min-h-[60vh] flex-col pb-20 sm:pb-0">
+              {children}
+            </main>
+            <Footer />
+            <MobileStickyCta />
+          </ConsultationProvider>
+        </GradientProvider>
       </body>
     </html>
   );
