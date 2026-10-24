@@ -15,7 +15,7 @@ const GradientWaves = dynamic(() => import("@/components/GradientWaves"), {
 
 export function HeroSection() {
   return (
-    <section className="relative w-full bg-white text-neutral-900 pt-20 pb-20 sm:pt-28 sm:pb-28 lg:pt-32 lg:pb-32 overflow-hidden min-h-[85vh] flex items-center justify-center border-b border-neutral-100">
+    <section className="relative w-full bg-white text-neutral-900 pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28 overflow-hidden min-h-[82vh] flex items-center justify-center border-b border-neutral-100">
       {/* React Bits GradientWaves WebGL Surface */}
       <div className="absolute inset-0 z-0 pointer-events-auto">
         <GradientWaves
@@ -49,62 +49,69 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-white/70 pointer-events-none" />
       </div>
 
-      {/* 12-Column Grid Architectural Container */}
-      <Container className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-none">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pointer-events-auto">
-          <div className="lg:col-span-12 text-center max-w-4xl mx-auto">
-            {/* Display Headline with Blue & Black Contrast */}
-            <h1 className="text-[38px] sm:text-[56px] lg:text-[72px] font-semibold tracking-[-0.035em] text-[#1d1d1f] leading-[1.04]">
-              More customers for your business.
-              <span className="block text-[#0066cc] font-medium mt-2 sm:mt-3">
-                Marketing planned, not guessed.
-              </span>
-            </h1>
+      {/* Hero Architectural Container */}
+      <Container className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-none">
+        <div className="text-center max-w-4xl mx-auto pointer-events-auto">
+          {/* Top Announcement / Pill Badge (AgentFrame style) */}
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-neutral-200/90 bg-white/85 backdrop-blur-md px-3.5 py-1 text-xs text-neutral-600 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-neutral-300 transition-colors mb-6 sm:mb-8">
+            <span className="rounded-full bg-[#0066cc] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+              Agency
+            </span>
+            <span className="font-normal text-neutral-700">
+              Strategic Brand &amp; Growth Marketing Agency
+            </span>
+          </div>
 
-            {/* Subtitle - exactly 2 clean lines */}
-            <p className="mt-6 text-base sm:text-lg lg:text-[18px] text-[#1d1d1f]/75 font-normal leading-[1.65] max-w-2xl mx-auto">
-              We connect brand strategy, high-converting websites, and targeted customer acquisition
-              <br className="hidden sm:inline" /> into one reliable system—turning visitors into steady sales without wasted ad spend.
-            </p>
+          {/* Display Headline with Serif Italic Accent (AgentFrame style) */}
+          <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.12] max-w-4xl mx-auto">
+            From First Step to Fully Scaled.
+            <span className="block font-serif italic font-normal text-[#0066cc] mt-1 sm:mt-2">
+              We’re With You.
+            </span>
+          </h1>
 
-            {/* Action Group */}
-            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4">
-              {/* Primary Action Button */}
-              <ConsultationTriggerButton
-                location="hero"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white px-8 py-3.5 text-[15px] font-medium transition-all duration-150 shadow-[0_4px_16px_rgba(0,102,204,0.25)] active:scale-[0.98] cursor-pointer"
-              >
-                <span>Get Free Growth Consultation</span>
-                <ArrowRight className="h-4 w-4" />
-              </ConsultationTriggerButton>
+          {/* Subtitle */}
+          <p className="mt-5 sm:mt-6 text-base sm:text-[17px] text-neutral-600 font-normal leading-[1.65] max-w-2xl mx-auto">
+            No cookie-cutter campaigns or chasing viral trends. We create tailored, authentic strategies that solve real challenges and drive real sales, whether you’re scaling an existing business or taking your very first step.
+          </p>
 
-              {/* Free Audit Button */}
-              <Link
-                href="/free-growth-audit"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300/90 bg-white/95 hover:bg-neutral-50 px-8 py-3.5 text-[15px] font-medium text-[#1d1d1f] transition-all duration-150 shadow-sm active:scale-[0.98] cursor-pointer backdrop-blur-md"
-              >
-                <span>Get Free Growth Audit</span>
-                <ArrowRight className="h-4 w-4 text-[#0066cc]" />
-              </Link>
-            </div>
+          {/* Action Group: 2 Side-by-Side CTAs with perfect proportions */}
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5">
+            {/* Outline / Secondary Button on Left (AgentFrame layout) */}
+            <Link
+              href="/free-growth-audit"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300/90 bg-white/95 hover:bg-neutral-50 px-6 py-2.5 sm:px-7 sm:py-3 text-[14px] font-medium text-[#1d1d1f] transition-all duration-150 shadow-xs hover:border-neutral-400 active:scale-[0.98] cursor-pointer backdrop-blur-sm"
+            >
+              <span>Get Free Growth Audit</span>
+              <ArrowRight className="h-4 w-4 text-[#0066cc]" />
+            </Link>
 
-            {/* Generously Spaced Micro Trust Line */}
-            <div className="mt-12 sm:mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-2.5 text-xs sm:text-[13px] text-neutral-500 font-normal">
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
-                Free 15-minute consultation
-              </span>
-              <span className="text-neutral-300 hidden sm:inline">•</span>
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
-                No commercial obligation
-              </span>
-              <span className="text-neutral-300 hidden sm:inline">•</span>
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
-                Direct WhatsApp response
-              </span>
-            </div>
+            {/* Solid Primary Button on Right (AgentFrame layout) */}
+            <ConsultationTriggerButton
+              location="hero"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white px-6 py-2.5 sm:px-7 sm:py-3 text-[14px] font-medium transition-all duration-150 shadow-[0_2px_14px_rgba(0,102,204,0.25)] active:scale-[0.98] cursor-pointer"
+            >
+              <span>Get Free Consultation</span>
+              <ArrowRight className="h-4 w-4" />
+            </ConsultationTriggerButton>
+          </div>
+
+          {/* Generously Spaced Understated Micro Trust Line */}
+          <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-[13px] text-neutral-500 font-normal">
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
+              Free 15-minute consultation
+            </span>
+            <span className="text-neutral-300 hidden sm:inline">•</span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
+              No commercial obligation
+            </span>
+            <span className="text-neutral-300 hidden sm:inline">•</span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0066cc]" />
+              Direct WhatsApp response
+            </span>
           </div>
         </div>
       </Container>

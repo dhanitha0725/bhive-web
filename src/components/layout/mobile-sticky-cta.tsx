@@ -22,7 +22,7 @@ export function MobileStickyCta() {
           onClick={(e) => openConsultation("mobile_sticky_bar", e.currentTarget)}
           className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white py-3.5 px-4 text-sm font-semibold shadow-sm active:scale-[0.98] transition-all focus-visible:outline-2 focus-visible:outline-[#0066cc]"
         >
-          <span>Get Free Growth Consultation</span>
+          <span>Free Consultation</span>
           <ArrowRight className="h-4 w-4" />
         </button>
 
