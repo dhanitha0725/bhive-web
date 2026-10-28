@@ -1,119 +1,91 @@
 export type ServiceSlug =
   | "business-strategy"
-  | "brand-strategy-identity"
+  | "brand-identity"
   | "marketing-strategy"
-  | "web-design-development"
-  | "content-social-launch";
+  | "website"
+  | "content-social";
+
 export type Service = {
   slug: ServiceSlug;
   name: string;
-  eyebrow: string;
-  hero: string;
-  summary: string;
-  problem: string;
+  problemSolved: string;
+  scope: string[];
   outcome: string;
-  capabilities: string[];
-  audiences: Array<"existing-business" | "new-venture">;
   published: boolean;
 };
+
 export const services: Service[] = [
   {
     slug: "business-strategy",
     name: "Business Strategy",
-    eyebrow: "Think",
-    hero: "Make better growth decisions before spending on execution.",
-    summary: "Clarify the market, offer, customer and priorities that should guide the next move.",
-    problem:
-      "Activity accelerates when a business has not agreed on what it is solving, for whom, or where it should compete.",
-    outcome: "A practical commercial direction that makes later brand, marketing and digital decisions easier.",
-    capabilities: [
-      "Business clarity",
-      "Market analysis",
-      "Customer understanding",
-      "Offer architecture",
-      "Positioning",
-      "Growth priorities",
-      "Roadmap",
+    problemSolved:
+      "Stops you from spending time and money before knowing who your best buyers are and what they really want.",
+    scope: [
+      "Target customer & buyer profile",
+      "Competitor and market check",
+      "Pricing and offer packaging",
+      "Step-by-step growth roadmap",
     ],
-    audiences: ["existing-business", "new-venture"],
+    outcome: "Total clarity on what you sell, who buys it, and how to price it profitably.",
     published: true,
   },
   {
-    slug: "brand-strategy-identity",
-    name: "Brand Strategy & Identity",
-    eyebrow: "Build",
-    hero: "Build a brand people can understand before asking them to remember it.",
-    summary: "Translate a business strategy into an identity and message that earns recognition and trust.",
-    problem: "A logo cannot solve unclear value, inconsistent messages or an identity disconnected from the business.",
-    outcome: "A recognizable, usable brand system that gives customers and teams a clearer signal.",
-    capabilities: [
-      "Positioning",
-      "Value proposition",
-      "Messaging",
-      "Personality",
-      "Naming guidance",
-      "Identity direction",
-      "Logo system",
-      "Typography and color",
-      "Guidelines",
+    slug: "brand-identity",
+    name: "Brand & Identity",
+    problemSolved:
+      "Stops your business from looking like an amateur hobby or blending into a crowd of cheap competitors.",
+    scope: [
+      "Memorable logo design & visual system",
+      "Clear brand colors and typography",
+      "Simple tagline & messaging guidelines",
+      "Social media and print templates",
     ],
-    audiences: ["existing-business", "new-venture"],
+    outcome: "A professional, trustworthy brand look that makes customers respect your business.",
     published: true,
   },
   {
     slug: "marketing-strategy",
     name: "Marketing Strategy",
-    eyebrow: "Grow",
-    hero: "Replace random marketing with a system built around business goals.",
-    summary: "Connect audience, message, journey, channel and measurement before investing in activity.",
-    problem: "Teams publish, promote and react without a shared reason for each action or a way to learn from it.",
-    outcome: "A focused plan that directs effort toward commercial priorities instead of channel noise.",
-    capabilities: ["Goals", "Audience", "Journey", "Message", "Channel roles", "Content", "Campaigns", "Measurement"],
-    audiences: ["existing-business", "new-venture"],
+    problemSolved:
+      "Replaces random 'boosting' and guessing with a predictable plan for getting steady enquiries.",
+    scope: [
+      "Lead generation roadmap",
+      "Selecting the right channels for your industry",
+      "Budget and campaign planning",
+      "Simple tracking to know what works",
+    ],
+    outcome: "A realistic marketing plan that directs your money only to channels that bring real buyers.",
     published: true,
   },
   {
-    slug: "web-design-development",
-    name: "Web Design & Development",
-    eyebrow: "Build",
-    hero: "Build a website that helps customers make a decision.",
-    summary: "Treat your website as business infrastructure, not a brochure or a decorative afterthought.",
-    problem:
-      "When structure, language and conversion paths are unclear, a website makes a good business harder to choose.",
-    outcome: "A responsive, accessible digital experience that explains value and supports next actions.",
-    capabilities: [
-      "Discovery",
-      "Content hierarchy",
-      "UX",
-      "UI",
-      "Conversion architecture",
-      "Responsive build",
-      "Performance",
-      "SEO foundations",
-      "Accessibility",
+    slug: "website",
+    name: "Website",
+    problemSolved:
+      "Fixes websites that look pretty but don't load fast on Sri Lankan mobile networks or convert visitors into calls.",
+    scope: [
+      "Mobile-first, lightning-fast design",
+      "Direct WhatsApp & click-to-call integration",
+      "Clear product/service showcases",
+      "Local Google Search (SEO) setup",
     ],
-    audiences: ["existing-business", "new-venture"],
+    outcome: "A high-speed website that acts as a 24/7 salesperson guiding visitors to message you.",
     published: true,
   },
   {
-    slug: "content-social-launch",
-    name: "Content & Social Launch",
-    eyebrow: "Grow",
-    hero: "Create content with a job to do.",
-    summary: "Build content and social systems that support positioning, customer journeys and launch priorities.",
-    problem: "Posting to keep an account active creates motion without a reason customers can feel.",
-    outcome: "A usable content direction that gives every channel a role in the larger system.",
-    capabilities: [
-      "Content strategy",
-      "Content pillars",
-      "Channel roles",
-      "Campaign planning",
-      "Launch content",
-      "Social systems",
-      "Measurement",
+    slug: "content-social",
+    name: "Content & Social",
+    problemSolved:
+      "Ends the headache of wondering 'what should we post today?' that produces likes without sales.",
+    scope: [
+      "Monthly content calendar & topics",
+      "High-converting video and photo creative",
+      "Direct-response caption copywriting",
+      "Customer enquiry management tips",
     ],
-    audiences: ["existing-business", "new-venture"],
+    outcome: "Consistent, engaging posts that build authority and attract customers who are ready to buy.",
     published: true,
   },
 ];
-export const getService = (slug: string) => services.find((item) => item.slug === slug);
+
+export const getService = (slug: string) =>
+  services.find((item) => item.slug === slug);

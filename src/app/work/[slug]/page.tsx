@@ -1,87 +1,117 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { caseStudies, getCaseStudy } from "@/content/case-studies";
+import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { FinalCta, PageHero, SectionTitle } from "@/components/sections/marketing";
 import { createMetadata } from "@/seo/metadata";
+import { Check } from "lucide-react";
+
 export function generateStaticParams() {
   return caseStudies.filter((x) => x.published).map((x) => ({ slug: x.slug }));
 }
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const x = getCaseStudy((await params).slug);
-  return x
-    ? createMetadata({
-        title: `${x.client} concept case study`,
-        description: x.transformation,
-        path: `/work/${x.slug}`,
-      })
-    : {};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const x = getCaseStudy(resolvedParams.slug);
+  if (!x) return {};
+
+  const baseMeta = createMetadata({
+    title: `${x.client} Case Study`,
+    description: x.result,
+    path: `/work/${x.slug}`,
+  });
+
+  // If proof is disabled, ensure demo case studies are marked as noindex
+  if (!siteConfig.showProof) {
+    return {
+      ...baseMeta,
+      robots: { index: false, follow: false },
+    };
+  }
+
+  return baseMeta;
 }
-export default async function Case({ params }: { params: Promise<{ slug: string }> }) {
-  const x = getCaseStudy((await params).slug);
+
+export default async function CaseStudyDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const resolvedParams = await params;
+  const x = getCaseStudy(resolvedParams.slug);
   if (!x) notFound();
+
   return (
     <>
       <PageHero
-        eyebrow={`Concept case study · ${x.industry}`}
+        eyebrow={`Case Study · ${x.industry}`}
         title={x.client}
-        body={x.transformation}
-        primary={{ label: "Discuss a Similar Challenge", href: "/contact" }}
+        body={x.result}
       />
-      <Section>
+
+      <Section className="py-12 sm:py-16">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
-            <aside className="font-mono text-xs uppercase tracking-widest text-blue-700">Illustrative work only</aside>
-            <div className="grid gap-10">
-              <div>
-                <SectionTitle
-                  eyebrow="01 The client"
-                  title="Context"
-                  body={`${x.client} is a concept example in ${x.industry}. It does not represent a BHive client engagement.`}
-                />
+          <div className="max-w-3xl mx-auto space-y-12">
+            {x.isDemo && (
+              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs font-mono text-amber-900">
+                {/* TODO: replace with verified client engagement data */}
+                Example case study for demonstration. Real client engagement data will be displayed upon verification.
               </div>
-              <div>
-                <SectionTitle eyebrow="02 The challenge" title="What needed change." body={x.challenge} />
-              </div>
-              <div>
-                <SectionTitle eyebrow="03 The scope" title="What the system needed." />
-                <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-                  {x.scope.map((y) => (
-                    <li key={y} className="border-l-2 border-blue-500 p-3">
-                      {y}
+            )}
+
+            {/* 1. Challenge */}
+            <div className="rounded-[22px] border border-red-200/80 bg-red-50/40 p-6 sm:p-8">
+              <SectionTitle
+                eyebrow="The Roadblock"
+                title="The Challenge"
+                body={x.challenge}
+              />
+            </div>
+
+            {/* 2. What We Did */}
+            <div className="rounded-[22px] border border-blue-200/80 bg-blue-50/40 p-6 sm:p-8">
+              <SectionTitle
+                eyebrow="The Action"
+                title="What We Did"
+                body={x.whatWeDid}
+              />
+
+              <div className="mt-6">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-700 mb-3">
+                  Scope of work delivered:
+                </h3>
+                <ul className="flex flex-wrap gap-2">
+                  {x.scope.map((item) => (
+                    <li
+                      key={item}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-white border border-blue-200 px-3 py-1 text-xs font-medium text-blue-900"
+                    >
+                      <Check className="h-3.5 w-3.5 text-blue-600" />
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div>
-                <SectionTitle eyebrow="04 The process" title="How the work moved." />
-                <ol className="mt-4 grid gap-3">
-                  {x.process.map((y, i) => (
-                    <li key={y}>
-                      <b>{i + 1}. </b>
-                      {y}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="border p-5">
-                  <p className="eyebrow">Before</p>
-                  <p className="mt-3 text-muted-foreground">{x.challenge}</p>
-                </div>
-                <div className="border border-blue-500 bg-blue-50 p-5">
-                  <p className="eyebrow">After</p>
-                  <p className="mt-3">{x.transformation}</p>
-                </div>
-              </div>
-              <div>
-                <SectionTitle eyebrow="06 The result" title="Qualitative outcome." body={x.result} />
-              </div>
+            </div>
+
+            {/* 3. The Result */}
+            <div className="rounded-[22px] border border-emerald-200/80 bg-emerald-50/40 p-6 sm:p-8">
+              <SectionTitle
+                eyebrow="The Outcome"
+                title="The Result"
+                body={x.result}
+              />
             </div>
           </div>
         </Container>
       </Section>
+
       <FinalCta />
     </>
   );

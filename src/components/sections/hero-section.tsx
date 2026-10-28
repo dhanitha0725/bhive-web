@@ -1,330 +1,169 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowRight,
-  Check,
-  Rocket,
-  TrendingUp,
-  Sparkles,
-} from "lucide-react";
-import { CloudSky } from "@/components/ui/cloud-sky";
+import React from "react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Container } from "@/components/ui/container";
-import { Dialog } from "@/components/ui/dialog";
-import { LeadForm } from "@/components/forms/lead-form";
+import { ConsultationTriggerButton } from "@/components/ui/consultation-trigger-button";
+import { ArrowRight } from "lucide-react";
 
-const AUTOPLAY_INTERVAL = 6000; // 6 seconds per card switch
-
-interface HeroCardData {
-  id: "strategy" | "audit";
-  badge: string;
-  icon: typeof Rocket;
-  title: string;
-  description: string;
-  points: string[];
-  buttonText: string;
-  buttonClass: string;
-  dialogType: "strategy" | "audit";
-}
-
-const HERO_CARDS: HeroCardData[] = [
-  {
-    id: "strategy",
-    badge: "FOR NEW BUSINESSES & FOUNDERS",
-    icon: Rocket,
-    title: "Book a Free 1-on-1 Strategy Call",
-    description:
-      "Building a new venture? Discuss your business model, brand identity, and go-to-market launch plan 1-on-1 with a senior strategist.",
-    points: [
-      "Market positioning & launch roadmap",
-      "Brand identity & high-converting website direction",
-      "30-minute tailored discovery session · 100% free guidance",
-    ],
-    buttonText: "BOOK A FREE STRATEGY CALL",
-    buttonClass: "bg-[#0a254f] hover:bg-[#071a3a]",
-    dialogType: "strategy",
-  },
-  {
-    id: "audit",
-    badge: "FOR EXISTING BUSINESSES",
-    icon: TrendingUp,
-    title: "Free Social Media & Growth Audit",
-    description:
-      "Already running a business? Uncover hidden revenue leaks and discover high-ROI channels across your social, ads, and web funnel.",
-    points: [
-      "Social media & paid ads performance review",
-      "Website conversion funnel & SEO diagnostics",
-      "Actionable growth roadmap delivered in 48h · 100% free",
-    ],
-    buttonText: "REQUEST MY FREE AUDIT",
-    buttonClass: "bg-blue-600 hover:bg-blue-700",
-    dialogType: "audit",
-  },
-];
+// Dynamically import GradientWaves to prevent WebGL SSR hydration mismatch
+const GradientWaves = dynamic(() => import("@/components/GradientWaves"), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-white" />,
+});
 
 export function HeroSection() {
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [timerKey, setTimerKey] = useState(0);
-  const [strategyDialogOpen, setStrategyDialogOpen] = useState(false);
-  const [auditDialogOpen, setAuditDialogOpen] = useState(false);
-
-  // Periodic card auto-switching with hover pause & modal pause
-  useEffect(() => {
-    if (isPaused || strategyDialogOpen || auditDialogOpen) return;
-
-    const interval = setInterval(() => {
-      setActiveCardIndex((prev) => (prev + 1) % HERO_CARDS.length);
-      setTimerKey((k) => k + 1);
-    }, AUTOPLAY_INTERVAL);
-
-    return () => clearInterval(interval);
-  }, [isPaused, strategyDialogOpen, auditDialogOpen, timerKey]);
-
-  const handleSelectCard = (index: number) => {
-    if (index === activeCardIndex) return;
-    setActiveCardIndex(index);
-    setTimerKey((k) => k + 1);
-  };
-
-  const activeCard = HERO_CARDS[activeCardIndex];
-
   return (
-    <>
-      {/* Outer wrapper: 100% width across all screens with zero outer margins or frames */}
-      <div className="w-full max-w-none overflow-x-clip">
-        <section className="relative flex w-full flex-col justify-center items-center overflow-hidden bg-[#0075FF] text-white rounded-none min-h-[100svh] pt-28 pb-14 sm:pt-32 sm:pb-16 md:pt-36 md:pb-20">
-          {/* 1. Cloud Sky Background (Interactive WebGL Drifting Sky with 100% full-bleed coverage) */}
-          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-auto rounded-none">
-            <CloudSky
-              background="#0075FF"
-              baseColor="#B4D2F0"
-              accentColor="#FFFFFF"
-              density={85}
-              speed={45}
-              size={130}
-              clouds={{ softness: 160, shadow: 65, cirrus: 65 }}
-              sun={{ x: 92, y: 94, glow: "#FFFFFF" }}
-              pointer={{ wind: 220, damping: 40, parallax: 240 }}
-              style={{ width: "100%", height: "100%", minWidth: "100%", minHeight: "100%" }}
-            />
-            {/* Soft atmospheric gradient to maintain high legibility */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0075FF]/35 via-transparent to-[#0075FF]/50 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-[#0060df]/30 pointer-events-none" />
-          </div>
-
-          {/* 2. Main Hero Content Container */}
-          <Container className="relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center px-4 sm:px-6">
-            {/* Top Pill Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 backdrop-blur-md px-4 py-1.5"
-            >
-              <Sparkles className="h-3.5 w-3.5 text-white/90" />
-              <span className="text-xs sm:text-sm font-semibold text-white/95">
-                Strategic Brand &amp; Growth Marketing Agency
-              </span>
-            </motion.div>
-
-            {/* Main Display Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-5 sm:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-semibold tracking-[-0.28px] text-white leading-[1.07] max-w-5xl"
-            >
-              <span className="block">From First Step to Fully Scaled.</span>
-              <span className="block mt-1 sm:mt-2 text-white/95">We’re With You.</span>
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="mt-4 sm:mt-5 max-w-3xl text-base sm:text-[17px] text-white/90 font-normal leading-[1.47] tracking-[-0.374px]"
-            >
-              No cookie-cutter campaigns or chasing viral trends. We create tailored, authentic strategies that solve real challenges and drive real sales, whether you’re scaling an existing business or taking your very first step.
-            </motion.p>
-
-            {/* 3. FOCUSED AUTO-SWITCHING CARD CONTAINER */}
-            <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-              className="mt-8 md:mt-10 w-full max-w-4xl mx-auto"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-            >
-              {/* Frosted Glass Outer Container */}
-              <div className="rounded-[22px] sm:rounded-[26px] bg-white/20 backdrop-blur-2xl p-2 sm:p-2.5 border border-white/40 shadow-none">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={activeCard.id}
-                    initial={{ opacity: 0, y: 12, scale: 0.99 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -12, scale: 0.99 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-[18px] sm:rounded-[22px] bg-white p-6 sm:p-8 md:p-8 text-slate-900 border border-white/90 shadow-none text-left"
-                  >
-                    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-                      {/* Left Column: Pathway Badge, Title, Description, and Desktop CTA */}
-                      <div className="order-1 lg:col-span-7 flex flex-col justify-between">
-                        <div>
-                          {/* Pathway Tag */}
-                          <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/85 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700">
-                            <activeCard.icon className="h-3.5 w-3.5 text-blue-600" />
-                            <span>{activeCard.badge}</span>
-                          </div>
-
-                          {/* Title */}
-                          <h3 className="mt-3.5 text-xl sm:text-2xl md:text-[28px] font-semibold font-display text-slate-900 tracking-[0.196px] leading-[1.14]">
-                            {activeCard.title}
-                          </h3>
-
-                          {/* Description */}
-                          <p className="mt-2 text-sm sm:text-[17px] text-slate-600 leading-[1.47] tracking-[-0.374px]">
-                            {activeCard.description}
-                          </p>
-                        </div>
-
-                        {/* Desktop Action Button */}
-                        <div className="hidden lg:block mt-7 pt-1">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              activeCard.dialogType === "strategy"
-                                ? setStrategyDialogOpen(true)
-                                : setAuditDialogOpen(true)
-                            }
-                            className={`group inline-flex items-center justify-center gap-2.5 rounded-full ${activeCard.buttonClass} px-7 py-3.5 text-[15px] sm:text-[17px] font-normal text-white transition-all duration-150 active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[#0071e3]`}
-                          >
-                            <span>{activeCard.buttonText}</span>
-                            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Right Column: Deliverables / Checklist highlights card */}
-                      <div className="order-2 lg:col-span-5 bg-slate-50/90 rounded-[18px] p-5 sm:p-6 border border-slate-100 flex flex-col justify-center space-y-3">
-                        <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-                          Included in this session · 100% Free
-                        </div>
-                        <div className="space-y-3 text-xs sm:text-sm text-slate-700">
-                          {activeCard.points.map((point, i) => (
-                            <div key={i} className="flex items-start gap-2.5">
-                              <div className="h-4 w-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
-                                <Check className="h-3 w-3 stroke-[2.5]" />
-                              </div>
-                              <span className="leading-snug text-slate-800 font-medium">
-                                {point}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Mobile Action Button (shown below checklist on small screens) */}
-                      <div className="order-3 lg:hidden mt-2 pt-1">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            activeCard.dialogType === "strategy"
-                              ? setStrategyDialogOpen(true)
-                              : setAuditDialogOpen(true)
-                          }
-                          className={`group inline-flex w-full items-center justify-center gap-2.5 rounded-full ${activeCard.buttonClass} px-6 py-3.5 text-[15px] sm:text-[17px] font-normal text-white transition-all duration-150 active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[#0071e3]`}
-                        >
-                          <span>{activeCard.buttonText}</span>
-                          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              {/* Card Switching UI - Dash Progress Indicators matching reference image rectangle */}
-              <div className="flex flex-col items-center justify-center mt-5 sm:mt-6">
-                <div className="flex items-center justify-center gap-2.5 sm:gap-3.5">
-                  {HERO_CARDS.map((card, idx) => {
-                    const isActive = activeCardIndex === idx;
-                    return (
-                      <button
-                        key={card.id}
-                        type="button"
-                        onClick={() => handleSelectCard(idx)}
-                        aria-label={`Switch to ${card.badge}`}
-                        title={card.badge}
-                        className="group relative py-2 px-1 focus:outline-none cursor-pointer"
-                      >
-                        {/* Dash track */}
-                        <div className="relative w-14 sm:w-20 h-1.5 sm:h-2 rounded-full bg-white/35 group-hover:bg-white/55 transition-colors overflow-hidden">
-                          {isActive && (
-                            isPaused ? (
-                              <div className="absolute inset-y-0 left-0 w-full bg-white rounded-full" />
-                            ) : (
-                              <motion.div
-                                key={`progress-${idx}-${timerKey}`}
-                                className="absolute inset-y-0 left-0 bg-white rounded-full"
-                                initial={{ width: "0%" }}
-                                animate={{ width: "100%" }}
-                                transition={{
-                                  duration: AUTOPLAY_INTERVAL / 1000,
-                                  ease: "linear",
-                                }}
-                              />
-                            )
-                          )}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </motion.div>
-          </Container>
-        </section>
+    <section className="relative w-full bg-white text-neutral-900 pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28 overflow-hidden min-h-[82vh] flex items-center justify-center border-b border-neutral-100">
+      {/* React Bits GradientWaves WebGL Surface */}
+      <div className="absolute inset-0 z-0 pointer-events-auto">
+        <GradientWaves
+          horizonColor="#006eff"
+          waveColor="#0073ff"
+          crestColor="#0055ff"
+          backgroundColor="#ffffff"
+          lightMode={true}
+          speed={0.32}
+          amplitude={3}
+          waveScale={0.65}
+          waveRatio={0.95}
+          swell={28}
+          turbulence={20}
+          tilt={75}
+          zoom={1.85}
+          height={5}
+          fogDepth={18}
+          relief={0.9}
+          lightAngle={110}
+          sheen={0.35}
+          brightness={1.05}
+          opacity={0.9}
+          grain={0.18}
+          quality="medium"
+          mouseInteraction={true}
+          swellOnClick={true}
+          className="w-full h-full"
+        />
+        {/* Soft atmospheric gradient scrim for flawless contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-white/70 pointer-events-none" />
       </div>
 
-      {/* Dialog for New Businesses: 1-on-1 Free Strategy Call */}
-      <Dialog
-        open={strategyDialogOpen}
-        onClose={() => setStrategyDialogOpen(false)}
-        title="Book Your Free Strategy Call"
-      >
-        <div className="text-sm text-slate-600 -mt-2 mb-4 space-y-1.5">
-          <p>
-            Connect 1-on-1 with a senior commercial strategist. We will discuss your business
-            concept, target market, and map out a high-converting launch roadmap.
-          </p>
-          <p className="text-xs font-semibold text-blue-600">
-            ✓ 30 minutes · 100% confidential · Zero sales pressure
-          </p>
-        </div>
-        <LeadForm type="business-guidance" />
-      </Dialog>
+      {/* Hero Architectural Container */}
+      <Container className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-none">
+        <div className="text-center max-w-4xl mx-auto pointer-events-auto">
+          {/* Top Announcement / Pill Badge (AgentFrame style) */}
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-neutral-200/90 bg-white/85 backdrop-blur-md px-3.5 py-1 text-xs text-neutral-600 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-neutral-300 transition-colors mb-6 sm:mb-8">
+            <span className="rounded-full bg-[#0066cc] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+              Agency
+            </span>
+            <span className="font-normal text-neutral-700">
+              Strategic Brand &amp; Growth Marketing Agency
+            </span>
+          </div>
 
-      {/* Dialog for Existing Businesses: Free Social Media & Growth Audit */}
-      <Dialog
-        open={auditDialogOpen}
-        onClose={() => setAuditDialogOpen(false)}
-        title="Request Your Free Growth & Marketing Audit"
-      >
-        <div className="text-sm text-slate-600 -mt-2 mb-4 space-y-1.5">
-          <p>
-            We will conduct an objective, diagnostic audit of your channels, website, and
-            conversion funnels, delivered with actionable insights in 48 hours.
+          {/* Display Headline with Serif Italic Accent (AgentFrame style) */}
+          <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.12] max-w-4xl mx-auto">
+            From First Step to Fully Scaled.
+            <span className="block font-serif italic font-normal text-[#0066cc] mt-1 sm:mt-2">
+              We’re With You.
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="mt-5 sm:mt-6 text-base sm:text-[17px] text-neutral-600 font-normal leading-[1.65] max-w-2xl mx-auto">
+            No cookie-cutter campaigns or chasing viral trends. We create tailored, authentic strategies that solve real challenges and drive real sales, whether you’re scaling an existing business or taking your very first step.
           </p>
-          <p className="text-xs font-semibold text-blue-600">
-            ✓ 100% free audit · Objective analysis · Zero obligation
-          </p>
+
+          {/* Action Group: 2 Side-by-Side CTAs with perfect proportions */}
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5">
+            {/* Outline / Secondary Button on Left (AgentFrame layout) */}
+            <Link
+              href="/free-growth-audit"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300/90 bg-white/95 hover:bg-neutral-50 px-6 py-2.5 sm:px-7 sm:py-3 text-[14px] font-medium text-[#1d1d1f] transition-all duration-150 shadow-xs hover:border-neutral-400 active:scale-[0.98] cursor-pointer backdrop-blur-sm"
+            >
+              <span>Get Free Growth Audit</span>
+              <ArrowRight className="h-4 w-4 text-[#0066cc]" />
+            </Link>
+
+            {/* Solid Primary Button on Right (AgentFrame layout) */}
+            <ConsultationTriggerButton
+              location="hero"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white px-6 py-2.5 sm:px-7 sm:py-3 text-[14px] font-medium transition-all duration-150 shadow-[0_2px_14px_rgba(0,102,204,0.25)] active:scale-[0.98] cursor-pointer"
+            >
+              <span>Get Free Consultation</span>
+              <ArrowRight className="h-4 w-4" />
+            </ConsultationTriggerButton>
+          </div>
+
+          {/* Client Proof Section */}
+          <div className="mt-14 sm:mt-16 pt-1">
+            {/* Secondary Font Label */}
+            <p className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.18em] text-neutral-400 font-medium">
+              Trusted by clients &amp; growing businesses
+            </p>
+
+            {/* Dummy Client Logos */}
+            <div className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-12 gap-y-4">
+              {/* Halcyon */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <span className="font-serif italic text-[18px] sm:text-[20px] text-neutral-700 tracking-wide">
+                  Halcyon
+                </span>
+              </div>
+
+              {/* VERTEX */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <svg className="h-3.5 w-3.5 text-neutral-600" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 22 20 2 20" />
+                </svg>
+                <span className="font-sans font-bold text-[13px] sm:text-[14px] tracking-[0.24em] text-neutral-700 uppercase">
+                  VERTEX
+                </span>
+              </div>
+
+              {/* loopwork */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <svg className="h-4 w-4 text-neutral-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.267-8-12.362-8-5.096 0-5.096 8 0 8 5.095 0 7.267-8 12.362-8z" />
+                </svg>
+                <span className="font-sans font-semibold text-[15px] sm:text-[16px] tracking-tight text-neutral-700">
+                  loopwork
+                </span>
+              </div>
+
+              {/* Nimbus */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <svg className="h-4 w-4 text-neutral-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                  <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                </svg>
+                <span className="font-sans font-medium text-[16px] sm:text-[17px] tracking-normal text-neutral-700">
+                  Nimbus
+                </span>
+              </div>
+
+              {/* FORMA */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <span className="font-sans font-black text-[13px] sm:text-[14px] tracking-[0.22em] text-neutral-700 uppercase">
+                  FORMA
+                </span>
+              </div>
+
+              {/* arcline */}
+              <div className="flex items-center gap-1.5 opacity-60 hover:opacity-90 transition-opacity cursor-default">
+                <svg className="h-3.5 w-3.5 text-neutral-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M4 20A16 16 0 0 1 20 4" />
+                </svg>
+                <span className="font-sans font-medium text-[15px] sm:text-[16px] tracking-wide text-neutral-700 lowercase">
+                  arcline
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-        <LeadForm type="growth-audit" />
-      </Dialog>
-    </>
+      </Container>
+    </section>
   );
 }
+
+export default HeroSection;
