@@ -61,5 +61,5 @@
   - Validation: Strict client & server-side Zod validation with inline error messaging.
   - Honeypot: Anti-bot silent trap.
   - Rate Limiting: Max 5 submissions per 10 minutes per IP.
-  - Notifications: Dispatcher for Resend Email, Telegram Bot, Google Sheets, with complete console logging fallback so no lead is ever lost.
+  - Notifications: Dispatcher for lead logging so no lead is ever lost.
   - Future Extensibility: `whatsAppCloudApiAdapter` interface reserved with `// TODO: Wire WhatsApp Cloud API`.

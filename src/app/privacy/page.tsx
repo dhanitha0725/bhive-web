@@ -47,13 +47,8 @@ export default function PrivacyPage() {
               2. Third-Party Processors
             </h2>
             <p>
-              We do not sell or rent your information to advertisers. We use reputable third-party infrastructure providers solely to deliver lead alerts to our team:
+              We do not sell or rent your personal information to advertisers. We only use secure hosting and communication infrastructure necessary to deliver our services and review your inquiries.
             </p>
-            <ul className="mt-3 list-disc pl-5 space-y-1.5 text-slate-600">
-              <li><strong>Resend</strong>: Secure transactional email provider used to notify our team of new consultation submissions.</li>
-              <li><strong>Telegram Bot API</strong>: Used to dispatch instant encrypted notification alerts to our internal management team.</li>
-              <li><strong>Google Sheets Webhook</strong>: Used as an encrypted backup to log incoming inquiries in our private client pipeline spreadsheet.</li>
-            </ul>
           </div>
 
           {/* 3. Purpose */}
@@ -106,7 +101,7 @@ export default function PrivacyPage() {
               </li>
             </ul>
             <p className="mt-3">
-              We will delete all your records from our notification logs and spreadsheets within 48 hours of receiving your request.
+              We will delete all your records from our systems within 48 hours of receiving your request.
             </p>
           </div>
         </div>
