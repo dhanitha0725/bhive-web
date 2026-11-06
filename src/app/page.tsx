@@ -1,7 +1,6 @@
 import { HeroSection } from "@/components/sections/hero-section";
 import { TrustedPartnersSection } from "@/components/sections/trusted-partners-section";
 import { ProblemSection } from "@/components/sections/problem-section";
-import { OutcomesSection } from "@/components/sections/system-section";
 import { PathwaySection } from "@/components/sections/pathway-section";
 import { HowItWorksSection } from "@/components/sections/how-it-works-section";
 import { SelectedWorkSection } from "@/components/sections/selected-work-section";
@@ -26,15 +25,12 @@ export default function Home() {
       {/* 2. Logo & Stat Strip: Slim stat counters with TODO placeholders */}
       <TrustedPartnersSection />
 
-      {/* 3. Problem: 4 business owner pains */}
-      <ProblemSection />
-
-      {/* 4. Outcomes: 4 compact blocks in owner language */}
+      {/* 3. The Transformation: Merged Problems & Results in one unified section */}
       <div id="outcomes">
-        <OutcomesSection />
+        <ProblemSection />
       </div>
 
-      {/* 5. Services: 5 plain-named cards linking to /services#slug */}
+      {/* 4. Services: 5 plain-named cards linking to /services#slug */}
       <PathwaySection />
 
       {/* 6. How it works: 3 steps */}
