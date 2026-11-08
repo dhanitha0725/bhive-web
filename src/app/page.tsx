@@ -1,4 +1,4 @@
-import { HeroSection } from "@/components/sections/hero-section";
+import { HeroSwitcher } from "@/components/sections/hero-switcher";
 import { TrustedPartnersSection } from "@/components/sections/trusted-partners-section";
 import { ProblemSection } from "@/components/sections/problem-section";
 import { PathwaySection } from "@/components/sections/pathway-section";
@@ -19,8 +19,8 @@ export const metadata = createMetadata({
 export default function Home() {
   return (
     <>
-      {/* 1. Hero: Plain headline, subline, primary CTA + WhatsApp */}
-      <HeroSection />
+      {/* 1. Hero: Switchable variations (FlexCarousel vs 3D Tilted Grid) */}
+      <HeroSwitcher />
 
       {/* 2. Logo & Stat Strip: Slim stat counters with TODO placeholders */}
       <TrustedPartnersSection />
