@@ -91,8 +91,15 @@ export function TiltedGridHero({
   // Responsive card sizing — the card width drives the whole ring so the
   // composition keeps the same tile-to-gap ratio on every viewport.
   const isMobile = dimensions.width < 640;
+  const isTablet = dimensions.width >= 640 && dimensions.width < 1024;
 
-  const cardWidth = Math.round(Math.min(250, Math.max(102, dimensions.width * 0.13)));
+  const cardWidth = Math.round(
+    isMobile
+      ? Math.min(130, Math.max(105, dimensions.width * 0.28))
+      : isTablet
+        ? Math.min(165, Math.max(130, dimensions.width * 0.18))
+        : Math.min(220, Math.max(160, dimensions.width * 0.13)),
+  );
   const cardHeight = Math.round(cardWidth / aspectRatio);
 
   const slotsCount = useMemo(() => {
