@@ -4,10 +4,17 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { primaryNavigation } from "@/config/site";
-import { useConsultation } from "@/components/providers/consultation-provider";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { useConsultation } from "@/components/providers/consultation-provider";
+import { motion, AnimatePresence } from "framer-motion";
+
+const navLinks = [
+  { label: "Services", href: "/#services" },
+  { label: "Our Work", href: "/#work" },
+  { label: "Blog", href: "/#insights" },
+  { label: "About", href: "/about" },
+];
 
 export function Header() {
   const pathname = usePathname();
@@ -17,7 +24,7 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 16);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
@@ -26,41 +33,39 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-200 ${
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-xl border-b border-neutral-200/60 shadow-xs"
-          : "bg-white/40 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none border-b-0"
+          ? "bg-white/95 backdrop-blur-md border-b border-[#e5e8ee] shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
+          : "bg-white"
       }`}
     >
-      <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
-          {/* Col Left: Logo */}
-          <div className="flex items-center">
-            <Link
-              href="/"
-              className="flex items-center py-1 transition-opacity hover:opacity-85 focus-visible:outline-2 focus-visible:outline-[#0071e3]"
-              aria-label="BHive Home"
-            >
-              <img
-                src="/logo.png"
-                alt="BHive"
-                className="h-7 sm:h-7.5 w-auto object-contain block"
-              />
-            </Link>
-          </div>
+      <Container>
+        <div className="flex items-center justify-between h-20 sm:h-24 md:h-28">
+          {/* Brand Logo */}
+          <Link
+            href="/"
+            className="flex items-center shrink-0 transition-opacity hover:opacity-90"
+            aria-label="BHive Home"
+          >
+            <img
+              src="/images/figma/bhive-logo.png"
+              alt="BHive"
+              className="h-8 sm:h-10 md:h-11 w-auto object-contain block"
+            />
+          </Link>
 
-          {/* Col Middle: Navigation Links */}
-          <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-1">
-            {primaryNavigation.map((item) => {
-              const isActive = pathname === item.href;
+          {/* Desktop Navigation Links */}
+          <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-8 lg:gap-10">
+            {navLinks.map((item) => {
+              const isCurrent = pathname === item.href;
               return (
                 <Link
-                  key={item.href}
+                  key={item.label}
                   href={item.href}
-                  className={`px-3.5 py-1.5 rounded-full text-[13px] font-medium transition-all ${
-                    isActive
-                      ? "text-[#0066cc] bg-blue-50/70 font-semibold"
-                      : "text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100/60"
+                  className={`text-[15px] font-medium transition-colors duration-150 ${
+                    isCurrent
+                      ? "text-[#3068f9]"
+                      : "text-[#0b1220] hover:text-[#3068f9]"
                   }`}
                 >
                   {item.label}
@@ -69,70 +74,70 @@ export function Header() {
             })}
           </nav>
 
-          {/* Col Right: Compact Header CTA Button */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Contact Action Pill Button */}
+          <div className="hidden md:flex items-center">
             <button
               type="button"
               onClick={(e) => openConsultation("header", e.currentTarget)}
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white px-3.5 py-1.5 sm:px-4 sm:py-1.5 text-xs sm:text-[13px] font-medium transition-all duration-150 active:scale-[0.98] shadow-xs cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 h-12 lg:h-13 px-6 lg:px-8 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[15px] font-medium shadow-[0_2px_12px_rgba(48,104,249,0.22)] transition-all duration-200 active:scale-[0.98] cursor-pointer"
             >
-              <span>Free Consultation</span>
-              <ArrowUpRight className="h-3.5 w-3.5" />
+              <span>Contact</span>
+              <ArrowRight className="h-4 w-4" />
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <div className="flex md:hidden items-center gap-2">
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label="Toggle mobile menu"
-              className="p-2 rounded-lg text-neutral-700 hover:bg-neutral-100 transition-colors"
+              className="p-2.5 rounded-full text-[#0b1220] hover:bg-[#f5f7fa] transition-colors"
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-neutral-100 py-4 px-2 space-y-2 animate-in fade-in slide-in-from-top-2 duration-150">
-            {primaryNavigation.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-2.5 rounded-xl text-base font-medium transition-colors ${
-                    isActive
-                      ? "text-[#0066cc] bg-blue-50 font-semibold"
-                      : "text-neutral-700 hover:bg-neutral-100"
-                  }`}
+        {/* Mobile Navigation Dropdown */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden overflow-hidden border-t border-[#e5e8ee] py-5 space-y-4"
+            >
+              <div className="flex flex-col space-y-3">
+                {navLinks.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-2 py-1.5 text-base font-medium text-[#0b1220] hover:text-[#3068f9] transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    openConsultation("header-mobile", e.currentTarget);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 h-12 rounded-full bg-[#3068f9] text-white text-[15px] font-medium shadow-md"
                 >
-                  {item.label}
-                </Link>
-              );
-            })}
-
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  openConsultation("header_mobile", e.currentTarget);
-                }}
-                className="w-full inline-flex items-center justify-center gap-1.5 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white py-2.5 text-[14px] font-medium transition-all active:scale-[0.98] shadow-xs cursor-pointer"
-              >
-                <span>Free Consultation</span>
-                <ArrowUpRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        )}
+                  <span>Contact</span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Container>
     </header>
   );
 }
-
-export default Header;

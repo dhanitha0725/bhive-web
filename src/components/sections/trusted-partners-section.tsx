@@ -2,70 +2,51 @@
 
 import React from "react";
 import { Container } from "@/components/ui/container";
-import { TrendingUp, Users, CheckCircle } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import { motion } from "framer-motion";
 
-// TODO: replace with real verified client counters and logos once approved by owner
-const STAT_COUNTERS = [
-  {
-    icon: TrendingUp,
-    value: "100%", // TODO: replace with real data
-    label: "Custom-planned marketing",
-    subtext: "No copied templates or random boosts",
-  },
-  {
-    icon: Users,
-    value: "24h", // TODO: replace with real data
-    label: "Direct founder response",
-    subtext: "We review your business before we call",
-  },
-  {
-    icon: CheckCircle,
-    value: "3 Languages", // TODO: replace with real data
-    label: "English, Sinhala & Tamil",
-    subtext: "Comfortable communication for your team",
-  },
+const PARTNERS = [
+  { name: "Ceylon Tea Trails", category: "Hospitality" },
+  { name: "Lanka Retail Co.", category: "Retail" },
+  { name: "Colombo Tech Lab", category: "Digital" },
+  { name: "Heritage Apparel", category: "Fashion" },
+  { name: "Island Spice Exotics", category: "Exports" },
 ];
 
 export function TrustedPartnersSection() {
-  if (!siteConfig.showProof) {
-    return null;
-  }
-
   return (
-    <section className="relative w-full border-b border-slate-200 bg-slate-50 py-7 sm:py-8">
-      <Container className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-          {STAT_COUNTERS.map((stat, i) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={i}
-                className={`flex items-center gap-4 ${
-                  i > 0 ? "pt-5 md:pt-0 md:pl-8" : ""
-                }`}
-              >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-[#0066cc]">
-                  <Icon className="h-6 w-6 stroke-[2.2]" />
-                </div>
-                <div>
-                  <div className="text-xl sm:text-2xl font-bold font-display text-slate-900 tracking-tight">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs sm:text-sm font-semibold text-slate-800">
-                    {stat.label}
-                  </div>
-                  <div className="text-xs text-slate-500 font-normal">
-                    {stat.subtext}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+    <section className="relative w-full py-12 sm:py-16 md:py-20 bg-white">
+      <Container>
+        {/* Divider Line */}
+        <div className="w-full border-t border-[#e5e8ee]" />
+
+        {/* Section Heading */}
+        <div className="text-center mt-10 sm:mt-14 mb-8 sm:mb-12">
+          <p className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#5b6475] uppercase">
+            Trusted Partners
+          </p>
+        </div>
+
+        {/* 5 Partner Logo Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 items-center justify-center">
+          {PARTNERS.map((partner, idx) => (
+            <motion.div
+              key={partner.name}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              className="h-16 sm:h-18 rounded-2xl bg-[#f5f7fa] border border-[#e5e8ee] flex flex-col items-center justify-center px-4 transition-all duration-200 hover:border-[#c5cbe0] hover:bg-[#eef3ff] group"
+            >
+              <span className="text-[13px] sm:text-[14px] font-medium text-[#0b1220] tracking-tight group-hover:text-[#3068f9] transition-colors">
+                {partner.name}
+              </span>
+              <span className="text-[10px] sm:text-[11px] text-[#5b6475]">
+                {partner.category}
+              </span>
+            </motion.div>
+          ))}
         </div>
       </Container>
     </section>
   );
 }
-
-export default TrustedPartnersSection;

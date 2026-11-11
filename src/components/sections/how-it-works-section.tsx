@@ -2,27 +2,24 @@
 
 import React from "react";
 import { Container } from "@/components/ui/container";
-import { MessageSquare, Search, PhoneCall } from "lucide-react";
+import { motion } from "framer-motion";
 
 const STEPS = [
   {
-    step: "01",
-    icon: MessageSquare,
-    title: "1. Message us your business details",
+    number: "01",
+    title: "Message us your business details",
     description:
       "Send a quick note on WhatsApp or fill out our 30-second form with your business name and main goal.",
   },
   {
-    step: "02",
-    icon: Search,
-    title: "2. We review your current marketing",
+    number: "02",
+    title: "We review your current marketing",
     description:
       "Before we talk, our team analyzes your website, social channels, and competitors to see where sales are leaking.",
   },
   {
-    step: "03",
-    icon: PhoneCall,
-    title: "3. Short call with a clear, honest plan",
+    number: "03",
+    title: "Short call with a clear, honest plan",
     description:
       "We walk you through a tailored 3-month action plan. If we're a good fit, we can work together. If not, the plan is 100% yours to keep.",
   },
@@ -30,55 +27,59 @@ const STEPS = [
 
 export function HowItWorksSection() {
   return (
-    <section className="relative w-full py-16 sm:py-20 lg:py-24 bg-slate-50/70 text-slate-900 border-b border-slate-200">
-      <Container className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold uppercase tracking-wider">
-            Simple 3-Step Process
-          </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[42px] font-semibold font-display tracking-tight text-slate-900 leading-[1.15]">
+    <section className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
+      <Container>
+        {/* Section Header */}
+        <div className="mb-12 sm:mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-3 sm:mb-4"
+          >
+            <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
+              HOW IT WORKS
+            </span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-3xl sm:text-5xl lg:text-[60px] font-medium tracking-[-0.03em] leading-[1.08] text-[#0b1220]"
+          >
             How we get started together
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
-            No endless sales pitches or complicated onboarding. We keep it direct and practical.
-          </p>
+          </motion.h2>
         </div>
 
-        {/* 3 Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {STEPS.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={item.step}
-                className="relative rounded-[22px] bg-white border border-slate-200 p-6 sm:p-8 flex flex-col justify-between shadow-sm"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="font-mono text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
-                      STEP {item.step}
-                    </span>
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-[#0066cc]">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                  </div>
+        {/* 12-Column Stretch Grid: 3 Cards (4 Cols each) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {STEPS.map((step, idx) => (
+            <motion.div
+              key={step.number}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="rounded-2xl bg-white border border-[#e5e8ee] p-8 sm:p-10 flex flex-col justify-start transition-all duration-300 hover:border-[#c5cbe0] hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+            >
+              <span className="text-3xl sm:text-4xl font-medium text-[#3068f9] mb-6 block">
+                {step.number}
+              </span>
 
-                  <h3 className="text-xl font-semibold font-display text-slate-900 leading-snug">
-                    {item.title}
-                  </h3>
+              <h3 className="text-xl sm:text-2xl font-medium tracking-tight text-[#0b1220] mb-4">
+                {step.title}
+              </h3>
 
-                  <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+              <p className="text-sm sm:text-base text-[#5b6475] leading-relaxed">
+                {step.description}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </Container>
     </section>
   );
 }
-
-export default HowItWorksSection;
