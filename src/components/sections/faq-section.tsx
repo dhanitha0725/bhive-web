@@ -44,10 +44,10 @@ export function FaqSection() {
           {/* Left Column: 5 Columns */}
           <div className="lg:col-span-5 flex flex-col items-start">
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className="mb-3 sm:mb-4"
             >
               <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
@@ -56,18 +56,18 @@ export function FaqSection() {
             </motion.div>
 
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-5xl lg:text-[56px] font-medium tracking-[-0.03em] leading-[1.08] text-[#0b1220]"
+              transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+              className="text-3xl sm:text-5xl lg:text-[56px] font-medium tracking-[-0.03em] leading-[1.05] text-[#0b1220]"
             >
               Frequently Asked Questions
             </motion.h2>
 
             <div className="mt-8 sm:mt-12">
               <PillButton
-                variant="primary"
+                treatment="primary"
                 isConsultation
                 consultationLocation="faq"
                 showArrow
@@ -89,15 +89,16 @@ export function FaqSection() {
                     className="w-full flex items-center justify-between text-left gap-4 cursor-pointer group"
                     aria-expanded={isOpen}
                   >
-                    <span className="text-base sm:text-lg font-medium text-[#0b1220] group-hover:text-[#3068f9] transition-colors leading-[1.3]">
+                    <span className="text-base sm:text-lg font-medium text-[#0b1220] group-hover:text-[#3068f9] transition-colors duration-200 leading-[1.3]">
                       {faq.q}
                     </span>
 
-                    <span className="w-8 h-8 rounded-full bg-[#f5f7fa] flex items-center justify-center shrink-0 text-[#0b1220] group-hover:bg-[#eef3ff] group-hover:text-[#3068f9] transition-all">
+                    <span className="w-8 h-8 rounded-full bg-[#f5f7fa] flex items-center justify-center shrink-0 text-[#0b1220] group-hover:bg-[#eef3ff] group-hover:text-[#3068f9] transition-colors duration-200">
                       <Plus
-                        className={`h-4 w-4 transition-transform duration-200 ${
+                        className={`h-4 w-4 transition-transform duration-200 ease-out ${
                           isOpen ? "rotate-45" : ""
                         }`}
+                        strokeWidth={1.5}
                       />
                     </span>
                   </button>
@@ -108,7 +109,7 @@ export function FaqSection() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
                         className="overflow-hidden"
                       >
                         <p className="pt-3 sm:pt-4 text-sm sm:text-base text-[#5b6475] leading-relaxed pr-6 sm:pr-10">

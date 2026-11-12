@@ -32,10 +32,10 @@ export function HowItWorksSection() {
         {/* Section Header */}
         <div className="mb-12 sm:mb-16">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className="mb-3 sm:mb-4"
           >
             <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
@@ -44,11 +44,11 @@ export function HowItWorksSection() {
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-5xl lg:text-[60px] font-medium tracking-[-0.03em] leading-[1.08] text-[#0b1220]"
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+            className="text-3xl sm:text-5xl lg:text-[60px] font-medium tracking-[-0.03em] leading-[1.05] text-[#0b1220]"
           >
             How we get started together
           </motion.h2>
@@ -59,11 +59,11 @@ export function HowItWorksSection() {
           {STEPS.map((step, idx) => (
             <motion.div
               key={step.number}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="rounded-2xl bg-white border border-[#e5e8ee] p-8 sm:p-10 flex flex-col justify-start transition-all duration-300 hover:border-[#c5cbe0] hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+              transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.05 }}
+              className="rounded-2xl bg-white border border-[#e5e8ee] p-8 sm:p-10 flex flex-col justify-start transition-colors duration-200 hover:border-[#c5cbe0]"
             >
               <span className="text-3xl sm:text-4xl font-medium text-[#3068f9] mb-6 block">
                 {step.number}

@@ -51,10 +51,10 @@ export function ServicesSection() {
         {/* Section Header */}
         <div className="max-w-[1100px] mb-12 sm:mb-16">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className="mb-3 sm:mb-4"
           >
             <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
@@ -63,11 +63,11 @@ export function ServicesSection() {
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-5xl lg:text-[56px] xl:text-[60px] font-medium tracking-[-0.03em] leading-[1.08] text-[#0b1220]"
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+            className="text-3xl sm:text-5xl lg:text-[56px] xl:text-[60px] font-medium tracking-[-0.03em] leading-[1.05] text-[#0b1220]"
           >
             Everything your business needs to attract and close customers
           </motion.h2>
@@ -84,9 +84,9 @@ export function ServicesSection() {
                   key={service.id}
                   type="button"
                   onClick={() => setActiveIdx(idx)}
-                  className={`w-full text-left flex items-center justify-between p-4 sm:p-5 md:p-6 rounded-2xl transition-all duration-200 cursor-pointer ${
+                  className={`w-full text-left flex items-center justify-between p-4 sm:p-5 md:p-6 rounded-2xl transition-colors duration-200 ease-out cursor-pointer ${
                     isActive
-                      ? "bg-[#eef3ff] text-[#0b1220] shadow-[0_2px_8px_rgba(48,104,249,0.06)]"
+                      ? "bg-[#eef3ff] text-[#0b1220]"
                       : "bg-transparent text-[#0b1220] hover:bg-[#f5f7fa] border border-transparent hover:border-[#e5e8ee]"
                   }`}
                 >
@@ -104,11 +104,12 @@ export function ServicesSection() {
                   </div>
 
                   <ArrowRight
-                    className={`h-5 w-5 transition-all duration-200 ${
+                    className={`h-5 w-5 transition-transform duration-200 ease-out ${
                       isActive
                         ? "text-[#3068f9] translate-x-1"
                         : "text-[#5b6475] opacity-60"
                     }`}
+                    strokeWidth={1.5}
                   />
                 </button>
               );
@@ -123,11 +124,11 @@ export function ServicesSection() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
                 className="flex flex-col"
               >
                 {/* Preview Image */}
-                <div className="relative w-full aspect-[628/340] sm:aspect-[628/320] rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+                <div className="relative w-full aspect-[628/340] sm:aspect-[628/320] rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee]">
                   <img
                     src={activeService.image}
                     alt={activeService.alt}
@@ -147,4 +148,3 @@ export function ServicesSection() {
     </section>
   );
 }
-

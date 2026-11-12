@@ -5,11 +5,12 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useConsultation } from "@/components/providers/consultation-provider";
 
-type Variant = "primary" | "secondary" | "white" | "dark";
+type Treatment = "primary" | "outline" | "filled" | "faded" | "secondary" | "white" | "dark";
 
 interface PillButtonProps {
   children: React.ReactNode;
-  variant?: Variant;
+  treatment?: Treatment;
+  variant?: Treatment; // Alias for compatibility
   href?: string;
   isConsultation?: boolean;
   consultationLocation?: string;
@@ -22,6 +23,7 @@ interface PillButtonProps {
 
 export function PillButton({
   children,
+  treatment,
   variant = "primary",
   href,
   isConsultation = false,
@@ -33,19 +35,32 @@ export function PillButton({
   disabled = false,
 }: PillButtonProps) {
   const { openConsultation } = useConsultation();
+  const activeStyle = treatment || variant;
 
-  const variantStyles: Record<Variant, string> = {
+  const treatmentStyles: Record<Treatment, string> = {
+    // Primary: Blue (#3068F9) / White text, Hover: #1F55E0
     primary:
-      "bg-[#3068f9] text-white hover:bg-[#1f55e0] shadow-[0_2px_12px_rgba(48,104,249,0.25)]",
+      "bg-[#3068f9] text-white hover:bg-[#1f55e0]",
+    // Outline: White bg, 1px #E5E8EE border, Ink (#0B1220) text, Hover: #C5CBE0
+    outline:
+      "bg-white text-[#0b1220] border border-[#e5e8ee] hover:border-[#c5cbe0] hover:bg-[#f8fafd]",
     secondary:
       "bg-white text-[#0b1220] border border-[#e5e8ee] hover:border-[#c5cbe0] hover:bg-[#f8fafd]",
+    // Filled: White bg / Blue text (for dark Ink zone) or Ink / White
+    filled:
+      "bg-white text-[#3068f9] hover:bg-white/95",
     white:
-      "bg-white text-[#3068f9] hover:bg-white/90 shadow-[0_2px_12px_rgba(0,0,0,0.06)]",
+      "bg-white text-[#3068f9] hover:bg-white/95",
+    // Faded: Blue-tint (#EEF3FF) bg / Blue-hover (#1F55E0) text
+    faded:
+      "bg-[#eef3ff] text-[#1f55e0] hover:bg-[#dfe9ff]",
     dark:
       "bg-[#0b1220] text-white hover:bg-[#162035]",
   };
 
-  const baseClasses = `inline-flex items-center justify-center gap-2.5 h-13 sm:h-[60px] px-6 sm:px-8 rounded-full text-[15px] font-medium transition-all duration-200 active:scale-[0.98] select-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 ${variantStyles[variant]} ${className}`;
+  const baseClasses = `inline-flex items-center justify-center gap-2.5 h-13 sm:h-[60px] px-6 sm:px-8 rounded-full text-[15px] font-medium transition-colors duration-200 ease-out select-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 ${
+    treatmentStyles[activeStyle] || treatmentStyles.primary
+  } ${className}`;
 
   if (isConsultation) {
     return (
@@ -59,7 +74,7 @@ export function PillButton({
         disabled={disabled}
       >
         <span>{children}</span>
-        {showArrow && <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />}
+        {showArrow && <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1" strokeWidth={1.5} />}
       </button>
     );
   }
@@ -68,7 +83,7 @@ export function PillButton({
     return (
       <Link href={href} className={baseClasses}>
         <span>{children}</span>
-        {showArrow && <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />}
+        {showArrow && <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1" strokeWidth={1.5} />}
       </Link>
     );
   }
@@ -81,8 +96,7 @@ export function PillButton({
       disabled={disabled}
     >
       <span>{children}</span>
-      {showArrow && <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />}
+      {showArrow && <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1" strokeWidth={1.5} />}
     </button>
   );
 }
-

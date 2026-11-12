@@ -29,41 +29,39 @@ const HERO_CARDS = [
   },
 ];
 
+// Motion specification from Figma Board 03: 200ms ease-out, 12px translate
+const motionFadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.2, ease: "easeOut" as const, delay },
+});
+
 export function HeroSection() {
   return (
-    <section className="relative w-full pt-8 sm:pt-14 md:pt-18 pb-16 sm:pb-24 lg:pb-32 overflow-hidden bg-white">
+    <section className="relative w-full pt-8 sm:pt-14 md:pt-18 pb-16 sm:pb-24 lg:pb-32 bg-white">
       <Container>
         {/* Header Block */}
         <div className="flex flex-col items-center text-center max-w-[1280px] mx-auto">
-          {/* Eyebrow */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-4 sm:mb-6"
-          >
+          {/* Eyebrow: Label / Eyebrow 13px, weight 500, +2% tracking */}
+          <motion.div {...motionFadeUp(0)} className="mb-4 sm:mb-6">
             <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
               STRATEGY. BRAND. MARKETING.
             </span>
           </motion.div>
 
-          {/* Display Headline */}
+          {/* Display Headline: Display / H1 96px · 500 · 100% · -4% */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-[84px] xl:text-[94px] font-medium tracking-[-0.04em] leading-[1.04] text-[#0b1220] max-w-[1280px]"
+            {...motionFadeUp(0.05)}
+            className="text-[44px] sm:text-[56px] md:text-[72px] lg:text-[84px] xl:text-[96px] font-medium tracking-[-0.04em] leading-[1.0] text-[#0b1220] max-w-[1280px]"
           >
             From First Step <br className="hidden sm:inline" />
             to Fully Scaled. <br className="hidden sm:inline" />
             We’re With <span className="text-[#3068f9]">You.</span>
           </motion.h1>
 
-          {/* Subheading */}
+          {/* Subheading: Body / Large 18px · 400 · 160% · 0 */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            {...motionFadeUp(0.1)}
             className="mt-6 sm:mt-8 max-w-[832px] text-base sm:text-lg lg:text-[18px] text-[#5b6475] leading-[1.6]"
           >
             No cookie-cutter campaigns or chasing viral trends. We create tailored, authentic
@@ -71,15 +69,13 @@ export function HeroSection() {
             an existing business or taking your very first step.
           </motion.p>
 
-          {/* Hero Actions (2 Pill Buttons) */}
+          {/* Hero Actions (Pill Buttons) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            {...motionFadeUp(0.15)}
             className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto"
           >
             <PillButton
-              variant="primary"
+              treatment="primary"
               href="/free-growth-audit"
               className="w-full sm:w-[248px]"
             >
@@ -87,7 +83,7 @@ export function HeroSection() {
             </PillButton>
 
             <PillButton
-              variant="secondary"
+              treatment="outline"
               isConsultation
               consultationLocation="hero"
               className="w-full sm:w-[248px]"
@@ -103,10 +99,10 @@ export function HeroSection() {
             {HERO_CARDS.map((card, idx) => (
               <motion.div
                 key={card.src}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 + idx * 0.1 }}
-                className={`relative rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] shadow-[0_8px_30px_rgba(0,0,0,0.05)] transition-transform duration-300 hover:-translate-y-1 ${
+                transition={{ duration: 0.2, ease: "easeOut", delay: 0.1 + idx * 0.05 }}
+                className={`relative rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] transition-colors duration-200 ${
                   card.elevated
                     ? "aspect-[302/396] sm:-translate-y-6 lg:-translate-y-8"
                     : "aspect-[302/336]"

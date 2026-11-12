@@ -33,10 +33,10 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+      className={`sticky top-0 z-50 w-full transition-colors duration-200 ease-out ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-[#e5e8ee] shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
-          : "bg-white"
+          ? "bg-white border-b border-[#e5e8ee]"
+          : "bg-white border-b border-transparent"
       }`}
     >
       <Container>
@@ -62,7 +62,7 @@ export function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`text-[15px] font-medium transition-colors duration-150 ${
+                  className={`text-[15px] font-medium transition-colors duration-200 ease-out ${
                     isCurrent
                       ? "text-[#3068f9]"
                       : "text-[#0b1220] hover:text-[#3068f9]"
@@ -79,10 +79,10 @@ export function Header() {
             <button
               type="button"
               onClick={(e) => openConsultation("header", e.currentTarget)}
-              className="inline-flex items-center justify-center gap-2 h-12 lg:h-13 px-6 lg:px-8 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[15px] font-medium shadow-[0_2px_12px_rgba(48,104,249,0.22)] transition-all duration-200 active:scale-[0.98] cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 h-12 lg:h-13 px-6 lg:px-8 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[15px] font-medium transition-colors duration-200 ease-out cursor-pointer active:scale-[0.98]"
             >
               <span>Contact</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
             </button>
           </div>
 
@@ -106,7 +106,7 @@ export function Header() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className="md:hidden overflow-hidden border-t border-[#e5e8ee] py-5 space-y-4"
             >
               <div className="flex flex-col space-y-3">
@@ -128,10 +128,10 @@ export function Header() {
                     setMobileMenuOpen(false);
                     openConsultation("header-mobile", e.currentTarget);
                   }}
-                  className="w-full flex items-center justify-center gap-2 h-12 rounded-full bg-[#3068f9] text-white text-[15px] font-medium shadow-md"
+                  className="w-full flex items-center justify-center gap-2 h-12 rounded-full bg-[#3068f9] text-white text-[15px] font-medium"
                 >
                   <span>Contact</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
                 </button>
               </div>
             </motion.div>

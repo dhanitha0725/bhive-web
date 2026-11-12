@@ -40,10 +40,10 @@ export function InsightsSection() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div>
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className="mb-3 sm:mb-4"
             >
               <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
@@ -52,24 +52,24 @@ export function InsightsSection() {
             </motion.div>
 
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-5xl lg:text-[60px] font-medium tracking-[-0.03em] leading-[1.08] text-[#0b1220]"
+              transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+              className="text-3xl sm:text-5xl lg:text-[60px] font-medium tracking-[-0.03em] leading-[1.05] text-[#0b1220]"
             >
               Blog &amp; Insights
             </motion.h2>
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.1 }}
           >
             <PillButton
-              variant="secondary"
+              treatment="outline"
               href="/insights"
               showArrow
             >
@@ -83,10 +83,10 @@ export function InsightsSection() {
           {ARTICLES.map((article, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.05 }}
             >
               <Link href={article.href} className="group flex flex-col h-full">
                 {/* Article Image */}
@@ -94,7 +94,7 @@ export function InsightsSection() {
                   <img
                     src={article.image}
                     alt={article.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover transition-transform duration-200 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
 
@@ -104,14 +104,14 @@ export function InsightsSection() {
                 </p>
 
                 {/* Title */}
-                <h3 className="mt-2 text-lg sm:text-xl font-medium tracking-tight text-[#0b1220] group-hover:text-[#3068f9] transition-colors leading-[1.3]">
+                <h3 className="mt-2 text-lg sm:text-xl font-medium tracking-tight text-[#0b1220] group-hover:text-[#3068f9] transition-colors duration-200 leading-[1.3]">
                   {article.title}
                 </h3>
 
                 {/* Action Link */}
-                <div className="mt-4 flex items-center gap-1.5 text-sm font-medium text-[#0b1220] group-hover:text-[#3068f9] transition-colors">
+                <div className="mt-4 flex items-center gap-1.5 text-sm font-medium text-[#0b1220] group-hover:text-[#3068f9] transition-colors duration-200">
                   <span>Read article</span>
-                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" strokeWidth={1.5} />
                 </div>
               </Link>
             </motion.div>

@@ -10,13 +10,13 @@ export function ConsultationCalloutSection() {
     <section className="relative w-full py-8 sm:py-12 lg:py-16 bg-white">
       <Container>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
           className="w-full rounded-3xl bg-[#f5f7fa] border border-[#e5e8ee] p-8 sm:p-12 lg:p-16 flex flex-col items-start justify-center"
         >
-          <h3 className="text-2xl sm:text-3xl lg:text-[32px] font-medium tracking-[-0.02em] text-[#0b1220]">
+          <h3 className="text-2xl sm:text-3xl lg:text-[32px] font-medium tracking-[-0.02em] leading-[1.2] text-[#0b1220]">
             Not sure which service your business needs first?
           </h3>
 
@@ -26,7 +26,7 @@ export function ConsultationCalloutSection() {
 
           <div className="mt-6 sm:mt-8">
             <PillButton
-              variant="primary"
+              treatment="primary"
               isConsultation
               consultationLocation="consultation-callout"
               showArrow
@@ -39,4 +39,3 @@ export function ConsultationCalloutSection() {
     </section>
   );
 }
-

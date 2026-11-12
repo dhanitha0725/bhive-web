@@ -31,13 +31,13 @@ export function TrustedPartnersSection() {
           {PARTNERS.map((partner, idx) => (
             <motion.div
               key={partner.name}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="h-16 sm:h-18 rounded-2xl bg-[#f5f7fa] border border-[#e5e8ee] flex flex-col items-center justify-center px-4 transition-all duration-200 hover:border-[#c5cbe0] hover:bg-[#eef3ff] group"
+              transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.04 }}
+              className="h-16 sm:h-18 rounded-2xl bg-[#f5f7fa] border border-[#e5e8ee] flex flex-col items-center justify-center px-4 transition-colors duration-200 ease-out hover:border-[#c5cbe0] hover:bg-[#eef3ff] group"
             >
-              <span className="text-[13px] sm:text-[14px] font-medium text-[#0b1220] tracking-tight group-hover:text-[#3068f9] transition-colors">
+              <span className="text-[13px] sm:text-[14px] font-medium text-[#0b1220] tracking-tight group-hover:text-[#3068f9] transition-colors duration-200">
                 {partner.name}
               </span>
               <span className="text-[10px] sm:text-[11px] text-[#5b6475]">

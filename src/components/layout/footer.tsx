@@ -27,22 +27,22 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
           {/* Left Side: Brand Message & Action */}
           <div className="lg:col-span-7 flex flex-col items-start max-w-xl">
-            <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-white/60 uppercase">
+            <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-white/64 uppercase">
               FIND YOUR STRATEGY. MAKE IT YOURS.
             </span>
 
-            <h3 className="mt-4 text-3xl sm:text-5xl font-medium tracking-tight text-white leading-[1.1]">
+            <h3 className="mt-4 text-3xl sm:text-5xl font-medium tracking-tight text-white leading-[1.05]">
               Great marketing. <br />
               Better growth.
             </h3>
 
-            <p className="mt-4 text-base sm:text-lg text-white/70 leading-[1.6]">
+            <p className="mt-4 text-base sm:text-lg text-white/64 leading-[1.6]">
               Discover and work the marketing for your next business. Less planning, more doing.
             </p>
 
             <div className="mt-8">
               <PillButton
-                variant="white"
+                treatment="filled"
                 isConsultation
                 consultationLocation="footer"
                 showArrow
@@ -64,7 +64,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm sm:text-base text-white/70 hover:text-white transition-colors"
+                      className="text-sm sm:text-base text-white/64 hover:text-white transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -83,7 +83,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm sm:text-base text-white/70 hover:text-white transition-colors"
+                      className="text-sm sm:text-base text-white/64 hover:text-white transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -98,17 +98,17 @@ export function Footer() {
         <div className="w-full border-t border-white/10 mt-16 sm:mt-20 pt-8" />
 
         {/* Bottom Legal Row */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-white/60">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-white/64">
           <p>© {currentYear} BHive. All rights reserved.</p>
 
           <div className="flex items-center gap-6 sm:gap-8">
-            <Link href="/privacy" className="hover:text-white transition-colors">
+            <Link href="/privacy" className="hover:text-white transition-colors duration-200">
               Privacy policy
             </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
+            <Link href="/terms" className="hover:text-white transition-colors duration-200">
               Terms of service
             </Link>
-            <Link href="/privacy#cookies" className="hover:text-white transition-colors">
+            <Link href="/privacy#cookies" className="hover:text-white transition-colors duration-200">
               Cookie policy
             </Link>
           </div>
