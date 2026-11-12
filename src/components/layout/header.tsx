@@ -24,7 +24,7 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 16);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
@@ -40,7 +40,7 @@ export function Header() {
       }`}
     >
       <Container>
-        <div className="flex items-center justify-between h-20 sm:h-24 md:h-28">
+        <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20">
           {/* Brand Logo */}
           <Link
             href="/"
@@ -50,19 +50,19 @@ export function Header() {
             <img
               src="/images/figma/bhive-logo.png"
               alt="BHive"
-              className="h-8 sm:h-10 md:h-11 w-auto object-contain block"
+              className="h-7 sm:h-8 w-auto object-contain block"
             />
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-8 lg:gap-10">
+          <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-7 lg:gap-9">
             {navLinks.map((item) => {
               const isCurrent = pathname === item.href;
               return (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`text-[15px] font-medium transition-colors duration-200 ease-out ${
+                  className={`text-[14px] lg:text-[15px] font-medium transition-colors duration-200 ease-out ${
                     isCurrent
                       ? "text-[#3068f9]"
                       : "text-[#0b1220] hover:text-[#3068f9]"
@@ -79,10 +79,10 @@ export function Header() {
             <button
               type="button"
               onClick={(e) => openConsultation("header", e.currentTarget)}
-              className="inline-flex items-center justify-center gap-2 h-12 lg:h-13 px-6 lg:px-8 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[15px] font-medium transition-colors duration-200 ease-out cursor-pointer active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 h-10 sm:h-11 px-5 sm:px-6 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[14px] font-medium transition-colors duration-200 ease-out cursor-pointer active:scale-[0.98] whitespace-nowrap"
             >
               <span>Contact</span>
-              <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} />
             </button>
           </div>
 
@@ -92,9 +92,9 @@ export function Header() {
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label="Toggle mobile menu"
-              className="p-2.5 rounded-full text-[#0b1220] hover:bg-[#f5f7fa] transition-colors"
+              className="p-2 rounded-full text-[#0b1220] hover:bg-[#f5f7fa] transition-colors"
             >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
@@ -107,15 +107,15 @@ export function Header() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="md:hidden overflow-hidden border-t border-[#e5e8ee] py-5 space-y-4"
+              className="md:hidden overflow-hidden border-t border-[#e5e8ee] py-4 space-y-3"
             >
-              <div className="flex flex-col space-y-3">
+              <div className="flex flex-col space-y-2">
                 {navLinks.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-2 py-1.5 text-base font-medium text-[#0b1220] hover:text-[#3068f9] transition-colors"
+                    className="px-2 py-1.5 text-[15px] font-medium text-[#0b1220] hover:text-[#3068f9] transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -128,7 +128,7 @@ export function Header() {
                     setMobileMenuOpen(false);
                     openConsultation("header-mobile", e.currentTarget);
                   }}
-                  className="w-full flex items-center justify-center gap-2 h-12 rounded-full bg-[#3068f9] text-white text-[15px] font-medium"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-full bg-[#3068f9] text-white text-[14px] font-medium"
                 >
                   <span>Contact</span>
                   <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
