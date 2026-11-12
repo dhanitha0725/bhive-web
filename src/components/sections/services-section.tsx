@@ -46,7 +46,7 @@ export function ServicesSection() {
   const activeService = SERVICES[activeIdx];
 
   return (
-    <section id="services" className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
+    <section id="services" className="relative w-full pt-10 sm:pt-14 lg:pt-16 pb-16 sm:pb-24 lg:pb-32 bg-white">
       <Container>
         {/* Section Header */}
         <div className="max-w-[1100px] mb-12 sm:mb-16">

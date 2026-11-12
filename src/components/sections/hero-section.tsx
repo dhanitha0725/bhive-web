@@ -10,22 +10,22 @@ const HERO_CARDS = [
   {
     src: "/images/figma/hero-1.png",
     alt: "BHive retail strategy showcase 1",
-    elevated: false,
+    taller: false,
   },
   {
     src: "/images/figma/hero-2.png",
     alt: "BHive brand delivery showcase 2",
-    elevated: true,
+    taller: true,
   },
   {
     src: "/images/figma/hero-3.png",
     alt: "BHive marketing campaign showcase 3",
-    elevated: true,
+    taller: true,
   },
   {
     src: "/images/figma/hero-4.png",
     alt: "BHive customer connection showcase 4",
-    elevated: false,
+    taller: false,
   },
 ];
 
@@ -38,7 +38,7 @@ const motionFadeUp = (delay = 0) => ({
 
 export function HeroSection() {
   return (
-    <section className="relative w-full pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-20 lg:pb-28 bg-white">
+    <section className="relative w-full pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 lg:pb-14 bg-white">
       <Container>
         {/* Header Block */}
         <div className="flex flex-col items-center text-center max-w-[1280px] mx-auto">
@@ -91,9 +91,9 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* 12-Column Stretch Grid Showcase: 4 Cards (3 Cols each) */}
+        {/* 12-Column Stretch Grid Showcase: 4 Cards (3 Cols each), Middle-Aligned */}
         <div className="mt-10 sm:mt-14 lg:mt-18">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 items-end">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 items-center">
             {HERO_CARDS.map((card, idx) => (
               <motion.div
                 key={card.src}
@@ -101,9 +101,9 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" as const, delay: 0.1 + idx * 0.05 }}
                 className={`relative rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] transition-colors duration-200 ${
-                  card.elevated
-                    ? "aspect-[302/396] sm:-translate-y-6 lg:-translate-y-8"
-                    : "aspect-[302/336]"
+                  card.taller
+                    ? "aspect-[2/3]"
+                    : "aspect-[5/6]"
                 }`}
               >
                 <img
