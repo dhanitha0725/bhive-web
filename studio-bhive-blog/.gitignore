@@ -1,0 +1,8 @@
+node_modules
+.output
+.sanity
+dist
+schema.json
+*.tsbuildinfo
+*.local
+.DS_Store

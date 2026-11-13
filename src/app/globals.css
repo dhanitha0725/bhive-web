@@ -13,24 +13,24 @@
 :root {
   color-scheme: light;
 
-  /* DESIGN.md Color Tokens */
-  --color-primary: #0066cc;
-  --color-primary-focus: #0071e3;
-  --color-primary-on-dark: #2997ff;
-  --color-ink: #1d1d1f;
+  /* Figma Design Tokens */
+  --color-primary: #3068f9;
+  --color-primary-focus: #1f55e0;
+  --color-primary-on-dark: #3068f9;
+  --color-ink: #0b1220;
   --color-canvas: #ffffff;
-  --color-canvas-parchment: #f5f5f7;
-  --color-surface-pearl: #fafafc;
-  --color-surface-tile-1: #272729;
-  --color-surface-tile-2: #2a2a2c;
-  --color-surface-tile-3: #252527;
-  --color-surface-black: #000000;
+  --color-canvas-parchment: #f5f7fa;
+  --color-surface-pearl: #f5f7fa;
+  --color-surface-tile-1: #0b1220;
+  --color-surface-tile-2: #162035;
+  --color-surface-tile-3: #0b1220;
+  --color-surface-black: #0b1220;
   --color-surface-chip-translucent: rgba(210, 210, 215, 0.64);
-  --color-hairline: #e0e0e0;
-  --color-divider-soft: #f0f0f0;
-  --color-body-muted: #cccccc;
-  --color-ink-muted-80: #333333;
-  --color-ink-muted-48: #7a7a7a;
+  --color-hairline: #e5e8ee;
+  --color-divider-soft: #e5e8ee;
+  --color-body-muted: #5b6475;
+  --color-ink-muted-80: #0b1220;
+  --color-ink-muted-48: #5b6475;
 
   /* Corporate blue scale (primary actions, links, focus) */
   --color-navy-50: #eef4ff; --color-navy-100: #d9e6ff; --color-navy-200: #b3ccff; --color-navy-300: #7fa8f5; --color-navy-400: #4a7de8; --color-navy-500: #1f5cd6; --color-navy-600: #0066cc; --color-navy-700: #0055b3; --color-navy-800: #0a2f78; --color-navy-900: #0a254f;
@@ -42,33 +42,34 @@
   --color-neutral-white: #ffffff; --color-neutral-50: #f5f5f7; --color-neutral-100: #f0f0f0; --color-neutral-200: #e0e0e0; --color-neutral-300: #cccccc; --color-neutral-400: #7a7a7a; --color-neutral-500: #5b6474; --color-neutral-600: #333333; --color-neutral-700: #272729; --color-neutral-800: #252527; --color-neutral-900: #1d1d1f;
 
   --background: #ffffff;
-  --foreground: #1d1d1f;
-  --muted: #f5f5f7;
-  --muted-foreground: #7a7a7a;
-  --border: #e0e0e0;
-  --ring: #0071e3;
+  --foreground: #0b1220;
+  --muted: #f5f7fa;
+  --muted-foreground: #5b6475;
+  --border: #e5e8ee;
+  --ring: #3068f9;
 
-  /* DESIGN.md Radii Tokens */
+  /* Figma Radii Tokens */
   --radius-none: 0px;
-  --radius-xs: 5px;
+  --radius-xs: 4px;
   --radius-sm: 8px;
-  --radius-md: 11px;
-  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-pill: 9999px;
   --radius-full: 9999px;
   --radius-btn: 9999px;
-  --radius-card: 18px;
+  --radius-card: 16px;
   --radius-badge: 9999px;
 
-  /* DESIGN.md Spacing Tokens */
-  --spacing-xxs: 4px;
-  --spacing-xs: 8px;
-  --spacing-sm: 12px;
-  --spacing-md: 17px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-xxl: 48px;
-  --spacing-section: 80px;
+  /* Figma Spacing Tokens (8px base) */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-96: 96px;
+  --spacing-128: 128px;
 
   /* DESIGN.md Product Drop Shadow */
   --shadow-product: 3px 5px 30px 0 rgba(0, 0, 0, 0.22);
@@ -355,6 +356,23 @@ a {
 
 .animate-marquee {
   animation: marquee 35s linear infinite;
+  /* Keep the marquee on the compositor so it never blocks scrolling. */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-right {
+  animation: marquee-right 35s linear infinite;
   /* Keep the marquee on the compositor so it never blocks scrolling. */
   transform: translateZ(0);
   will-change: transform;

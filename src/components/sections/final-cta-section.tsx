@@ -2,68 +2,78 @@
 
 import React from "react";
 import { Container } from "@/components/ui/container";
-import { useConsultation } from "@/components/providers/consultation-provider";
-import { WhatsAppLink } from "@/components/ui/whatsapp-link";
-import { MessageSquare, ArrowRight, ShieldCheck } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { motion } from "framer-motion";
 
 export function FinalCtaSection() {
-  const { openConsultation } = useConsultation();
-
   return (
-    <section className="bg-gradient-to-b from-[#0a254f] to-[#071a3a] py-16 sm:py-20 lg:py-24 text-white">
+    <section id="contact" className="relative w-full py-20 sm:py-28 lg:py-36 bg-[#0b1220] text-white">
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-blue-200">
-            Take The Next Step
-          </span>
+        <div className="flex flex-col items-center text-center max-w-[1000px] mx-auto">
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="mb-4 sm:mb-6"
+          >
+            <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-white/64 uppercase">
+              LET’S FIND YOUR NEXT STEP
+            </span>
+          </motion.div>
 
-          <h2 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-semibold font-display tracking-tight text-white leading-[1.15]">
+          {/* Heading */}
+          <motion.h2
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+            className="text-3xl sm:text-5xl lg:text-[60px] font-medium tracking-[-0.03em] leading-[1.05] text-white max-w-[1000px]"
+          >
             Ready to stop guessing and start getting real customers?
-          </h2>
+          </motion.h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-blue-100 leading-relaxed font-normal">
-            Tell us about your business. We will review your current marketing and send you a practical 3-month action plan.
-          </p>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.1 }}
+            className="mt-6 max-w-[800px] text-base sm:text-lg text-white/64 leading-[1.6]"
+          >
+            Tell us about your business. We will review your current marketing and send you a
+            practical 3-month action plan.
+          </motion.p>
 
-          {/* Action Buttons: Single Primary CTA + WhatsApp */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={(e) => openConsultation("final_cta", e.currentTarget)}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full bg-white text-[#0a254f] hover:bg-blue-50 px-7 py-4 text-base sm:text-[17px] font-semibold transition-all duration-150 active:scale-[0.97] shadow-lg shadow-black/20 focus-visible:outline-2 focus-visible:outline-white"
+          {/* Two Pill Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.15 }}
+            className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto"
+          >
+            <PillButton
+              treatment="primary"
+              href="/free-growth-audit"
+              showArrow
+              className="w-full sm:w-auto"
             >
-              <span>Get Free Growth Consultation</span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
+              Get free growth audit
+            </PillButton>
 
-            <WhatsAppLink
-              location="final_cta"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-4 text-base font-medium text-white hover:bg-white/10 transition-all duration-150 active:scale-[0.97]"
+            <PillButton
+              treatment="filled"
+              isConsultation
+              consultationLocation="final-cta"
+              className="w-full sm:w-auto"
             >
-              <MessageSquare className="h-4 w-4 text-emerald-400" />
-              <span>Chat on WhatsApp</span>
-            </WhatsAppLink>
-          </div>
-
-          {/* Micro trust assurances */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-5 sm:gap-6 text-xs sm:text-sm text-blue-200">
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              <span>Free 1-on-1 business review</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              <span>No pushy sales calls</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              <span>Reply within 24 hours</span>
-            </div>
-          </div>
+              Book a growth consultation
+            </PillButton>
+          </motion.div>
         </div>
       </Container>
     </section>
   );
 }
-
-export default FinalCtaSection;

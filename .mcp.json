@@ -7,6 +7,10 @@
     "vercel": {
       "url": "https://mcp.vercel.com",
       "serverUrl": "https://mcp.vercel.com"
+    },
+    "Figma Desktop": {
+      "url": "https://mcp.figma.com/mcp",
+      "serverUrl": "https://mcp.figma.com/mcp"
     }
   }
 }

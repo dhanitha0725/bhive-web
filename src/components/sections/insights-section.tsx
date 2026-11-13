@@ -1,86 +1,112 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
-import { Reveal } from "@/components/motion/reveal";
+import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import BlurText from "@/components/BlurText";
-import { ArrowUpRight, ArrowRight, Clock } from "lucide-react";
-import { insights, pillars } from "@/content/insights";
+import { PillButton } from "@/components/ui/pill-button";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import type { InsightSummary } from "@/lib/blog/types";
 
-export function InsightsSection() {
-  const recentInsights = insights.slice(0, 3);
+export function InsightsSection({ posts }: { posts: InsightSummary[] }) {
+  if (!posts || posts.length === 0) {
+    return null;
+  }
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-navy-50/50 text-[var(--foreground)] transition-colors duration-200">
+    <section id="insights" className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
       <Container>
-        {/* Header (Centered & Balanced) */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700">
-            <span>BHIVE INSIGHTS</span>
-          </div>
-          <h2 className="heading-2 mt-4 font-display tracking-tight text-[var(--foreground)] text-3xl sm:text-4xl lg:text-[40px] font-semibold leading-[1.10]">
-            <BlurText
-              text="Better growth starts with better decisions."
-              animateBy="words"
-              direction="bottom"
-              delay={70}
-              className="justify-center"
-            />
-          </h2>
-          <div className="mt-5 flex items-center justify-center">
-            <Link
-              href="/insights"
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 hover:text-blue-700 transition-colors group active:scale-[0.95]"
+        {/* Section Header: Title Left + View All Button Right */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="mb-3 sm:mb-4"
             >
-              <span>Explore All Insights</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </Link>
+              <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
+                IDEAS THAT MOVE BUSINESS
+              </span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+              className="text-3xl sm:text-5xl lg:text-[60px] font-medium tracking-[-0.03em] leading-[1.05] text-[#0b1220]"
+            >
+              Blog &amp; Insights
+            </motion.h2>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.1 }}
+          >
+            <PillButton treatment="outline" href="/insights" showArrow>
+              View all insights
+            </PillButton>
+          </motion.div>
         </div>
 
-        {/* Editorial Insight Cards Grid (Watermelon blog-1 adaptation) */}
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {recentInsights.map((item, idx) => (
-            <Reveal
-              as="article"
-              key={item.slug}
-              y={20}
-              delay={idx * 100}
-              className="group flex flex-col justify-between rounded-[18px] border border-[var(--border)] bg-[var(--background)] p-6 shadow-none transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400/60 hover:shadow-xl"
+        {/* 12-Column Stretch Grid: 3 Articles (4 Cols each) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {posts.map((post, idx) => (
+            <motion.div
+              key={post.slug || post._id || idx}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.05 }}
             >
-              <div>
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="rounded-full bg-blue-500/10 px-3 py-1 font-mono font-medium text-blue-700">
-                    {pillars[item.pillar] || item.pillar}
-                  </span>
-                  <div className="flex items-center gap-1.5 font-mono text-[11px]">
-                    <Clock className="h-3.5 w-3.5" />
-                    <span>{item.readingTime}</span>
-                  </div>
+              <Link href={`/insights/${post.slug}`} className="group flex flex-col h-full">
+                {/* Article Image or Gradient Placeholder */}
+                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee]">
+                  {post.coverImage ? (
+                    <img
+                      src={post.coverImage.url}
+                      srcSet={post.coverImage.srcSet}
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      alt={post.coverImage.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-200 ease-out group-hover:scale-[1.02]"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col justify-end p-6 bg-gradient-to-br from-[#0b2554] via-[#004f9e] to-[#0066cc] text-white">
+                      <span className="font-mono text-xs uppercase tracking-wider text-blue-200">
+                        {post.pillarName}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
-                <h3 className="mt-4 font-display text-xl sm:text-[21px] font-semibold text-[var(--foreground)] tracking-[0.231px] leading-[1.19] group-hover:text-blue-600 transition-colors line-clamp-2">
-                  <Link href={`/insights/${item.slug}`}>{item.title}</Link>
+                {/* Metadata */}
+                <p className="mt-4 text-xs sm:text-[13px] text-[#5b6475] font-medium">
+                  {post.pillarName} • {post.readingTime}
+                </p>
+
+                {/* Title */}
+                <h3 className="mt-2 text-lg sm:text-xl font-medium tracking-tight text-[#0b1220] group-hover:text-[#3068f9] transition-colors duration-200 leading-[1.3]">
+                  {post.title}
                 </h3>
 
-                <p className="mt-3 text-sm sm:text-[17px] text-muted-foreground leading-[1.47] tracking-[-0.374px] line-clamp-3">
-                  {item.excerpt}
-                </p>
-              </div>
-
-              <div className="mt-6 flex items-center justify-between pt-5 border-t border-[var(--border)]">
-                <span className="font-mono text-xs text-muted-foreground">
-                  {item.date}
-                </span>
-                <Link
-                  href={`/insights/${item.slug}`}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 group-hover:underline"
-                >
-                  <span>Read Article</span>
-                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
-              </div>
-            </Reveal>
+                {/* Action Link */}
+                <div className="mt-4 flex items-center gap-1.5 text-sm font-medium text-[#0b1220] group-hover:text-[#3068f9] transition-colors duration-200">
+                  <span>Read article</span>
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1"
+                    strokeWidth={1.5}
+                  />
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </Container>

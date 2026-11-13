@@ -1,75 +1,115 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { BrandMark } from "./brand-mark";
-import { WhatsAppLink } from "@/components/ui/whatsapp-link";
-import { useConsultation } from "@/components/providers/consultation-provider";
-import { MessageSquare } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+
+const EXPLORE_LINKS = [
+  { label: "Services", href: "/#services" },
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Insights", href: "/insights" },
+];
+
+const SUPPORT_LINKS = [
+  { label: "Help centre", href: "/contact" },
+  { label: "FAQs", href: "/#faq" },
+  { label: "Contact us", href: "/contact" },
+];
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const { openConsultation } = useConsultation();
-
-  const footerNavLinks = [
-    { label: "Services", href: "/services" },
-    { label: "Selected Work", href: "/work" },
-    { label: "About BHive", href: "/about" },
-    { label: "Contact Us", href: "/contact" },
-  ];
 
   return (
-    <footer className="bg-[#0a0a0b] py-14 text-white border-t border-white/10">
+    <footer className="relative w-full bg-[#0b1220] text-white pt-16 sm:pt-20 md:pt-24 pb-12 border-t border-white/10">
       <Container>
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-10 border-b border-white/10">
-          <div className="max-w-md">
-            <BrandMark inverted />
-            <p className="mt-4 text-sm sm:text-base leading-relaxed text-neutral-300">
-              More customers for your business with marketing that is planned, not guessed. Helping businesses in Sri Lanka grow step by step.
+        {/* Main Footer Grid: Brand Left + Links Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+          {/* Left Side: Brand Message & Action */}
+          <div className="lg:col-span-7 flex flex-col items-start max-w-xl">
+            <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-white/64 uppercase">
+              FIND YOUR STRATEGY. MAKE IT YOURS.
+            </span>
+
+            <h3 className="mt-4 text-3xl sm:text-5xl font-medium tracking-tight text-white leading-[1.05]">
+              Great marketing. <br />
+              Better growth.
+            </h3>
+
+            <p className="mt-4 text-base sm:text-lg text-white/64 leading-[1.6]">
+              Discover and work the marketing for your next business. Less planning, more doing.
             </p>
+
+            <div className="mt-8">
+              <PillButton
+                treatment="filled"
+                isConsultation
+                consultationLocation="footer"
+                showArrow
+              >
+                Book a growth consultation
+              </PillButton>
+            </div>
           </div>
 
-          {/* Quick Actions */}
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={(e) => openConsultation("footer", e.currentTarget)}
-              className="inline-flex items-center gap-2 rounded-full bg-[#0066cc] hover:bg-[#0055b3] text-white px-5 py-3 text-sm font-medium transition-all active:scale-[0.96]"
-            >
-              <MessageSquare className="h-4 w-4" />
-              <span>Get Free Growth Consultation</span>
-            </button>
+          {/* Right Side: Navigation Columns */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-8 sm:gap-12 pt-2 lg:pt-0">
+            {/* Explore Column */}
+            <div>
+              <p className="text-[15px] font-medium text-white mb-4 sm:mb-6">
+                Explore
+              </p>
+              <ul className="space-y-3 sm:space-y-4">
+                {EXPLORE_LINKS.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm sm:text-base text-white/64 hover:text-white transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            <WhatsAppLink
-              location="footer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 text-sm font-medium text-white hover:bg-white/10 transition-all active:scale-[0.96]"
-            >
-              <span>WhatsApp Us</span>
-            </WhatsAppLink>
+            {/* Support Column */}
+            <div>
+              <p className="text-[15px] font-medium text-white mb-4 sm:mb-6">
+                Support
+              </p>
+              <ul className="space-y-3 sm:space-y-4">
+                {SUPPORT_LINKS.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm sm:text-base text-white/64 hover:text-white transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* Navigation & Legal Links */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 text-sm text-neutral-400">
-          <nav aria-label="Footer Navigation" className="flex flex-wrap items-center gap-6">
-            {footerNavLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+        {/* Divider */}
+        <div className="w-full border-t border-white/10 mt-16 sm:mt-20 pt-8" />
 
-          <div className="flex flex-wrap items-center gap-6 text-xs text-neutral-400">
-            <span>© {currentYear} BHive. All rights reserved.</span>
-            <Link href="/privacy" className="hover:text-white transition-colors">
-              Privacy
+        {/* Bottom Legal Row */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-white/64">
+          <p>© {currentYear} BHive. All rights reserved.</p>
+
+          <div className="flex items-center gap-6 sm:gap-8">
+            <Link href="/privacy" className="hover:text-white transition-colors duration-200">
+              Privacy policy
             </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
-              Terms
+            <Link href="/terms" className="hover:text-white transition-colors duration-200">
+              Terms of service
+            </Link>
+            <Link href="/privacy#cookies" className="hover:text-white transition-colors duration-200">
+              Cookie policy
             </Link>
           </div>
         </div>
@@ -77,5 +117,3 @@ export function Footer() {
     </footer>
   );
 }
-
-export default Footer;

@@ -1,55 +1,71 @@
 import { HeroSection } from "@/components/sections/hero-section";
 import { TrustedPartnersSection } from "@/components/sections/trusted-partners-section";
-import { ProblemSection } from "@/components/sections/problem-section";
-import { OutcomesSection } from "@/components/sections/system-section";
-import { PathwaySection } from "@/components/sections/pathway-section";
-import { HowItWorksSection } from "@/components/sections/how-it-works-section";
+import { ServicesSection } from "@/components/sections/services-section";
+import { ConsultationCalloutSection } from "@/components/sections/consultation-section";
 import { SelectedWorkSection } from "@/components/sections/selected-work-section";
+import { HowItWorksSection } from "@/components/sections/how-it-works-section";
+import { InsightsSection } from "@/components/sections/insights-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { FaqSection } from "@/components/sections/faq-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { createMetadata } from "@/seo/metadata";
+import { client } from "@/sanity/client";
+import { LATEST_INSIGHTS_QUERY } from "@/sanity/queries";
+import type { LATEST_INSIGHTS_QUERY_RESULT } from "../../sanity.types";
+import { mapInsightSummary } from "@/lib/blog/map";
 
 export const metadata = createMetadata({
   title: "BHive — Marketing for Sri Lankan Businesses",
   description:
-    "Helping small and medium businesses in Sri Lanka get more customers with planned, practical marketing. Strategy, branding, web development, content, and growth.",
+    "Helping businesses in Sri Lanka attract and close customers with tailored marketing, strategy, branding, and digital execution.",
   path: "/",
 });
 
-export default function Home() {
+export default async function Home() {
+  let posts: ReturnType<typeof mapInsightSummary>[] = [];
+  try {
+    const rawPosts = await client.fetch<LATEST_INSIGHTS_QUERY_RESULT>(
+      LATEST_INSIGHTS_QUERY,
+      {},
+      { useCdn: false }
+    );
+    posts = (rawPosts || []).map(mapInsightSummary);
+  } catch (error) {
+    console.warn("Failed to fetch latest insights for homepage:", error);
+  }
+
   return (
     <>
-      {/* 1. Hero: Plain headline, subline, primary CTA + WhatsApp */}
+      {/* 1. Hero: 12-Column Stretch Grid with 4 rhythmic photo cards */}
       <HeroSection />
 
-      {/* 2. Logo & Stat Strip: Slim stat counters with TODO placeholders */}
+      {/* 2. Partner Proof: 5 distributed partner badges */}
       <TrustedPartnersSection />
 
-      {/* 3. Problem: 4 business owner pains */}
-      <ProblemSection />
+      {/* 3. Services: Interactive 2-column feature breakdown */}
+      <ServicesSection />
 
-      {/* 4. Outcomes: 4 compact blocks in owner language */}
-      <div id="outcomes">
-        <OutcomesSection />
-      </div>
+      {/* 4. Consultation Callout: Contained growth recommendation banner */}
+      <ConsultationCalloutSection />
 
-      {/* 5. Services: 5 plain-named cards linking to /services#slug */}
-      <PathwaySection />
-
-      {/* 6. How it works: 3 steps */}
-      <HowItWorksSection />
-
-      {/* 7. Work: 2-3 case cards in Challenge -> What we did -> Result */}
+      {/* 5. Selected Work: 8-column case image + 4-column metrics & story card */}
       <SelectedWorkSection />
 
-      {/* 8. Testimonials: Placed directly before final CTA */}
+      {/* 6. Process: Two-track starting points & engagement model */}
+      <div id="how-it-works">
+        <HowItWorksSection />
+      </div>
+
+      {/* 7. Blog & Insights: 3 editorial insight cards */}
+      <InsightsSection posts={posts} />
+
+      {/* 8. Client Voices / Testimonials: 3 success stories */}
       <TestimonialsSection />
 
-      {/* 9. FAQ: Pricing, timeline, process, Sinhala/Tamil/English */}
+      {/* 9. Frequently Asked Questions: 5-col header + 7-col interactive accordion */}
       <FaqSection />
 
-      {/* 10. Final Call to Action */}
+      {/* 10. Contact CTA: Full-bleed dark conversion section */}
       <FinalCtaSection />
     </>
   );

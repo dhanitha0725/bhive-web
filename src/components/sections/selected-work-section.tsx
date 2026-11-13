@@ -1,110 +1,93 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import React from "react";
-import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { caseStudies } from "@/content/case-studies";
-import { siteConfig } from "@/config/site";
-import { ArrowUpRight } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { motion } from "framer-motion";
 
 export function SelectedWorkSection() {
-  if (!siteConfig.showProof) {
-    return null;
-  }
-
-  const cases = caseStudies.filter((x) => x.published).slice(0, 3);
-
   return (
-    <section className="relative w-full py-16 sm:py-20 lg:py-24 bg-white text-slate-900 border-b border-slate-200">
-      <Container className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold uppercase tracking-wider">
-            Case Studies
-          </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[42px] font-semibold font-display tracking-tight text-slate-900 leading-[1.15]">
-            How we solve real business challenges
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
-            Practical marketing systems built to solve specific roadblocks and bring measurable sales.
-          </p>
-        </div>
-
-        {/* 3 Case Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-          {cases.map((item) => (
-            <div
-              key={item.slug}
-              className="flex flex-col justify-between rounded-[22px] border border-slate-200 bg-slate-50/70 p-6 sm:p-7 transition-all duration-200 hover:border-blue-400 hover:bg-white hover:shadow-md"
-            >
-              <div>
-                {/* Meta */}
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wider">
-                    {item.industry}
-                  </span>
-                  {item.isDemo && (
-                    <span className="text-[10px] font-mono bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-medium">
-                      Example Case
-                    </span>
-                  )}
-                </div>
-
-                {/* Client Name */}
-                <h3 className="text-xl font-semibold font-display text-slate-900">
-                  {item.client}
-                </h3>
-
-                {/* Challenge -> What we did -> Result */}
-                <div className="mt-5 space-y-4 text-sm leading-relaxed">
-                  <div className="border-l-2 border-red-300 pl-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-red-600 mb-0.5">
-                      Challenge
-                    </p>
-                    <p className="text-slate-600">{item.challenge}</p>
-                  </div>
-
-                  <div className="border-l-2 border-blue-300 pl-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-blue-600 mb-0.5">
-                      What We Did
-                    </p>
-                    <p className="text-slate-600">{item.whatWeDid}</p>
-                  </div>
-
-                  <div className="border-l-2 border-emerald-400 pl-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700 mb-0.5">
-                      Result
-                    </p>
-                    <p className="text-slate-800 font-medium">{item.result}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-slate-200/80">
-                <Link
-                  href={`/work/${item.slug}`}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0066cc] hover:text-[#0055b3] transition-colors"
-                >
-                  <span>Read case study</span>
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-12 text-center">
-          <Link
-            href="/work"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-[#0066cc] transition-colors underline underline-offset-4"
+    <section id="work" className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
+      <Container>
+        {/* Section Header */}
+        <div className="mb-10 sm:mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="mb-3 sm:mb-4"
           >
-            <span>View all work examples</span>
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
+            <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
+              STRATEGY INTO RESULTS
+            </span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+            className="text-3xl sm:text-5xl lg:text-[60px] font-medium tracking-[-0.03em] leading-[1.05] text-[#0b1220]"
+          >
+            Selected work
+          </motion.h2>
+        </div>
+
+        {/* 12-Column Stretch Grid: 8 Cols Left (Image) + 4 Cols Right (Story Card) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* Left Column: 8 Columns */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="lg:col-span-8 relative rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] min-h-[300px] sm:min-h-[420px] lg:min-h-[480px]"
+          >
+            <img
+              src="/images/figma/case-halegrove.png"
+              alt="Halegrove Case Study"
+              className="w-full h-full object-cover block"
+            />
+          </motion.div>
+
+          {/* Right Column: 4 Columns (Dark Ink Card #0B1220) */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+            className="lg:col-span-4 rounded-2xl bg-[#0b1220] p-6 sm:p-8 lg:p-10 flex flex-col justify-between text-white"
+          >
+            {/* Top Story */}
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-medium tracking-tight text-white">
+                Halegrove
+              </h3>
+              <p className="mt-3 text-sm sm:text-base text-white/64 leading-relaxed">
+                Rebuilt the creative testing engine and consolidated spend around three hero angles.
+              </p>
+            </div>
+
+            {/* Bottom Outcome & Action */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <p className="text-2xl sm:text-[32px] font-medium tracking-tight text-white mb-6">
+                x3 Sale Growth
+              </p>
+
+              <PillButton
+                treatment="filled"
+                href="/work"
+                className="w-full"
+                showArrow
+              >
+                View full case study
+              </PillButton>
+            </div>
+          </motion.div>
         </div>
       </Container>
     </section>
   );
 }
-
-export default SelectedWorkSection;

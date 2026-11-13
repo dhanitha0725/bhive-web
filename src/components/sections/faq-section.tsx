@@ -2,94 +2,128 @@
 
 import React, { useState } from "react";
 import { Container } from "@/components/ui/container";
-import { ChevronDown } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { Plus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface FaqItem {
-  q: string;
-  a: string;
-}
-
-const FAQS: FaqItem[] = [
+const FAQS = [
   {
-    q: "How much does it cost?",
-    a: "We don't believe in one-size-fits-all agency retainers. After our initial free consultation, we provide a transparent, fixed-price quote based strictly on what your business actually needs—whether that's a quick website refresh, branding, or an ongoing monthly marketing plan. There are zero hidden fees.",
+    q: "Do you take freelance commissions?",
+    a: "We work on structured project engagements and monthly growth partnerships. We do not do one-off hourly freelancing because our work focuses on end-to-end commercial outcomes rather than disconnected design tasks.",
   },
   {
-    q: "How long does it take to see results?",
-    a: "Quick fixes like improving your WhatsApp inquiry links or launching focused campaigns usually start producing customer enquiries within 2 to 3 weeks. Complete rebrands and website projects typically take 4 to 6 weeks from kickoff to launch.",
+    q: "What industries or clients do you usually work with?",
+    a: "We work primarily with established SMEs, retail brands, exporters, hospitality groups, and ambitious venture founders across Sri Lanka and regional markets looking to build sustainable customer growth.",
   },
   {
-    q: "How does working with BHive actually work?",
-    a: "We start with a quick WhatsApp chat or 20-minute call to understand your business and review your current marketing. Next, we give you a clear, written 3-month action plan. If you choose to work with us, we execute the plan step-by-step while giving you weekly updates in plain English, Sinhala, or Tamil.",
+    q: "How long does a typical project take?",
+    a: "Brand and strategic foundations typically take 4 to 6 weeks. Full website architecture and custom digital deployment take 6 to 8 weeks. Growth optimization runs on quarterly cycles.",
   },
   {
-    q: "Can our team communicate in Sinhala or Tamil?",
-    a: "Yes, absolutely! We understand that most businesses in Sri Lanka operate smoothly in local languages. Our team is fully comfortable discussing strategy and preparing social content in English, Sinhala, and Tamil.",
+    q: "What file formats will I receive?",
+    a: "You receive full, unrestricted ownership of all raw design files (Figma, vectors, SVG, PDF), brand design guidelines, production-ready code repositories, and complete deployment credentials.",
   },
   {
-    q: "What do I get in the Free Growth Consultation?",
-    a: "You get a direct 1-on-1 review of your existing marketing, social media, and website. We point out exactly where you are losing potential buyers and outline 3 practical changes you can make immediately. It is 100% free with zero obligation.",
+    q: "How do we get started working together?",
+    a: "Start with a 15-minute introductory call or free growth audit. We evaluate your current marketing, determine if we are the right fit, and provide a clear 3-month action plan before any commitment.",
   },
 ];
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const toggle = (index: number) => {
-    setOpenIndex((prev) => (prev === index ? null : index));
+  const toggle = (idx: number) => {
+    setOpenIndex(openIndex === idx ? null : idx);
   };
 
   return (
-    <section className="relative w-full py-16 sm:py-20 lg:py-24 bg-white text-slate-900 border-b border-slate-200">
-      <Container className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
-          <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold uppercase tracking-wider">
-            Common Questions
-          </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[42px] font-semibold font-display tracking-tight text-slate-900 leading-[1.15]">
-            Frequently Asked Questions
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl mx-auto">
-            Everything you need to know about our pricing, process, and communication.
-          </p>
-        </div>
+    <section id="faq" className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
+      <Container>
+        {/* 12-Column Stretch Grid: 5 Cols Left (Header + CTA) + 7 Cols Right (Accordion) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+          {/* Left Column: 5 Columns */}
+          <div className="lg:col-span-5 flex flex-col items-start">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="mb-3 sm:mb-4"
+            >
+              <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
+                GOOD QUESTIONS
+              </span>
+            </motion.div>
 
-        {/* Accordion List (5 items max) */}
-        <div className="space-y-4">
-          {FAQS.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={index}
-                className="rounded-[18px] border border-slate-200 bg-slate-50/60 overflow-hidden transition-all duration-200"
+            <motion.h2
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.2, ease: "easeOut", delay: 0.05 }}
+              className="text-3xl sm:text-5xl lg:text-[56px] font-medium tracking-[-0.03em] leading-[1.05] text-[#0b1220]"
+            >
+              Frequently Asked Questions
+            </motion.h2>
+
+            <div className="mt-8 sm:mt-12">
+              <PillButton
+                treatment="primary"
+                isConsultation
+                consultationLocation="faq"
+                showArrow
               >
-                <button
-                  type="button"
-                  onClick={() => toggle(index)}
-                  className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left font-semibold text-base sm:text-lg text-slate-900 hover:text-[#0066cc] transition-colors focus-visible:outline-2 focus-visible:outline-[#0071e3]"
-                  aria-expanded={isOpen}
-                >
-                  <span>{faq.q}</span>
-                  <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-slate-500 transition-transform duration-200 ${
-                      isOpen ? "rotate-180 text-[#0066cc]" : ""
-                    }`}
-                  />
-                </button>
+                Let&apos;s talk
+              </PillButton>
+            </div>
+          </div>
 
-                {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-slate-600 leading-relaxed border-t border-slate-200/60 bg-white">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {/* Right Column: 7 Columns Accordion */}
+          <div className="lg:col-span-7 flex flex-col divide-y divide-[#e5e8ee] border-t border-b border-[#e5e8ee]">
+            {FAQS.map((faq, idx) => {
+              const isOpen = openIndex === idx;
+              return (
+                <div key={idx} className="py-5 sm:py-6">
+                  <button
+                    type="button"
+                    onClick={() => toggle(idx)}
+                    className="w-full flex items-center justify-between text-left gap-4 cursor-pointer group"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-base sm:text-lg font-medium text-[#0b1220] group-hover:text-[#3068f9] transition-colors duration-200 leading-[1.3]">
+                      {faq.q}
+                    </span>
+
+                    <span className="w-8 h-8 rounded-full bg-[#f5f7fa] flex items-center justify-center shrink-0 text-[#0b1220] group-hover:bg-[#eef3ff] group-hover:text-[#3068f9] transition-colors duration-200">
+                      <Plus
+                        className={`h-4 w-4 transition-transform duration-200 ease-out ${
+                          isOpen ? "rotate-45" : ""
+                        }`}
+                        strokeWidth={1.5}
+                      />
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="pt-3 sm:pt-4 text-sm sm:text-base text-[#5b6475] leading-relaxed pr-6 sm:pr-10">
+                          {faq.a}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </Container>
     </section>
   );
 }
-
-export default FaqSection;

@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "sanity.types.ts",
+    "studio-bhive-blog/**",
+    ".agents/**",
   ]),
 ]);
 
