@@ -46,7 +46,7 @@ export default async function Home() {
       {/* 5. Selected Work: 8-column case image + 4-column metrics & story card */}
       <SelectedWorkSection />
 
-      {/* 6. Process: 3-step getting started cards */}
+      {/* 6. Process: Two-track starting points & engagement model */}
       <div id="how-it-works">
         <HowItWorksSection />
       </div>
