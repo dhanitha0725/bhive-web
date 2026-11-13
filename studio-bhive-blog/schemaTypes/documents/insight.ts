@@ -51,7 +51,8 @@ export const insight = defineType({
     }),
     defineField({
       name: 'publishedAt',
-      type: 'date',
+      type: 'datetime',
+      description: 'Publication date and time. Drives ordering; the site displays the date as YYYY-MM-DD.',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -145,6 +146,7 @@ export const insight = defineType({
   preview: {
     select: {
       title: 'title',
+      // Dot notation follows the reference; Studio resolves it for previews.
       pillarTitle: 'pillar.name',
       media: 'coverImage',
     },

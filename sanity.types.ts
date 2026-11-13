@@ -336,7 +336,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../src/sanity/queries.ts
 // Variable: INSIGHT_SUMMARIES_QUERY
-// Query: *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc) {    _id,    title,    "slug": slug.current,    excerpt,    "pillar": pillar->{ name, "slug": slug.current },    "coverImage": coverImage{ ..., "alt": alt },    publishedAt,    readingTime  }
+// Query: *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc) {    _id,    title,    "slug": slug.current,    excerpt,    "pillar": pillar->{ name, "slug": slug.current },    "coverImage": coverImage{ ..., "alt": alt },    publishedAt,    "readingTime": coalesce(      readingTime,      math::max([round(count(string::split(pt::text(coalesce(body, [])), " ")) / 200), 1])    )  }
 export type INSIGHT_SUMMARIES_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -355,12 +355,12 @@ export type INSIGHT_SUMMARIES_QUERY_RESULT = Array<{
     _type: "image";
   } | null;
   publishedAt: string | null;
-  readingTime: number | null;
+  readingTime: number | 1;
 }>;
 
 // Source: ../src/sanity/queries.ts
 // Variable: LATEST_INSIGHTS_QUERY
-// Query: *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc)[0...3] {    _id,    title,    "slug": slug.current,    excerpt,    "pillar": pillar->{ name, "slug": slug.current },    "coverImage": coverImage{ ..., "alt": alt },    publishedAt,    readingTime  }
+// Query: *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc)[0...3] {    _id,    title,    "slug": slug.current,    excerpt,    "pillar": pillar->{ name, "slug": slug.current },    "coverImage": coverImage{ ..., "alt": alt },    publishedAt,    "readingTime": coalesce(      readingTime,      math::max([round(count(string::split(pt::text(coalesce(body, [])), " ")) / 200), 1])    )  }
 export type LATEST_INSIGHTS_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -379,7 +379,7 @@ export type LATEST_INSIGHTS_QUERY_RESULT = Array<{
     _type: "image";
   } | null;
   publishedAt: string | null;
-  readingTime: number | null;
+  readingTime: number | 1;
 }>;
 
 // Source: ../src/sanity/queries.ts
@@ -513,8 +513,8 @@ export type SITE_SETTINGS_QUERY_RESULT =
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '\n  *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    "pillar": pillar->{ name, "slug": slug.current },\n    "coverImage": coverImage{ ..., "alt": alt },\n    publishedAt,\n    readingTime\n  }\n': INSIGHT_SUMMARIES_QUERY_RESULT;
-    '\n  *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc)[0...3] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    "pillar": pillar->{ name, "slug": slug.current },\n    "coverImage": coverImage{ ..., "alt": alt },\n    publishedAt,\n    readingTime\n  }\n': LATEST_INSIGHTS_QUERY_RESULT;
+    '\n  *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    "pillar": pillar->{ name, "slug": slug.current },\n    "coverImage": coverImage{ ..., "alt": alt },\n    publishedAt,\n    "readingTime": coalesce(\n      readingTime,\n      math::max([round(count(string::split(pt::text(coalesce(body, [])), " ")) / 200), 1])\n    )\n  }\n': INSIGHT_SUMMARIES_QUERY_RESULT;
+    '\n  *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc)[0...3] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    "pillar": pillar->{ name, "slug": slug.current },\n    "coverImage": coverImage{ ..., "alt": alt },\n    publishedAt,\n    "readingTime": coalesce(\n      readingTime,\n      math::max([round(count(string::split(pt::text(coalesce(body, [])), " ")) / 200), 1])\n    )\n  }\n': LATEST_INSIGHTS_QUERY_RESULT;
     '\n  *[_type == "insight" && slug.current == $slug][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    "pillar": pillar->{ name, "slug": slug.current },\n    "coverImage": coverImage{ ..., "alt": alt },\n    publishedAt,\n    readingTime,\n    body,\n    "relatedService": relatedService->{ name, "slug": slug.current },\n    seo\n  }\n': INSIGHT_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "insight" && defined(slug.current)] | order(publishedAt desc, _createdAt desc) {\n    "slug": slug.current,\n    _updatedAt\n  }\n': INSIGHT_SLUGS_QUERY_RESULT;
     '\n  count(*[_type == "insight" && defined(slug.current)])\n': INSIGHT_COUNT_QUERY_RESULT;

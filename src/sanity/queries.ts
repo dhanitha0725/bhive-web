@@ -9,7 +9,10 @@ export const INSIGHT_SUMMARIES_QUERY = defineQuery(/* groq */ `
     "pillar": pillar->{ name, "slug": slug.current },
     "coverImage": coverImage{ ..., "alt": alt },
     publishedAt,
-    readingTime
+    "readingTime": coalesce(
+      readingTime,
+      math::max([round(count(string::split(pt::text(coalesce(body, [])), " ")) / 200), 1])
+    )
   }
 `);
 
@@ -22,7 +25,10 @@ export const LATEST_INSIGHTS_QUERY = defineQuery(/* groq */ `
     "pillar": pillar->{ name, "slug": slug.current },
     "coverImage": coverImage{ ..., "alt": alt },
     publishedAt,
-    readingTime
+    "readingTime": coalesce(
+      readingTime,
+      math::max([round(count(string::split(pt::text(coalesce(body, [])), " ")) / 200), 1])
+    )
   }
 `);
 
