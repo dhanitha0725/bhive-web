@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import type { CaseStudy } from "@/content/case-studies";
-import type { Insight } from "@/content/insights";
+import type { InsightSummary } from "@/lib/blog/types";
 import { useConsultation } from "@/components/providers/consultation-provider";
 import { WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { MessageSquare, ArrowRight, ArrowUpRight } from "lucide-react";
@@ -166,11 +166,11 @@ export function CaseCard({ item }: { item: CaseStudy }) {
   );
 }
 
-export function InsightCard({ item }: { item: Insight }) {
+export function InsightCard({ item }: { item: InsightSummary }) {
   return (
     <article className="border-t border-slate-200 pt-5">
       <p className="font-mono text-xs uppercase tracking-wider text-slate-500">
-        {item.pillar.replaceAll("-", " ")}
+        {item.pillarName}
       </p>
       <h3 className="mt-2 font-display text-xl font-semibold tracking-tight text-slate-900">
         <Link

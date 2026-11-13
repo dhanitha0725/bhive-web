@@ -9,6 +9,10 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { FaqSection } from "@/components/sections/faq-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { createMetadata } from "@/seo/metadata";
+import { client } from "@/sanity/client";
+import { LATEST_INSIGHTS_QUERY } from "@/sanity/queries";
+import type { LATEST_INSIGHTS_QUERY_RESULT } from "../../sanity.types";
+import { mapInsightSummary } from "@/lib/blog/map";
 
 export const metadata = createMetadata({
   title: "BHive — Marketing for Sri Lankan Businesses",
@@ -17,7 +21,14 @@ export const metadata = createMetadata({
   path: "/",
 });
 
-export default function Home() {
+export default async function Home() {
+  const rawPosts = await client.fetch<LATEST_INSIGHTS_QUERY_RESULT>(
+    LATEST_INSIGHTS_QUERY,
+    {},
+    { useCdn: false }
+  );
+  const posts = (rawPosts || []).map(mapInsightSummary);
+
   return (
     <>
       {/* 1. Hero: 12-Column Stretch Grid with 4 rhythmic photo cards */}
@@ -41,7 +52,7 @@ export default function Home() {
       </div>
 
       {/* 7. Blog & Insights: 3 editorial insight cards */}
-      <InsightsSection />
+      <InsightsSection posts={posts} />
 
       {/* 8. Client Voices / Testimonials: 3 success stories */}
       <TestimonialsSection />

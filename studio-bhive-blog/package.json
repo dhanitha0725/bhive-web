@@ -1,0 +1,27 @@
+{
+  "name": "studio-bhive-blog",
+  "private": true,
+  "version": "1.0.0",
+  "main": "package.json",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "typegen": "sanity schemas extract --force && sanity typegen generate"
+  },
+  "dependencies": {
+    "@sanity/icons": "^5.3.0",
+    "@sanity/vision": "^6.23.0",
+    "react": "^19.2.2",
+    "react-dom": "^19.2.2",
+    "sanity": "^6.23.0",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.2.2",
+    "typescript": "^5.9.2"
+  }
+}

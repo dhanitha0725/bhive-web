@@ -8,7 +8,7 @@ import { PillButton } from "@/components/ui/pill-button";
 const EXPLORE_LINKS = [
   { label: "Services", href: "/#services" },
   { label: "How it works", href: "/#how-it-works" },
-  { label: "Insights", href: "/#insights" },
+  { label: "Insights", href: "/insights" },
 ];
 
 const SUPPORT_LINKS = [
