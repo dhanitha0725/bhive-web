@@ -22,12 +22,17 @@ export const metadata = createMetadata({
 });
 
 export default async function Home() {
-  const rawPosts = await client.fetch<LATEST_INSIGHTS_QUERY_RESULT>(
-    LATEST_INSIGHTS_QUERY,
-    {},
-    { useCdn: false }
-  );
-  const posts = (rawPosts || []).map(mapInsightSummary);
+  let posts: ReturnType<typeof mapInsightSummary>[] = [];
+  try {
+    const rawPosts = await client.fetch<LATEST_INSIGHTS_QUERY_RESULT>(
+      LATEST_INSIGHTS_QUERY,
+      {},
+      { useCdn: false }
+    );
+    posts = (rawPosts || []).map(mapInsightSummary);
+  } catch (error) {
+    console.warn("Failed to fetch latest insights for homepage:", error);
+  }
 
   return (
     <>

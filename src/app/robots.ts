@@ -5,14 +5,21 @@ import { INSIGHT_COUNT_QUERY } from "@/sanity/queries";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const siteUrl = siteConfig.url || "https://bhive.lk";
-  const publishedInsights = await client.fetch<number>(
-    INSIGHT_COUNT_QUERY,
-    {},
-    { useCdn: false }
-  );
+  let publishedInsights = 0;
+
+  try {
+    publishedInsights = (await client.fetch<number>(
+      INSIGHT_COUNT_QUERY,
+      {},
+      { useCdn: false }
+    )) ?? 0;
+  } catch (error) {
+    console.warn("Failed to query published insights for robots.txt:", error);
+  }
+
   const disallowList: string[] = ["/api/"];
 
-  if ((publishedInsights ?? 0) < 3) {
+  if (publishedInsights < 3) {
     disallowList.push("/insights", "/insights/");
   }
 
