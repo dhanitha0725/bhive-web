@@ -1,5 +1,4 @@
-import type { CSSProperties, ComponentType, ReactNode } from "react";
-import { Check } from "lucide-react";
+import type { ComponentType, ReactNode } from "react";
 
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -55,31 +54,116 @@ function ShineBorder({
   children,
   className,
   borderWidth = 2,
-  duration = 5,
-  color = "var(--color-primary)",
+  duration = 6,
+  color = "#3068f9",
   radius = 24,
 }: ShineBorderProps) {
+  const strokeWidth = borderWidth * 2 + 4;
+
   return (
     <div
       className={cn("relative isolate overflow-hidden bg-[#e5e8ee]", className)}
       style={{ borderRadius: radius, padding: borderWidth }}
     >
-      {/* Rotating beam, visible only through the border ring. */}
-      <div
+      {/* Perimeter-following meteor beam, visible only through the outer border ring. */}
+      <svg
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        style={{ borderRadius: radius }}
+        className="pointer-events-none absolute inset-0 h-full w-full motion-reduce:hidden"
+        fill="none"
       >
-        <div
-          className="animate-border-beam absolute left-1/2 top-1/2 h-[200%] w-[200%] opacity-90"
-          style={
-            {
-              background: `conic-gradient(from 90deg, transparent 0deg, transparent 336deg, ${color} 352deg, ${color} 356deg, transparent 360deg)`,
-              "--beam-duration": `${duration}s`,
-            } as CSSProperties
-          }
-        />
-      </div>
+        <rect
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          rx={radius}
+          ry={radius}
+          pathLength={100}
+          stroke={color}
+          strokeOpacity={0.28}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray="18 82"
+          strokeDashoffset={0}
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="0"
+            to="-100"
+            dur={`${duration}s`}
+            repeatCount="indefinite"
+          />
+        </rect>
+        <rect
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          rx={radius}
+          ry={radius}
+          pathLength={100}
+          stroke={color}
+          strokeOpacity={0.62}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray="10 90"
+          strokeDashoffset={-8}
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="-8"
+            to="-108"
+            dur={`${duration}s`}
+            repeatCount="indefinite"
+          />
+        </rect>
+        <rect
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          rx={radius}
+          ry={radius}
+          pathLength={100}
+          stroke={color}
+          strokeOpacity={1}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray="5 95"
+          strokeDashoffset={-13}
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="-13"
+            to="-113"
+            dur={`${duration}s`}
+            repeatCount="indefinite"
+          />
+        </rect>
+        <rect
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          rx={radius}
+          ry={radius}
+          pathLength={100}
+          stroke="#93c5fd"
+          strokeOpacity={0.95}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray="1.8 98.2"
+          strokeDashoffset={-16.2}
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="-16.2"
+            to="-116.2"
+            dur={`${duration}s`}
+            repeatCount="indefinite"
+          />
+        </rect>
+      </svg>
 
       <div
         className="relative z-10 h-full overflow-hidden bg-white"
