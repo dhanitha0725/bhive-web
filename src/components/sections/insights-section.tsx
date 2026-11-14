@@ -1,13 +1,11 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
 
 import React from "react";
-import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { PillButton } from "@/components/ui/pill-button";
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import type { InsightSummary } from "@/lib/blog/types";
+import { BlogCard } from "@/components/blog/blog-card";
 
 export function InsightsSection({ posts }: { posts: InsightSummary[] }) {
   if (!posts || posts.length === 0) {
@@ -64,48 +62,9 @@ export function InsightsSection({ posts }: { posts: InsightSummary[] }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.05 }}
+              className="h-full"
             >
-              <Link href={`/insights/${post.slug}`} className="group flex flex-col h-full">
-                {/* Article Image or Gradient Placeholder */}
-                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee]">
-                  {post.coverImage ? (
-                    <img
-                      src={post.coverImage.url}
-                      srcSet={post.coverImage.srcSet}
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      alt={post.coverImage.alt}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover transition-transform duration-200 ease-out group-hover:scale-[1.02]"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex flex-col justify-end p-6 bg-gradient-to-br from-[#0b2554] via-[#004f9e] to-[#0066cc] text-white">
-                      <span className="font-mono text-xs uppercase tracking-wider text-blue-200">
-                        {post.pillarName}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Metadata */}
-                <p className="mt-4 text-xs sm:text-[13px] text-[#5b6475] font-medium">
-                  {post.pillarName} • {post.readingTime}
-                </p>
-
-                {/* Title */}
-                <h3 className="mt-2 text-lg sm:text-xl font-medium tracking-tight text-[#0b1220] group-hover:text-[#3068f9] transition-colors duration-200 leading-[1.3]">
-                  {post.title}
-                </h3>
-
-                {/* Action Link */}
-                <div className="mt-4 flex items-center gap-1.5 text-sm font-medium text-[#0b1220] group-hover:text-[#3068f9] transition-colors duration-200">
-                  <span>Read article</span>
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1"
-                    strokeWidth={1.5}
-                  />
-                </div>
-              </Link>
+              <BlogCard post={post} />
             </motion.div>
           ))}
         </div>
