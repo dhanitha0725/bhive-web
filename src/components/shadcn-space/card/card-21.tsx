@@ -110,7 +110,7 @@ function ComparisonPanelColumn({
       className={cn(
         "relative flex h-full flex-col overflow-hidden rounded-2xl",
         dark ? "border border-white/10 bg-[#0b1220]" : "bg-white",
-        className
+        className,
       )}
     >
       {/* Ink panel glow */}
@@ -130,7 +130,7 @@ function ComparisonPanelColumn({
               "grid size-11 shrink-0 place-items-center rounded-xl border",
               dark
                 ? "border-white/15 bg-white/10 text-white"
-                : "border-[#dce6fb] bg-[#eef3ff] text-[#1f55e0]"
+                : "border-[#dce6fb] bg-[#eef3ff] text-[#1f55e0]",
             )}
           >
             <Icon className="size-5" strokeWidth={1.75} />
@@ -140,7 +140,7 @@ function ComparisonPanelColumn({
             <p
               className={cn(
                 "text-[10px] font-medium uppercase tracking-[0.1em] sm:text-[11px] sm:tracking-[0.14em]",
-                dark ? "text-white/55" : "text-[#5b6475]"
+                dark ? "text-white/55" : "text-[#5b6475]",
               )}
             >
               {panel.eyebrow}
@@ -148,7 +148,7 @@ function ComparisonPanelColumn({
             <h3
               className={cn(
                 "mt-1.5 text-[22px] font-medium leading-[1.2] tracking-[-0.02em] sm:text-2xl",
-                dark ? "text-white" : "text-[#0b1220]"
+                dark ? "text-white" : "text-[#0b1220]",
               )}
             >
               {panel.title}
@@ -159,7 +159,7 @@ function ComparisonPanelColumn({
         <p
           className={cn(
             "mt-4 text-sm leading-[1.6] sm:text-[15px]",
-            dark ? "text-white/65" : "text-[#5b6475]"
+            dark ? "text-white/65" : "text-[#5b6475]",
           )}
         >
           {panel.description}
@@ -179,7 +179,7 @@ function ComparisonPanelColumn({
                   "mt-px grid size-6 shrink-0 place-items-center rounded-full border text-[11px] font-semibold tabular-nums",
                   dark
                     ? "border-white/20 bg-white/[0.06] text-[#b3ccff]"
-                    : "border-[#dce6fb] bg-white text-[#1f55e0]"
+                    : "border-[#dce6fb] bg-white text-[#1f55e0]",
                 )}
               >
                 {step.num}
@@ -190,7 +190,7 @@ function ComparisonPanelColumn({
                   <h4
                     className={cn(
                       "text-[15px] font-medium leading-snug tracking-[-0.01em]",
-                      dark ? "text-white" : "text-[#0b1220]"
+                      dark ? "text-white" : "text-[#0b1220]",
                     )}
                   >
                     {step.title}
@@ -201,7 +201,7 @@ function ComparisonPanelColumn({
                         "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em]",
                         dark
                           ? "bg-white/10 text-white"
-                          : "bg-[#eef3ff] text-[#1f55e0]"
+                          : "bg-[#eef3ff] text-[#1f55e0]",
                       )}
                     >
                       {step.tag}
@@ -211,7 +211,7 @@ function ComparisonPanelColumn({
                 <p
                   className={cn(
                     "mt-1 text-[13px] leading-[1.55] sm:text-sm",
-                    dark ? "text-white/60" : "text-[#5b6475]"
+                    dark ? "text-white/60" : "text-[#5b6475]",
                   )}
                 >
                   {step.detail}
@@ -223,37 +223,7 @@ function ComparisonPanelColumn({
 
         {/* Commercial shape + action */}
         <div className="mt-auto pt-8">
-          <Separator className={cn(dark ? "bg-white/12" : "bg-[#e5e8ee]")} />
-          <div className="mt-5 flex flex-col gap-5">
-            <p
-              className={cn(
-                "flex items-start gap-2 text-[13px] leading-[1.55]",
-                dark ? "text-white/65" : "text-[#5b6475]"
-              )}
-            >
-              <Check
-                aria-hidden="true"
-                className={cn(
-                  "mt-0.5 size-4 shrink-0",
-                  dark ? "text-[#7fa8f5]" : "text-[#3068f9]"
-                )}
-                strokeWidth={2}
-              />
-              <span>
-                <span
-                  className={cn(
-                    "font-medium",
-                    dark ? "text-white" : "text-[#0b1220]"
-                  )}
-                >
-                  Investment shape:
-                </span>{" "}
-                {panel.investment}
-              </span>
-            </p>
-
-            {panel.action}
-          </div>
+          <div className="mt-5 flex flex-col gap-5">{panel.action}</div>
         </div>
       </div>
     </div>
