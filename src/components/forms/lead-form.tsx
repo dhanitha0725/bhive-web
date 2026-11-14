@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { consultationLeadSchema } from "@/forms/schemas";
-import { CheckCircle2, Loader2, AlertCircle, MessageSquare } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle, MessageSquare, ArrowRight } from "lucide-react";
 import { WhatsAppLink } from "@/components/ui/whatsapp-link";
 import {
   getUtmAndReferrer,
@@ -14,6 +14,8 @@ interface LeadFormProps {
   onSuccess?: () => void;
   className?: string;
   source?: string;
+  submitLabel?: string;
+  isAudit?: boolean;
 }
 
 interface FormState {
@@ -24,7 +26,12 @@ interface FormState {
   honeypot: string;
 }
 
-export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
+export function LeadForm({
+  onSuccess,
+  className = "",
+  submitLabel,
+  isAudit = false,
+}: LeadFormProps) {
   const [formData, setFormData] = useState<FormState>({
     name: "",
     whatsappNumber: "",
@@ -37,6 +44,8 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+
+  const defaultSubmitLabel = submitLabel || (isAudit ? "Claim Free Growth Audit" : "Book Growth Consultation");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -97,7 +106,8 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           }
           setErrors(fieldErrors);
         }
-        const errorMsg = data.error || "Unable to send request. Please message us on WhatsApp directly.";
+        const errorMsg =
+          data.error || "Unable to send request. Please message us on WhatsApp directly.";
         trackLeadSubmitError(errorMsg);
         throw new Error(errorMsg);
       }
@@ -119,19 +129,26 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
 
   if (isSuccess) {
     return (
-      <div className="rounded-[18px] border border-emerald-200 bg-emerald-50/70 p-6 sm:p-8 text-center text-slate-900">
+      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-6 sm:p-8 text-center text-[#0b1220]">
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4">
           <CheckCircle2 className="h-6 w-6 stroke-[2.5]" />
         </div>
-        <h3 className="text-xl font-semibold text-slate-900 font-display">
+        <h3 className="text-xl font-medium text-[#0b1220]">
           Request Received
         </h3>
-        <p className="mt-2 text-base text-slate-700 max-w-md mx-auto leading-relaxed">
-          Thanks. We will WhatsApp you within 24 hours.
+        <p className="mt-2 text-sm sm:text-base text-[#5b6475] max-w-md mx-auto leading-relaxed">
+          Thanks, {formData.name || "there"}! We will review your business details and message you on WhatsApp within 24 hours.
         </p>
-        <p className="mt-4 text-xs font-mono uppercase tracking-wider text-slate-500">
-          No obligation · 100% Free Consultation
-        </p>
+        <div className="mt-6 pt-4 border-t border-emerald-200/60 flex flex-col items-center gap-2">
+          <p className="text-xs text-[#5b6475]">Want an immediate answer?</p>
+          <WhatsAppLink
+            location="form_success"
+            className="inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] px-5 py-2.5 text-sm font-medium text-white transition-all shadow-sm"
+          >
+            <MessageSquare className="h-4 w-4 fill-white stroke-none" />
+            <span>Chat on WhatsApp Now</span>
+          </WhatsAppLink>
+        </div>
       </div>
     );
   }
@@ -158,7 +175,7 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           </div>
           <WhatsAppLink
             location="form_error"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] px-4 py-2.5 text-sm font-semibold text-white transition-all shadow-sm"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] px-4 py-2.5 text-sm font-medium text-white transition-all shadow-sm"
           >
             <MessageSquare className="h-4 w-4 fill-white stroke-none" />
             <span>Message Us Directly on WhatsApp</span>
@@ -170,9 +187,9 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
       <div>
         <label
           htmlFor="lead-name"
-          className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5"
+          className="block text-xs font-medium tracking-wider text-[#5b6475] uppercase mb-1.5"
         >
-          Your Name <span className="text-red-500">*</span>
+          Your Name <span className="text-[#3068f9]">*</span>
         </label>
         <input
           id="lead-name"
@@ -183,8 +200,8 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           value={formData.name}
           onChange={handleChange}
           disabled={isSubmitting}
-          className={`w-full rounded-full border bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
-            errors.name ? "border-red-400 ring-1 ring-red-400" : "border-slate-300"
+          className={`w-full rounded-xl border bg-white px-4 py-2.5 sm:py-3 text-[15px] text-[#0b1220] placeholder:text-[#5b6475]/50 focus:outline-none focus:ring-2 focus:ring-[#3068f9] transition-colors ${
+            errors.name ? "border-red-400 ring-1 ring-red-400" : "border-[#e5e8ee] hover:border-[#c5cbe0]"
           }`}
         />
         {errors.name && (
@@ -196,9 +213,9 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
       <div>
         <label
           htmlFor="lead-phone"
-          className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5"
+          className="block text-xs font-medium tracking-wider text-[#5b6475] uppercase mb-1.5"
         >
-          WhatsApp Number <span className="text-red-500">*</span>
+          WhatsApp Number <span className="text-[#3068f9]">*</span>
         </label>
         <input
           id="lead-phone"
@@ -209,8 +226,8 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
           value={formData.whatsappNumber}
           onChange={handleChange}
           disabled={isSubmitting}
-          className={`w-full rounded-full border bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
-            errors.whatsappNumber ? "border-red-400 ring-1 ring-red-400" : "border-slate-300"
+          className={`w-full rounded-xl border bg-white px-4 py-2.5 sm:py-3 text-[15px] text-[#0b1220] placeholder:text-[#5b6475]/50 focus:outline-none focus:ring-2 focus:ring-[#3068f9] transition-colors ${
+            errors.whatsappNumber ? "border-red-400 ring-1 ring-red-400" : "border-[#e5e8ee] hover:border-[#c5cbe0]"
           }`}
         />
         {errors.whatsappNumber && (
@@ -224,21 +241,21 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
       <div>
         <label
           htmlFor="lead-business"
-          className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5"
+          className="block text-xs font-medium tracking-wider text-[#5b6475] uppercase mb-1.5"
         >
-          Business or Project Name <span className="text-red-500">*</span>
+          Business or Project Name <span className="text-[#3068f9]">*</span>
         </label>
         <input
           id="lead-business"
           type="text"
           name="businessName"
           required
-          placeholder="e.g. Ceylon Spices Store"
+          placeholder="e.g. Ceylon Spices Store or ceylonspices.lk"
           value={formData.businessName}
           onChange={handleChange}
           disabled={isSubmitting}
-          className={`w-full rounded-full border bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
-            errors.businessName ? "border-red-400 ring-1 ring-red-400" : "border-slate-300"
+          className={`w-full rounded-xl border bg-white px-4 py-2.5 sm:py-3 text-[15px] text-[#0b1220] placeholder:text-[#5b6475]/50 focus:outline-none focus:ring-2 focus:ring-[#3068f9] transition-colors ${
+            errors.businessName ? "border-red-400 ring-1 ring-red-400" : "border-[#e5e8ee] hover:border-[#c5cbe0]"
           }`}
         />
         {errors.businessName && (
@@ -252,21 +269,25 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
       <div>
         <label
           htmlFor="lead-need"
-          className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5"
+          className="block text-xs font-medium tracking-wider text-[#5b6475] uppercase mb-1.5"
         >
-          What do you need help with? <span className="text-red-500">*</span>
+          {isAudit ? "What channels or areas would you like us to audit?" : "What do you need help with?"} <span className="text-[#3068f9]">*</span>
         </label>
         <textarea
           id="lead-need"
           name="whatYouNeed"
           rows={3}
           required
-          placeholder="e.g. We have a Facebook page with 5k followers but hardly get any enquiries or sales..."
+          placeholder={
+            isAudit
+              ? "e.g. We run Facebook and Instagram ads but cost per enquiry is too high, and our website bounce rate is high..."
+              : "e.g. We need to launch a new brand, build a high-converting web presence, or scale our customer acquisition..."
+          }
           value={formData.whatYouNeed}
           onChange={handleChange}
           disabled={isSubmitting}
-          className={`w-full rounded-[14px] border bg-white p-3.5 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc] ${
-            errors.whatYouNeed ? "border-red-400 ring-1 ring-red-400" : "border-slate-300"
+          className={`w-full rounded-xl border bg-white p-3 sm:p-3.5 text-[15px] text-[#0b1220] placeholder:text-[#5b6475]/50 focus:outline-none focus:ring-2 focus:ring-[#3068f9] transition-colors ${
+            errors.whatYouNeed ? "border-red-400 ring-1 ring-red-400" : "border-[#e5e8ee] hover:border-[#c5cbe0]"
           }`}
         />
         {errors.whatYouNeed && (
@@ -281,7 +302,7 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#0066cc] px-6 py-3.5 text-sm sm:text-base font-medium text-white transition-all duration-150 hover:bg-[#0055b3] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-[#0071e3]"
+          className="w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] px-6 text-[15px] font-medium text-white transition-all duration-150 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
         >
           {isSubmitting ? (
             <>
@@ -289,18 +310,18 @@ export function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
               <span>Submitting...</span>
             </>
           ) : (
-            <span>Get Free Growth Consultation</span>
+            <>
+              <span>{defaultSubmitLabel}</span>
+              <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+            </>
           )}
         </button>
       </div>
 
       {/* Consent Line & Guarantees */}
-      <div className="space-y-1.5 pt-1 text-center">
-        <p className="text-xs text-slate-500 leading-relaxed">
-          By submitting this form, you agree that BHive may contact you via WhatsApp or phone regarding your growth consultation. Your information is never sold or shared with third-party advertisers.
-        </p>
-        <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
-          Free · No Obligation · Reply Within 24h
+      <div className="pt-1 text-center">
+        <p className="text-[12px] text-[#5b6475] leading-relaxed">
+          100% Free · No sales pressure · Replies within 24h via WhatsApp
         </p>
       </div>
     </form>

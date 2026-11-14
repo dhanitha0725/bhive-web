@@ -14,6 +14,7 @@ interface PillButtonProps {
   href?: string;
   isConsultation?: boolean;
   consultationLocation?: string;
+  consultationType?: "growth-audit" | "consultation";
   className?: string;
   showArrow?: boolean;
   onClick?: () => void;
@@ -28,6 +29,7 @@ export function PillButton({
   href,
   isConsultation = false,
   consultationLocation = "cta",
+  consultationType,
   className = "",
   showArrow = false,
   onClick,
@@ -68,7 +70,7 @@ export function PillButton({
         type="button"
         onClick={(e) => {
           onClick?.();
-          openConsultation(consultationLocation, e.currentTarget);
+          openConsultation(consultationLocation, e.currentTarget, { type: consultationType });
         }}
         className={baseClasses}
         disabled={disabled}
