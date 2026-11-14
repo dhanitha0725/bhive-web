@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   turbopack: {
     root: process.cwd(),
   },
@@ -16,7 +17,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  allowedDevOrigins: ["10.83.57.29", "localhost:3001"],
+  allowedDevOrigins: [
+    "*.run.app",
+    "*.asia-southeast1.run.app",
+    "*.googleusercontent.com",
+    "10.83.57.29",
+    "localhost",
+    "localhost:3000",
+    "localhost:3001",
+    "127.0.0.1",
+  ],
   async redirects() {
     return [
       {
