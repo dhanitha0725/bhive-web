@@ -21,22 +21,25 @@ export function Header() {
   const { openConsultation } = useConsultation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 16);
+      setScrolled(window.scrollY > 48);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const showHeader = !isHomePage || scrolled || mobileMenuOpen;
+
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-colors duration-200 ease-out ${
-        scrolled
-          ? "bg-white border-b border-[#e5e8ee]"
-          : "bg-white border-b border-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-out ${
+        showHeader
+          ? "translate-y-0 opacity-100 bg-white/95 backdrop-blur-sm border-b border-[#e5e8ee]"
+          : "-translate-y-full opacity-0 pointer-events-none border-b border-transparent"
       }`}
     >
       <Container>
@@ -44,7 +47,7 @@ export function Header() {
           {/* Brand Logo */}
           <Link
             href="/"
-            className="flex items-center shrink-0 transition-opacity hover:opacity-90"
+            className="flex items-center gap-2 shrink-0 transition-opacity hover:opacity-90"
             aria-label="BHive Home"
           >
             <img
@@ -54,7 +57,7 @@ export function Header() {
             />
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links: Services · Our Work · Blog · About */}
           <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-7 lg:gap-9">
             {navLinks.map((item) => {
               const isCurrent = pathname === item.href;
@@ -74,7 +77,7 @@ export function Header() {
             })}
           </nav>
 
-          {/* Contact Action Pill Button */}
+          {/* Single Action Pill Button: Contact -> */}
           <div className="hidden md:flex items-center">
             <button
               type="button"
