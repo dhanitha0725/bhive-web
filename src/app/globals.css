@@ -365,23 +365,6 @@ a {
   backface-visibility: hidden;
 }
 
-@keyframes marquee-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.animate-marquee-right {
-  animation: marquee-right 35s linear infinite;
-  /* Keep the marquee on the compositor so it never blocks scrolling. */
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
 /* Lightweight scroll reveal (replaces framer-motion whileInView).
  * Transform + opacity only, so reveals never trigger layout/paint. */
 .reveal {

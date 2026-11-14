@@ -41,6 +41,8 @@ const PERSPECTIVE = 600;
 const CARD_BAND_TOP = 470;
 const CARD_BAND_HEIGHT = 560;
 const AUTO_SCROLL_SPEED = 50; // u per second
+const MOBILE_MARQUEE_SPEED = 40; // px per second
+const MOBILE_MARQUEE_STOP = 5; // px per second
 
 /**
  * Computes the cylindrical geometry for a card from its unpushed offset t.
@@ -96,12 +98,25 @@ export function HeroSection() {
   const cardSurfacesRef = useRef<(HTMLDivElement | null)[]>([]);
   const cardVisibilityRef = useRef<boolean[]>(Array(CARD_COUNT).fill(true));
 
+  // Mobile / touch marquee (the curved frame is desktop-only)
+  const mobileTrackRef = useRef<HTMLDivElement>(null);
+  const mobileCopyRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileState = useRef({
+    offset: 0,
+    velocity: 0,
+    isDragging: false,
+    dragStartX: 0,
+    dragStartOffset: 0,
+    lastPointerX: 0,
+    lastPointerTime: 0,
+    setWidth: 0,
+  });
+
   // Animation & Physics state (stored in ref to avoid react re-render stalls during 60/120fps tick)
   const animState = useRef({
     offset: 0,
     velocity: 0,
     isDragging: false,
-    isHovered: false,
     dragStartX: 0,
     dragStartOffset: 0,
     lastPointerX: 0,
@@ -112,8 +127,9 @@ export function HeroSection() {
 
   const [entered, setEntered] = useState(false);
   const [isGrabbing, setIsGrabbing] = useState(false);
+  const [mobileGrabbing, setMobileGrabbing] = useState(false);
 
-  // Initialize scale U and check reduced motion
+  // Initialize the frame scale (--u = min(vw/1440, vh/1080))
   const updateScale = useCallback(() => {
     if (typeof window === "undefined") return;
     const vw = window.innerWidth;
@@ -179,7 +195,6 @@ export function HeroSection() {
     // Initial positioning
     updateCardsDOM(0);
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let lastTime = performance.now();
     let rafId: number;
 
@@ -199,13 +214,16 @@ export function HeroSection() {
 
         // Normalize offset
         state.offset = ((state.offset % TOTAL_WIDTH) + TOTAL_WIDTH) % TOTAL_WIDTH;
-      } else if (!state.isHovered && !prefersReducedMotion) {
-        // Continuous smooth auto-rotation circularly along the curved arc (right to left)
+      } else {
+        // Continuous automatic rotation along the curved arc (right to left).
+        // It always runs: dragging temporarily overrides it, then momentum
+        // hands control back to the auto-scroll.
         state.offset += AUTO_SCROLL_SPEED * dt;
         state.offset = ((state.offset % TOTAL_WIDTH) + TOTAL_WIDTH) % TOTAL_WIDTH;
       }
 
-      updateCardsDOM(state.offset);
+      // Skip DOM work while the curved frame is display:none (mobile layout).
+      if (frameRef.current?.offsetParent) updateCardsDOM(state.offset);
       rafId = requestAnimationFrame(loop);
     };
 
@@ -217,6 +235,68 @@ export function HeroSection() {
       cancelAnimationFrame(rafId);
     };
   }, [updateScale, updateCardsDOM]);
+
+  // Measure the distance between the two duplicated mobile copies. That is the
+  // exact loop length, including the inter-card gap, so the wrap is seamless.
+  const measureMobileMarquee = useCallback(() => {
+    const first = mobileCopyRefs.current[0];
+    const second = mobileCopyRefs.current[1];
+    if (!first || !second) return;
+    const width = second.offsetLeft - first.offsetLeft;
+    if (width > 0) mobileState.current.setWidth = width;
+  }, []);
+
+  // Mobile marquee: automatic continuous scroll + pointer/touch drag with
+  // momentum. Uses transforms only, so it stays smooth on touch devices.
+  useEffect(() => {
+    const track = mobileTrackRef.current;
+    if (!track) return;
+
+    measureMobileMarquee();
+    const resizeObserver = new ResizeObserver(() => measureMobileMarquee());
+    resizeObserver.observe(track);
+
+    let lastTime = performance.now();
+    let rafId: number;
+
+    const loop = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      const state = mobileState.current;
+
+      // The mobile block is rendered but display:none on md+ screens.
+      if (!track.offsetParent) {
+        rafId = requestAnimationFrame(loop);
+        return;
+      }
+      if (state.setWidth === 0) measureMobileMarquee();
+
+      if (!state.isDragging) {
+        if (Math.abs(state.velocity) > MOBILE_MARQUEE_STOP) {
+          state.offset += state.velocity * dt;
+          state.velocity *= Math.pow(0.05, dt);
+        } else {
+          state.velocity = 0;
+          state.offset += MOBILE_MARQUEE_SPEED * dt;
+        }
+      }
+
+      if (state.setWidth > 0) {
+        state.offset = ((state.offset % state.setWidth) + state.setWidth) % state.setWidth;
+      }
+
+      track.style.transform = `translate3d(${-state.offset.toFixed(2)}px, 0, 0)`;
+      rafId = requestAnimationFrame(loop);
+    };
+
+    rafId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      resizeObserver.disconnect();
+    };
+  }, [measureMobileMarquee]);
 
   // Pointer drag interactions (supports pointer and touch)
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -259,6 +339,48 @@ export function HeroSection() {
     if (!state.isDragging) return;
     state.isDragging = false;
     setIsGrabbing(false);
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {
+      // Ignore if pointer capture release throws
+    }
+  };
+
+  // Mobile marquee drag handlers (same 1:1 + momentum behaviour as desktop)
+  const handleMobilePointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    const target = e.currentTarget as HTMLElement;
+    target.setPointerCapture(e.pointerId);
+
+    const state = mobileState.current;
+    state.isDragging = true;
+    state.dragStartX = e.clientX;
+    state.dragStartOffset = state.offset;
+    state.lastPointerX = e.clientX;
+    state.lastPointerTime = performance.now();
+    state.velocity = 0;
+    setMobileGrabbing(true);
+  };
+
+  const handleMobilePointerMove = (e: React.PointerEvent) => {
+    const state = mobileState.current;
+    if (!state.isDragging) return;
+
+    const now = performance.now();
+    state.offset = state.dragStartOffset - (e.clientX - state.dragStartX);
+
+    const dt = Math.max((now - state.lastPointerTime) / 1000, 0.005);
+    state.velocity = -(e.clientX - state.lastPointerX) / dt;
+
+    state.lastPointerX = e.clientX;
+    state.lastPointerTime = now;
+  };
+
+  const handleMobilePointerUp = (e: React.PointerEvent) => {
+    const state = mobileState.current;
+    if (!state.isDragging) return;
+    state.isDragging = false;
+    setMobileGrabbing(false);
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
     } catch {
@@ -417,13 +539,7 @@ export function HeroSection() {
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
-            onMouseEnter={() => {
-              animState.current.isHovered = true;
-            }}
-            onMouseLeave={() => {
-              animState.current.isHovered = false;
-            }}
-            className={`absolute left-0 w-[1440px] touch-none transition-opacity duration-700 delay-300 ${
+            className={`absolute left-0 w-[1440px] touch-pan-y transition-opacity duration-700 delay-300 ${
               isGrabbing ? "cursor-grabbing" : "cursor-grab"
             } ${entered ? "opacity-100" : "opacity-0"}`}
             style={{ top: CARD_BAND_TOP, height: CARD_BAND_HEIGHT }}
@@ -540,20 +656,42 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Looping Mobile Carousel Band */}
+        {/* Looping Mobile Carousel Band - auto-scrolls and is draggable */}
         <div className="w-full mt-8 overflow-hidden relative select-none">
-          <div className="flex items-center gap-3 w-max animate-marquee-right hover:[animation-play-state:paused] py-1">
-            {[...SHOWCASE_CARDS, ...SHOWCASE_CARDS].map((card, idx) => (
+          <div
+            ref={mobileTrackRef}
+            onPointerDown={handleMobilePointerDown}
+            onPointerMove={handleMobilePointerMove}
+            onPointerUp={handleMobilePointerUp}
+            onPointerCancel={handleMobilePointerUp}
+            className={`flex w-max items-center gap-3 py-1 touch-pan-y will-change-transform ${
+              mobileGrabbing ? "cursor-grabbing" : "cursor-grab"
+            }`}
+            style={{ transform: "translate3d(0, 0, 0)", backfaceVisibility: "hidden" }}
+          >
+            {[0, 1].map((copy) => (
               <div
-                key={`mob-${card.id}-${idx}`}
-                className="relative rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] shrink-0 w-[150px] sm:w-[170px] aspect-[9/15]"
+                key={`mob-copy-${copy}`}
+                ref={(el) => {
+                  mobileCopyRefs.current[copy] = el;
+                }}
+                className="flex items-center gap-3 shrink-0"
+                aria-hidden={copy === 1 ? true : undefined}
               >
-                <img
-                  src={card.src}
-                  alt={card.alt}
-                  className="w-full h-full object-cover block"
-                  loading={idx < 4 ? "eager" : "lazy"}
-                />
+                {SHOWCASE_CARDS.map((card, idx) => (
+                  <div
+                    key={`mob-${copy}-${card.id}`}
+                    className="relative rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] shrink-0 w-[150px] sm:w-[170px] aspect-[9/15]"
+                  >
+                    <img
+                      src={card.src}
+                      alt={card.alt}
+                      draggable={false}
+                      className="w-full h-full object-cover block pointer-events-none"
+                      loading={copy === 0 && idx < 4 ? "eager" : "lazy"}
+                    />
+                  </div>
+                ))}
               </div>
             ))}
           </div>
