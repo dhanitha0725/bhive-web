@@ -86,6 +86,7 @@ function computeGeometry(t: number, centerX: number, curveRadius: number) {
 
 export function HeroSection() {
   const { openConsultation } = useConsultation();
+  const sectionRef = useRef<HTMLElement>(null);
   const desktopContainerRef = useRef<HTMLDivElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
@@ -93,11 +94,14 @@ export function HeroSection() {
   // surface that carries the perspective/rotation/scale for the curved shape.
   const cardWrappersRef = useRef<(HTMLDivElement | null)[]>([]);
   const cardSurfacesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const cardImgsRef = useRef<(HTMLImageElement | null)[]>([]);
   const cardVisibilityRef = useRef<boolean[]>(Array(CARD_COUNT).fill(true));
 
   // Mobile / touch marquee (the curved frame is desktop-only)
+  const mobileShowcaseRef = useRef<HTMLDivElement>(null);
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const mobileCopyRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileImgsRef = useRef<(HTMLImageElement | null)[]>([]);
   const mobileState = useRef({
     offset: 0,
     velocity: 0,
@@ -107,6 +111,14 @@ export function HeroSection() {
     lastPointerX: 0,
     lastPointerTime: 0,
     setWidth: 0,
+  });
+
+  // Scroll parallax state (0 -> 1 as hero scrolls out of viewport)
+  const scrollState = useRef({
+    target: 0,
+    current: 0,
+    heroHeight: 900,
+    reducedMotion: false,
   });
 
   // Animation & Physics state (stored in ref to avoid react re-render stalls during 60/120fps tick)
@@ -129,6 +141,11 @@ export function HeroSection() {
   // Measure the full-width desktop showcase band and compute its scale factor so
   // the tallest edge cards fit cleanly inside the remaining hero viewport height.
   const measureDesktopBand = useCallback(() => {
+    const section = sectionRef.current;
+    if (section) {
+      scrollState.current.heroHeight = Math.max(section.offsetHeight, window.innerHeight || 720, 1);
+    }
+
     const band = cardsContainerRef.current;
     if (!band) return;
     const width = band.clientWidth;
@@ -143,8 +160,8 @@ export function HeroSection() {
     animState.current.scaleU = u;
   }, []);
 
-  // Animation frame runner across 100% of the showcase width
-  const updateCardsDOM = useCallback((currentOffset: number) => {
+  // Animation frame runner across 100% of the showcase width with scroll depth parallax
+  const updateCardsDOM = useCallback((currentOffset: number, scrollProgress = 0) => {
     const { bandWidth, bandHeight, scaleU } = animState.current;
     if (bandWidth <= 0 || bandHeight <= 0 || scaleU <= 0) return;
 
@@ -154,9 +171,15 @@ export function HeroSection() {
     const centerY = bandHeight / 2;
     const halfWidth = TOTAL_WIDTH / 2;
 
+    if (cardsContainerRef.current) {
+      const bandParallaxY = scrollProgress * 22;
+      cardsContainerRef.current.style.transform = `translate3d(0, ${bandParallaxY.toFixed(2)}px, 0)`;
+    }
+
     for (let k = 0; k < CARD_COUNT; k++) {
       const wrapper = cardWrappersRef.current[k];
       const surface = cardSurfacesRef.current[k];
+      const img = cardImgsRef.current[k];
       if (!wrapper || !surface) continue;
 
       // Base unpushed offset
@@ -174,10 +197,14 @@ export function HeroSection() {
       }
       if (!visible) continue;
 
+      // Cylindrical depth factor: 0 at deep center, ~1+ at closer outer wings.
+      const depthFactor = Math.min(Math.abs(geom.x - centerX) / curveRadius, 1.25);
+      const cardParallaxY = (12 - 22 * depthFactor) * scrollProgress;
+
       // Translate in real pixels relative to full-width band; inner surface
       // holds the perspective projection and scaleU factor.
       const wrapperX = geom.x * scaleU - BASE_W / 2;
-      const wrapperY = centerY + geom.yOffset * scaleU - BASE_H / 2;
+      const wrapperY = centerY + geom.yOffset * scaleU - BASE_H / 2 + cardParallaxY;
       wrapper.style.transform = `translate3d(${wrapperX.toFixed(2)}px, ${wrapperY.toFixed(2)}px, 0)`;
 
       const localScaleX = (geom.scaleX * scaleU) / RASTER_SCALE;
@@ -185,21 +212,52 @@ export function HeroSection() {
       surface.style.transform = `perspective(${(PERSPECTIVE * scaleU).toFixed(1)}px) rotateY(${geom.angle.toFixed(
         4
       )}rad) scale(${localScaleX.toFixed(4)}, ${localScaleY.toFixed(4)})`;
+
+      // Inner image counter-parallax inside its rounded card frame
+      if (img) {
+        const imgShiftY = (-12 + 18 * depthFactor) * scrollProgress;
+        img.style.transform = `scale(1.08) translate3d(0, ${imgShiftY.toFixed(2)}px, 0)`;
+      }
     }
   }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    scrollState.current.reducedMotion = motionQuery.matches;
+
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      scrollState.current.reducedMotion = e.matches;
+      if (e.matches) {
+        scrollState.current.target = 0;
+        scrollState.current.current = 0;
+      }
+    };
+    motionQuery.addEventListener("change", handleMotionChange);
+
+    const updateScrollTarget = () => {
+      if (scrollState.current.reducedMotion) {
+        scrollState.current.target = 0;
+        return;
+      }
+      const h = Math.max(scrollState.current.heroHeight, 1);
+      scrollState.current.target = Math.min(Math.max(window.scrollY / h, 0), 1);
+    };
+
     const band = cardsContainerRef.current;
 
     measureDesktopBand();
-    updateCardsDOM(animState.current.offset);
+    updateScrollTarget();
+    scrollState.current.current = scrollState.current.target;
+    updateCardsDOM(animState.current.offset + scrollState.current.current * 110, scrollState.current.current);
 
     const resizeObserver =
       band && typeof ResizeObserver !== "undefined"
         ? new ResizeObserver(() => {
             measureDesktopBand();
-            updateCardsDOM(animState.current.offset);
+            updateScrollTarget();
+            const p = scrollState.current.reducedMotion ? 0 : scrollState.current.current;
+            updateCardsDOM(animState.current.offset + p * 110, p);
           })
         : null;
     if (band && resizeObserver) {
@@ -208,9 +266,12 @@ export function HeroSection() {
 
     const handleResize = () => {
       measureDesktopBand();
-      updateCardsDOM(animState.current.offset);
+      updateScrollTarget();
+      const p = scrollState.current.reducedMotion ? 0 : scrollState.current.current;
+      updateCardsDOM(animState.current.offset + p * 110, p);
     };
     window.addEventListener("resize", handleResize, { passive: true });
+    window.addEventListener("scroll", updateScrollTarget, { passive: true });
 
     let lastTime = performance.now();
     let rafId: number;
@@ -239,7 +300,15 @@ export function HeroSection() {
 
       // Skip DOM work while the desktop hero is display:none (mobile layout).
       if (desktopContainerRef.current?.offsetParent) {
-        updateCardsDOM(state.offset);
+        const sState = scrollState.current;
+        if (sState.reducedMotion) {
+          sState.current = 0;
+        } else {
+          const damp = 1 - Math.pow(0.001, dt);
+          sState.current += (sState.target - sState.current) * damp;
+        }
+        const effectiveOffset = state.offset + sState.current * 110;
+        updateCardsDOM(effectiveOffset, sState.current);
       }
       rafId = requestAnimationFrame(loop);
     };
@@ -248,6 +317,8 @@ export function HeroSection() {
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", updateScrollTarget);
+      motionQuery.removeEventListener("change", handleMotionChange);
       resizeObserver?.disconnect();
       cancelAnimationFrame(rafId);
     };
@@ -263,13 +334,18 @@ export function HeroSection() {
     if (width > 0) mobileState.current.setWidth = width;
   }, []);
 
-  // Mobile marquee: automatic continuous scroll + pointer/touch drag with momentum.
+  // Mobile marquee: automatic continuous scroll + pointer/touch drag with momentum + scroll parallax.
   useEffect(() => {
     const track = mobileTrackRef.current;
     if (!track) return;
 
     measureMobileMarquee();
-    const resizeObserver = new ResizeObserver(() => measureMobileMarquee());
+    const resizeObserver = new ResizeObserver(() => {
+      measureMobileMarquee();
+      if (sectionRef.current) {
+        scrollState.current.heroHeight = Math.max(sectionRef.current.offsetHeight, window.innerHeight || 720, 1);
+      }
+    });
     resizeObserver.observe(track);
 
     let lastTime = performance.now();
@@ -302,7 +378,34 @@ export function HeroSection() {
         state.offset = ((state.offset % state.setWidth) + state.setWidth) % state.setWidth;
       }
 
-      track.style.transform = `translate3d(${-state.offset.toFixed(2)}px, 0, 0)`;
+      const sState = scrollState.current;
+      if (sState.reducedMotion) {
+        sState.current = 0;
+      } else {
+        const damp = 1 - Math.pow(0.001, dt);
+        sState.current += (sState.target - sState.current) * damp;
+      }
+      const p = sState.current;
+
+      if (mobileShowcaseRef.current) {
+        mobileShowcaseRef.current.style.transform = `translate3d(0, ${(p * 16).toFixed(2)}px, 0)`;
+      }
+
+      const displayOffset =
+        state.setWidth > 0
+          ? (((state.offset + p * 54) % state.setWidth) + state.setWidth) % state.setWidth
+          : state.offset;
+
+      track.style.transform = `translate3d(${-displayOffset.toFixed(2)}px, 0, 0)`;
+
+      for (let i = 0; i < mobileImgsRef.current.length; i++) {
+        const img = mobileImgsRef.current[i];
+        if (!img) continue;
+        const cadence = (i % 3) - 1;
+        const imgY = (-8 + cadence * 5) * p;
+        img.style.transform = `scale(1.07) translate3d(0, ${imgY.toFixed(2)}px, 0)`;
+      }
+
       rafId = requestAnimationFrame(loop);
     };
 
@@ -405,7 +508,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative w-full bg-white text-[#0b1220] overflow-hidden select-none">
+    <section ref={sectionRef} className="relative w-full bg-white text-[#0b1220] overflow-hidden select-none">
       {/* =========================================================
           DESKTOP LAYOUT: Fits screen height cleanly with a 100%-width
           panoramic cylindrical image showcase band.
@@ -557,7 +660,7 @@ export function HeroSection() {
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
-          className={`relative w-full flex-1 min-h-[260px] overflow-hidden touch-pan-y pb-4 ${
+          className={`relative w-full flex-1 min-h-[260px] overflow-hidden touch-pan-y pb-4 will-change-transform ${
             isGrabbing ? "cursor-grabbing" : "cursor-grab"
           }`}
         >
@@ -592,10 +695,14 @@ export function HeroSection() {
                 }}
               >
                 <img
+                  ref={(el) => {
+                    cardImgsRef.current[i] = el;
+                  }}
                   src={card.src}
                   alt={card.alt}
                   draggable={false}
-                  className="w-full h-full object-cover pointer-events-none block"
+                  className="w-full h-full object-cover pointer-events-none block will-change-transform"
+                  style={{ transform: "scale(1.08) translate3d(0, 0, 0)" }}
                   loading={i < 6 ? "eager" : "lazy"}
                 />
               </div>
@@ -696,8 +803,11 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Full-width Looping Mobile Carousel Band - auto-scrolls and is draggable */}
-        <div className="w-full mt-8 overflow-hidden relative select-none">
+        {/* Full-width Looping Mobile Carousel Band - auto-scrolls, draggable, and scroll parallax */}
+        <div
+          ref={mobileShowcaseRef}
+          className="w-full mt-8 overflow-hidden relative select-none will-change-transform"
+        >
           <div
             ref={mobileTrackRef}
             onPointerDown={handleMobilePointerDown}
@@ -724,10 +834,14 @@ export function HeroSection() {
                     className="relative rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] shrink-0 w-[150px] sm:w-[170px] aspect-[9/15]"
                   >
                     <img
+                      ref={(el) => {
+                        mobileImgsRef.current[copy * 10 + idx] = el;
+                      }}
                       src={card.src}
                       alt={card.alt}
                       draggable={false}
-                      className="w-full h-full object-cover block pointer-events-none"
+                      className="w-full h-full object-cover block pointer-events-none will-change-transform"
+                      style={{ transform: "scale(1.07) translate3d(0, 0, 0)" }}
                       loading={copy === 0 && idx < 4 ? "eager" : "lazy"}
                     />
                   </div>
