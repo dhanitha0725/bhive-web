@@ -7,38 +7,48 @@ import { urlFor } from "@/sanity/image";
 const components: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-lg leading-8 text-neutral-700">{children}</p>
+      <p className="text-base sm:text-lg leading-[1.6] text-[#0b1220] mb-6 font-normal">
+        {children}
+      </p>
     ),
     h2: ({ children }) => (
-      <h2 className="heading-2 mt-10 text-neutral-900">{children}</h2>
+      <h2 className="text-2xl sm:text-[32px] font-medium tracking-[-0.02em] leading-[1.2] text-[#0b1220] mt-12 sm:mt-16 mb-4 sm:mb-6">
+        {children}
+      </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-8 text-xl font-semibold text-neutral-900">{children}</h3>
+      <h3 className="text-xl sm:text-2xl font-medium tracking-[-0.01em] leading-[1.3] text-[#0b1220] mt-8 sm:mt-10 mb-3 sm:mb-4">
+        {children}
+      </h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-[#0066cc] pl-4 text-lg italic text-neutral-600">
+      <blockquote className="border-l-2 border-[#3068f9] pl-6 py-1 my-8 text-lg sm:text-xl italic text-[#5b6475] leading-[1.6]">
         {children}
       </blockquote>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc space-y-2 pl-6 text-lg leading-8 text-neutral-700">{children}</ul>
+      <ul className="list-disc space-y-3 pl-6 text-base sm:text-lg leading-[1.6] text-[#0b1220] my-6">
+        {children}
+      </ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal space-y-2 pl-6 text-lg leading-8 text-neutral-700">{children}</ol>
+      <ol className="list-decimal space-y-3 pl-6 text-base sm:text-lg leading-[1.6] text-[#0b1220] my-6">
+        {children}
+      </ol>
     ),
   },
   marks: {
     strong: ({ children }) => (
-      <strong className="font-semibold text-neutral-900">{children}</strong>
+      <strong className="font-semibold text-[#0b1220]">{children}</strong>
     ),
     em: ({ children }) => <em className="italic">{children}</em>,
     underline: ({ children }) => (
       <span className="underline underline-offset-4">{children}</span>
     ),
     code: ({ children }) => (
-      <code className="rounded bg-neutral-100 px-1.5 py-0.5 font-mono text-sm text-neutral-800">
+      <code className="rounded bg-[#f5f7fa] px-1.5 py-0.5 font-mono text-sm text-[#0b1220] border border-[#e5e8ee]">
         {children}
       </code>
     ),
@@ -48,8 +58,8 @@ const components: PortableTextComponents = {
       return (
         <a
           href={href}
-          className="font-semibold text-[#0066cc] underline underline-offset-4 hover:text-[#0055b3]"
-          rel="noreferrer noopener"
+          className="font-medium text-[#3068f9] underline underline-offset-4 hover:text-[#1f55e0] transition-colors"
+          rel={isExternal ? "noreferrer noopener" : undefined}
           target={isExternal ? "_blank" : undefined}
         >
           {children}
@@ -67,16 +77,18 @@ const components: PortableTextComponents = {
             ? value.alt
             : "Article image";
         return (
-          <figure className="my-8">
-            <img
-              src={imageUrl}
-              alt={altText}
-              loading="lazy"
-              decoding="async"
-              className="w-full rounded-2xl border border-neutral-200 object-cover"
-            />
+          <figure className="my-10">
+            <div className="overflow-hidden rounded-2xl border border-[#e5e8ee] bg-[#f5f7fa]">
+              <img
+                src={imageUrl}
+                alt={altText}
+                loading="lazy"
+                decoding="async"
+                className="w-full object-cover"
+              />
+            </div>
             {value.caption ? (
-              <figcaption className="mt-2 text-center text-sm text-neutral-500">
+              <figcaption className="mt-3 text-center text-sm text-[#5b6475]">
                 {value.caption}
               </figcaption>
             ) : null}
@@ -92,7 +104,7 @@ const components: PortableTextComponents = {
 export function ArticleBody({ value }: { value: PortableTextBlock[] }) {
   if (!value || value.length === 0) return null;
   return (
-    <div className="grid gap-6">
+    <div className="w-full">
       <PortableText value={value} components={components} />
     </div>
   );
