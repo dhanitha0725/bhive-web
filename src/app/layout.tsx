@@ -4,7 +4,6 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { MobileStickyCta } from "@/components/layout/mobile-sticky-cta";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { siteConfig } from "@/config/site";
 import { ConsultationProvider } from "@/components/providers/consultation-provider";
@@ -78,6 +77,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fontInter.variable} ${fontMono.variable}`}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -103,11 +104,10 @@ export default function RootLayout({
         <ConsultationProvider>
           <Header />
           <SmoothScroll />
-          <main id="main-content" className="flex min-h-[60vh] flex-col pb-20 sm:pb-0">
+          <main id="main-content" className="flex min-h-[60vh] flex-col">
             {children}
           </main>
           <Footer />
-          <MobileStickyCta />
         </ConsultationProvider>
       </body>
     </html>

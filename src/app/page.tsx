@@ -36,28 +36,28 @@ export default async function Home() {
 
   return (
     <>
-      {/* 1. Hero: 12-Column Stretch Grid with 4 rhythmic photo cards */}
+      {/* 1. Hero: Arched cylindrical video showcase & headline */}
       <HeroSection />
 
-      {/* 2. Partner Proof: 5 distributed partner badges */}
-      <TrustedPartnersSection />
-
-      {/* 3. Services: Interactive 2-column feature breakdown */}
+      {/* 2. Services: Interactive 2-column feature breakdown */}
       <ServicesSection />
 
-      {/* 4. Consultation Callout: Contained growth recommendation banner */}
+      {/* 3. Consultation Callout: Contained growth recommendation banner */}
       <ConsultationCalloutSection />
 
-      {/* 5. Selected Work: 8-column case image + 4-column metrics & story card */}
+      {/* 4. Selected Work: 8-column case image + 4-column metrics & story card */}
       <SelectedWorkSection />
 
-      {/* 6. Process: Two-track starting points & engagement model */}
+      {/* 5. Process: Two-track starting points & engagement model */}
       <div id="how-it-works">
         <HowItWorksSection />
       </div>
 
-      {/* 7. Blog & Insights: 3 editorial insight cards */}
+      {/* 6. Blog & Insights: 3 editorial insight cards */}
       <InsightsSection posts={posts} />
+
+      {/* 7. Partner Proof: Clients We've Worked With */}
+      <TrustedPartnersSection />
 
       {/* 8. Client Voices / Testimonials: 3 success stories */}
       <TestimonialsSection />

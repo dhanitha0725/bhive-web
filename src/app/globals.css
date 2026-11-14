@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter+Tight:ital,wght@0,600;0,700;0,800;1,600&display=swap');
 @import "tailwindcss";
 
 /*
@@ -79,6 +80,8 @@
   --font-display: var(--font-inter), sans-serif;
   --font-body: var(--font-inter), sans-serif;
   --font-mono: var(--font-mono), monospace;
+  --font-caveat: 'Caveat', cursive, sans-serif;
+  --font-inter-tight: 'Inter Tight', var(--font-inter), sans-serif;
   --font-display-weight: 600;
   --font-display-tracking: -0.01em;
   --btn-transform: none;
@@ -356,23 +359,6 @@ a {
 
 .animate-marquee {
   animation: marquee 35s linear infinite;
-  /* Keep the marquee on the compositor so it never blocks scrolling. */
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-@keyframes marquee-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.animate-marquee-right {
-  animation: marquee-right 35s linear infinite;
   /* Keep the marquee on the compositor so it never blocks scrolling. */
   transform: translateZ(0);
   will-change: transform;

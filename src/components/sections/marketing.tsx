@@ -166,26 +166,10 @@ export function CaseCard({ item }: { item: CaseStudy }) {
   );
 }
 
+import { BlogCard } from "@/components/blog/blog-card";
+
 export function InsightCard({ item }: { item: InsightSummary }) {
-  return (
-    <article className="border-t border-slate-200 pt-5">
-      <p className="font-mono text-xs uppercase tracking-wider text-slate-500">
-        {item.pillarName}
-      </p>
-      <h3 className="mt-2 font-display text-xl font-semibold tracking-tight text-slate-900">
-        <Link
-          href={`/insights/${item.slug}`}
-          className="hover:text-[#0066cc] transition-colors"
-        >
-          {item.title}
-        </Link>
-      </h3>
-      <p className="mt-2 text-sm text-slate-600 leading-relaxed">{item.excerpt}</p>
-      <p className="mt-3 font-mono text-xs text-slate-400">
-        {item.readingTime} · {item.date}
-      </p>
-    </article>
-  );
+  return <BlogCard post={item} />;
 }
 
 export function FinalCta() {

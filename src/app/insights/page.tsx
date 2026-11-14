@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { FinalCta, InsightCard, PageHero } from "@/components/sections/marketing";
+import { BlogCard } from "@/components/blog/blog-card";
+import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { createMetadata } from "@/seo/metadata";
 import { client } from "@/sanity/client";
 import { INSIGHT_COUNT_QUERY, INSIGHT_SUMMARIES_QUERY } from "@/sanity/queries";
@@ -36,28 +36,53 @@ export default async function Insights() {
   const posts = (rawPosts || []).map(mapInsightSummary);
 
   return (
-    <>
-      <PageHero
-        eyebrow="BHive Insights"
-        title="Better growth starts with better decisions."
-        body="Practical thinking about business strategy, brand, marketing, and building something that can grow."
-      />
-      <Section className="py-12 sm:py-16">
+    <div className="w-full bg-white text-[#0b1220]">
+      {/* Hero / Header Section: Centered typography aligned with Figma node 189:140 */}
+      <section className="pt-32 sm:pt-40 lg:pt-44 pb-12 sm:pb-16 lg:pb-20">
+        <Container>
+          <div className="flex flex-col items-center text-center max-w-[800px] mx-auto">
+            {/* Eyebrow */}
+            <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase mb-3 sm:mb-4">
+              IDEAS THAT MOVE BUSINESS
+            </span>
+
+            {/* Display Headline */}
+            <h1 className="text-4xl sm:text-6xl lg:text-[72px] font-medium tracking-[-0.035em] leading-[1.08] text-[#0b1220]">
+              Blog &amp; Insights
+            </h1>
+
+            {/* Subline */}
+            <p className="mt-4 sm:mt-5 text-base sm:text-lg text-[#5b6475] leading-[1.6] max-w-[620px] font-normal">
+              Practical thinking about business strategy, brand, and marketing that brings real paying customers.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      {/* Blog Posts Listing Grid */}
+      <section className="pb-24 sm:pb-32 lg:pb-40">
         <Container>
           {posts.length === 0 ? (
-            <div className="py-12 text-center text-neutral-500">
-              <p className="text-lg">First insight coming soon.</p>
+            <div className="py-20 text-center max-w-md mx-auto">
+              <p className="text-xl font-medium text-[#0b1220]">First insight coming soon.</p>
+              <p className="mt-2 text-sm text-[#5b6475] leading-relaxed">
+                Practical thinking about business strategy, brand, and marketing is on the way.
+              </p>
             </div>
           ) : (
-            <div className="grid gap-8 lg:grid-cols-2">
-              {posts.map((x) => (
-                <InsightCard key={x.slug} item={x} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+              {posts.map((post, index) => (
+                <div key={post.slug || post._id} className="h-full">
+                  <BlogCard post={post} priority={index === 0} />
+                </div>
               ))}
             </div>
           )}
         </Container>
-      </Section>
-      <FinalCta />
-    </>
+      </section>
+
+      {/* Conversion Section: Official dark ink CTA band leading into footer */}
+      <FinalCtaSection />
+    </div>
   );
 }
