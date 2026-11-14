@@ -7,9 +7,12 @@ import { motion } from "framer-motion";
 
 export function FinalCtaSection() {
   return (
-    <section id="contact" className="relative w-full py-16 sm:py-24 lg:py-28 bg-white">
+    <section
+      id="contact"
+      className="relative w-full pt-16 sm:pt-24 lg:pt-28 pb-20 sm:pb-24 lg:pb-28 bg-white"
+    >
       <Container>
-        <div className="rounded-3xl bg-[#0b1220] text-white px-6 py-14 sm:px-12 sm:py-20 lg:px-16 lg:py-24">
+        <div className="rounded-3xl bg-[#0b1220] text-white border border-[#162035] px-6 py-14 sm:px-12 sm:py-20 lg:px-16 lg:py-24">
           <div className="flex flex-col items-center text-center max-w-[880px] mx-auto">
             {/* Eyebrow */}
             <motion.div

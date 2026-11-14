@@ -6,6 +6,7 @@ import { PillButton } from "@/components/ui/pill-button";
 import { motion } from "framer-motion";
 import type { InsightSummary } from "@/lib/blog/types";
 import { BlogCard } from "@/components/blog/blog-card";
+import { Reveal } from "@/components/motion/reveal";
 
 export function InsightsSection({ posts }: { posts: InsightSummary[] }) {
   if (!posts || posts.length === 0) {
@@ -56,16 +57,14 @@ export function InsightsSection({ posts }: { posts: InsightSummary[] }) {
         {/* 12-Column Stretch Grid: 3 Articles (4 Cols each) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((post, idx) => (
-            <motion.div
+            <Reveal
               key={post.slug || post._id || idx}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.05 }}
+              delay={(idx % 3) * 85}
+              y={16}
               className="h-full"
             >
               <BlogCard post={post} />
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </Container>

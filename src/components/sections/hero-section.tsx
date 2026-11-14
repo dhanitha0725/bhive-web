@@ -1,7 +1,7 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import { useConsultation } from "@/components/providers/consultation-provider";
@@ -137,6 +137,142 @@ export function HeroSection() {
 
   const [isGrabbing, setIsGrabbing] = useState(false);
   const [mobileGrabbing, setMobileGrabbing] = useState(false);
+
+  // Hero loading curtain state: waits until card geometry, fonts, and above-the-fold
+  // hero images are ready (capped by a hard fallback timer) for a seamless reveal.
+  const [heroReady, setHeroReady] = useState(false);
+  const [loaderMounted, setLoaderMounted] = useState(true);
+  const readinessRef = useRef({
+    geometry: false,
+    fonts: false,
+    images: false,
+    resolved: false,
+  });
+  const loadedDesktopIndicesRef = useRef<Set<number>>(new Set());
+  const loadedMobileIndicesRef = useRef<Set<number>>(new Set());
+
+  const tryRevealHero = useCallback(() => {
+    const r = readinessRef.current;
+    if (r.resolved) return;
+    if (r.geometry && r.fonts && r.images) {
+      r.resolved = true;
+      requestAnimationFrame(() => {
+        setHeroReady(true);
+      });
+    }
+  }, []);
+
+  const syncCriticalImagesStatus = useCallback(() => {
+    if (readinessRef.current.images) return;
+    const isDesktop = typeof window !== "undefined" ? window.innerWidth >= 768 : true;
+
+    if (isDesktop) {
+      let readyCount = 0;
+      for (let i = 0; i < 6; i++) {
+        const img = cardImgsRef.current[i];
+        if ((img && img.complete && img.naturalWidth > 0) || loadedDesktopIndicesRef.current.has(i)) {
+          readyCount++;
+        }
+      }
+      if (readyCount >= 6) {
+        readinessRef.current.images = true;
+        tryRevealHero();
+      }
+    } else {
+      let readyCount = 0;
+      for (let i = 0; i < 4; i++) {
+        const img = mobileImgsRef.current[i];
+        if ((img && img.complete && img.naturalWidth > 0) || loadedMobileIndicesRef.current.has(i)) {
+          readyCount++;
+        }
+      }
+      if (readyCount >= 4) {
+        readinessRef.current.images = true;
+        tryRevealHero();
+      }
+    }
+  }, [tryRevealHero]);
+
+  const markDesktopImageReady = useCallback(
+    (index: number) => {
+      if (index >= 6) return;
+      loadedDesktopIndicesRef.current.add(index);
+      syncCriticalImagesStatus();
+    },
+    [syncCriticalImagesStatus]
+  );
+
+  const markMobileImageReady = useCallback(
+    (copy: number, index: number) => {
+      if (copy !== 0 || index >= 4) return;
+      loadedMobileIndicesRef.current.add(index);
+      syncCriticalImagesStatus();
+    },
+    [syncCriticalImagesStatus]
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const jumpedToSection = Boolean(window.location.hash) || window.scrollY > 80;
+
+    if (reducedMotion || jumpedToSection) {
+      readinessRef.current = { geometry: true, fonts: true, images: true, resolved: true };
+      const raf = requestAnimationFrame(() => {
+        setHeroReady(true);
+        setLoaderMounted(false);
+      });
+      return () => cancelAnimationFrame(raf);
+    }
+
+    let cancelled = false;
+
+    const markGeometryAndImages = () => {
+      if (cancelled) return;
+      readinessRef.current.geometry = true;
+      syncCriticalImagesStatus();
+      tryRevealHero();
+    };
+
+    const initRaf = requestAnimationFrame(markGeometryAndImages);
+
+    const fontReadyPromise =
+      document.fonts && document.fonts.ready
+        ? Promise.race([
+            document.fonts.ready,
+            new Promise<void>((resolve) => window.setTimeout(resolve, 900)),
+          ])
+        : Promise.resolve();
+
+    void fontReadyPromise.then(() => {
+      if (cancelled) return;
+      readinessRef.current.fonts = true;
+      syncCriticalImagesStatus();
+      tryRevealHero();
+    });
+
+    // Hard safety cap so slow networks or blocked requests never stall the page.
+    const safetyTimer = window.setTimeout(() => {
+      if (cancelled || readinessRef.current.resolved) return;
+      readinessRef.current = { geometry: true, fonts: true, images: true, resolved: true };
+      setHeroReady(true);
+    }, 2200);
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(initRaf);
+      window.clearTimeout(safetyTimer);
+    };
+  }, [syncCriticalImagesStatus, tryRevealHero]);
+
+  useEffect(() => {
+    if (!heroReady || !loaderMounted) return;
+    const unmountTimer = window.setTimeout(() => {
+      setLoaderMounted(false);
+    }, 520);
+    return () => window.clearTimeout(unmountTimer);
+  }, [heroReady, loaderMounted]);
 
   // Measure the full-width desktop showcase band and compute its scale factor so
   // the tallest edge cards fit cleanly inside the remaining hero viewport height.
@@ -510,6 +646,37 @@ export function HeroSection() {
   return (
     <section ref={sectionRef} className="relative w-full bg-white text-[#0b1220] overflow-hidden select-none">
       {/* =========================================================
+          HERO LOADING CURTAIN: Keeps hero hidden cleanly until
+          cylindrical geometry, fonts, and key imagery are ready.
+         ========================================================= */}
+      {loaderMounted && (
+        <div
+          aria-hidden={heroReady}
+          className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white transition-opacity duration-500 ease-out ${
+            heroReady ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          <div className="flex flex-col items-center gap-5 px-6">
+            <Image
+              src="/images/figma/bhive-logo.png"
+              alt="BHive"
+              width={131}
+              height={46}
+              preload
+              fetchPriority="high"
+              referrerPolicy="no-referrer"
+              className={`h-9 w-auto object-contain block transition-transform duration-500 ease-out ${
+                heroReady ? "scale-95" : "scale-100"
+              }`}
+            />
+            <div className="w-32 sm:w-36 h-[2px] rounded-full bg-[#e5e8ee] overflow-hidden">
+              <div className="h-full w-2/5 rounded-full bg-[#3068f9] animate-hero-loader" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================
           DESKTOP LAYOUT: Fits screen height cleanly with a 100%-width
           panoramic cylindrical image showcase band.
          ========================================================= */}
@@ -523,9 +690,14 @@ export function HeroSection() {
             href="/"
             className="flex items-center gap-2 hover:opacity-90 transition-opacity shrink-0"
           >
-            <img
+            <Image
               src="/images/figma/bhive-logo.png"
               alt="BHive"
+              width={131}
+              height={46}
+              preload
+              fetchPriority="high"
+              referrerPolicy="no-referrer"
               className="h-8 w-auto object-contain block"
             />
           </Link>
@@ -559,7 +731,11 @@ export function HeroSection() {
         </div>
 
         {/* 2. HERO COPY & CTA BLOCK */}
-        <div className="w-full max-w-[1180px] mx-auto px-6 pt-2 lg:pt-4 pb-3 lg:pb-5 flex flex-col items-center text-center shrink-0 z-10">
+        <div
+          className={`w-full max-w-[1180px] mx-auto px-6 pt-2 lg:pt-4 pb-3 lg:pb-5 flex flex-col items-center text-center shrink-0 z-10 transition-[opacity,transform] duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            heroReady ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          }`}
+        >
           <span className="text-[12px] lg:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase mb-2.5 lg:mb-3.5">
             STRATEGY. BRAND. MARKETING.
           </span>
@@ -660,9 +836,9 @@ export function HeroSection() {
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
-          className={`relative w-full flex-1 min-h-[260px] overflow-hidden touch-pan-y pb-4 will-change-transform ${
-            isGrabbing ? "cursor-grabbing" : "cursor-grab"
-          }`}
+          className={`relative w-full flex-1 min-h-[260px] overflow-hidden touch-pan-y pb-4 will-change-transform transition-[opacity,transform] duration-700 delay-75 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            heroReady ? "opacity-100" : "opacity-0"
+          } ${isGrabbing ? "cursor-grabbing" : "cursor-grab"}`}
         >
           {SHOWCASE_CARDS.map((card, i) => (
             <div
@@ -694,16 +870,23 @@ export function HeroSection() {
                   backfaceVisibility: "hidden",
                 }}
               >
-                <img
+                <Image
                   ref={(el) => {
                     cardImgsRef.current[i] = el;
                   }}
                   src={card.src}
                   alt={card.alt}
-                  draggable={false}
-                  className="w-full h-full object-cover pointer-events-none block will-change-transform"
-                  style={{ transform: "scale(1.08) translate3d(0, 0, 0)" }}
+                  fill
+                  sizes="(max-width: 767px) 170px, 260px"
+                  preload={i < 6}
                   loading={i < 6 ? "eager" : "lazy"}
+                  fetchPriority={i < 6 ? "high" : undefined}
+                  referrerPolicy="no-referrer"
+                  draggable={false}
+                  onLoad={i < 6 ? () => markDesktopImageReady(i) : undefined}
+                  onError={i < 6 ? () => markDesktopImageReady(i) : undefined}
+                  className="object-cover pointer-events-none block will-change-transform"
+                  style={{ transform: "scale(1.08) translate3d(0, 0, 0)" }}
                 />
               </div>
             </div>
@@ -719,9 +902,14 @@ export function HeroSection() {
           {/* Top bar on phone */}
           <div className="flex items-center justify-between w-full mb-6">
             <Link href="/" className="flex items-center gap-2">
-              <img
+              <Image
                 src="/images/figma/bhive-logo.png"
                 alt="BHive"
+                width={131}
+                height={46}
+                loading="eager"
+                fetchPriority="high"
+                referrerPolicy="no-referrer"
                 className="h-7 w-auto object-contain block"
               />
             </Link>
@@ -737,7 +925,11 @@ export function HeroSection() {
           </div>
 
           {/* Copy: stacked and centered */}
-          <div className="flex flex-col items-center text-center max-w-lg mx-auto">
+          <div
+            className={`flex flex-col items-center text-center max-w-lg mx-auto transition-[opacity,transform] duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              heroReady ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            }`}
+          >
             <div className="mb-3">
               <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase">
                 STRATEGY. BRAND. MARKETING.
@@ -806,7 +998,9 @@ export function HeroSection() {
         {/* Full-width Looping Mobile Carousel Band - auto-scrolls, draggable, and scroll parallax */}
         <div
           ref={mobileShowcaseRef}
-          className="w-full mt-8 overflow-hidden relative select-none will-change-transform"
+          className={`w-full mt-8 overflow-hidden relative select-none will-change-transform transition-opacity duration-700 delay-75 ease-out ${
+            heroReady ? "opacity-100" : "opacity-0"
+          }`}
         >
           <div
             ref={mobileTrackRef}
@@ -833,16 +1027,22 @@ export function HeroSection() {
                     key={`mob-${copy}-${card.id}`}
                     className="relative rounded-2xl overflow-hidden bg-[#f5f7fa] border border-[#e5e8ee] shrink-0 w-[150px] sm:w-[170px] aspect-[9/15]"
                   >
-                    <img
+                    <Image
                       ref={(el) => {
                         mobileImgsRef.current[copy * 10 + idx] = el;
                       }}
                       src={card.src}
                       alt={card.alt}
-                      draggable={false}
-                      className="w-full h-full object-cover block pointer-events-none will-change-transform"
-                      style={{ transform: "scale(1.07) translate3d(0, 0, 0)" }}
+                      fill
+                      sizes="(max-width: 640px) 150px, 170px"
                       loading={copy === 0 && idx < 4 ? "eager" : "lazy"}
+                      fetchPriority={copy === 0 && idx < 4 ? "high" : undefined}
+                      referrerPolicy="no-referrer"
+                      draggable={false}
+                      onLoad={copy === 0 && idx < 4 ? () => markMobileImageReady(copy, idx) : undefined}
+                      onError={copy === 0 && idx < 4 ? () => markMobileImageReady(copy, idx) : undefined}
+                      className="object-cover block pointer-events-none will-change-transform"
+                      style={{ transform: "scale(1.07) translate3d(0, 0, 0)" }}
                     />
                   </div>
                 ))}

@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { PillButton } from "@/components/ui/pill-button";
 import { BlogCard } from "@/components/blog/blog-card";
+import { Reveal } from "@/components/motion/reveal";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { createMetadata } from "@/seo/metadata";
 import { client } from "@/sanity/client";
@@ -190,10 +191,15 @@ export default async function InsightPage({
 
             {/* 3-Column Card Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
-              {recentPosts.map((recent) => (
-                <div key={recent.slug || recent._id} className="h-full">
+              {recentPosts.map((recent, index) => (
+                <Reveal
+                  key={recent.slug || recent._id}
+                  delay={(index % 3) * 85}
+                  y={16}
+                  className="h-full"
+                >
                   <BlogCard post={recent} />
-                </div>
+                </Reveal>
               ))}
             </div>
           </Container>

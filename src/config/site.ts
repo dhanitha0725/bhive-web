@@ -14,7 +14,13 @@ export const siteConfig = {
   // When false: hides stat counters, outcome metrics, case study cards, and testimonials on home;
   // shows a "coming soon" state on /work; adds noindex to demo case studies and excludes from sitemap.
   showProof: false,
-  social: [] as Array<{ label: string; href: string }>,
+  // TODO: replace with verified BHive social profile URLs
+  social: [
+    { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com" },
+    { id: "instagram", label: "Instagram", href: "https://www.instagram.com" },
+    { id: "facebook", label: "Facebook", href: "https://www.facebook.com" },
+    { id: "youtube", label: "YouTube", href: "https://www.youtube.com" },
+  ] as const,
 } as const;
 
 export const primaryNavigation = [

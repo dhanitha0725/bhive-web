@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { BlogCard } from "@/components/blog/blog-card";
+import { Reveal } from "@/components/motion/reveal";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { createMetadata } from "@/seo/metadata";
 import { client } from "@/sanity/client";
@@ -72,9 +73,14 @@ export default async function Insights() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
               {posts.map((post, index) => (
-                <div key={post.slug || post._id} className="h-full">
+                <Reveal
+                  key={post.slug || post._id}
+                  delay={(index % 3) * 85}
+                  y={16}
+                  className="h-full"
+                >
                   <BlogCard post={post} priority={index === 0} />
-                </div>
+                </Reveal>
               ))}
             </div>
           )}
