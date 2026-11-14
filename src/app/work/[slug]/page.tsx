@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { caseStudies, getCaseStudy } from "@/content/case-studies";
 import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
 import { FinalCta, PageHero, SectionTitle } from "@/components/sections/marketing";
 import { createMetadata } from "@/seo/metadata";
 import { Check } from "lucide-react";
@@ -27,7 +26,6 @@ export async function generateMetadata({
     path: `/work/${x.slug}`,
   });
 
-  // If proof is disabled, ensure demo case studies are marked as noindex
   if (!siteConfig.showProof) {
     return {
       ...baseMeta,
@@ -48,25 +46,24 @@ export default async function CaseStudyDetailPage({
   if (!x) notFound();
 
   return (
-    <>
+    <div className="w-full bg-white text-[#0b1220]">
       <PageHero
         eyebrow={`Case Study · ${x.industry}`}
         title={x.client}
         body={x.result}
       />
 
-      <Section className="py-12 sm:py-16">
+      <section className="w-full py-16 sm:py-24 bg-white">
         <Container>
-          <div className="max-w-3xl mx-auto space-y-12">
+          <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
             {x.isDemo && (
-              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs font-mono text-amber-900">
-                {/* TODO: replace with verified client engagement data */}
+              <div className="rounded-xl border border-[#e5e8ee] bg-[#f5f7fa] p-4 text-xs text-[#5b6475]">
                 Example case study for demonstration. Real client engagement data will be displayed upon verification.
               </div>
             )}
 
             {/* 1. Challenge */}
-            <div className="rounded-[22px] border border-red-200/80 bg-red-50/40 p-6 sm:p-8">
+            <div className="rounded-2xl border border-[#e5e8ee] bg-white p-7 sm:p-9">
               <SectionTitle
                 eyebrow="The Roadblock"
                 title="The Challenge"
@@ -75,24 +72,24 @@ export default async function CaseStudyDetailPage({
             </div>
 
             {/* 2. What We Did */}
-            <div className="rounded-[22px] border border-blue-200/80 bg-blue-50/40 p-6 sm:p-8">
+            <div className="rounded-2xl border border-[#e5e8ee] bg-[#f5f7fa] p-7 sm:p-9">
               <SectionTitle
                 eyebrow="The Action"
                 title="What We Did"
                 body={x.whatWeDid}
               />
 
-              <div className="mt-6">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-700 mb-3">
-                  Scope of work delivered:
+              <div className="mt-6 pt-6 border-t border-[#e5e8ee]">
+                <h3 className="text-xs font-medium uppercase tracking-[0.15em] text-[#5b6475] mb-3.5">
+                  Scope of work delivered
                 </h3>
                 <ul className="flex flex-wrap gap-2">
                   {x.scope.map((item) => (
                     <li
                       key={item}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-white border border-blue-200 px-3 py-1 text-xs font-medium text-blue-900"
+                      className="inline-flex items-center gap-1.5 rounded-full bg-white border border-[#e5e8ee] px-3.5 py-1.5 text-xs font-medium text-[#0b1220]"
                     >
-                      <Check className="h-3.5 w-3.5 text-blue-600" />
+                      <Check className="h-3.5 w-3.5 text-[#3068f9]" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -101,7 +98,7 @@ export default async function CaseStudyDetailPage({
             </div>
 
             {/* 3. The Result */}
-            <div className="rounded-[22px] border border-emerald-200/80 bg-emerald-50/40 p-6 sm:p-8">
+            <div className="rounded-2xl border border-[#dce6fb] bg-[#eef3ff] p-7 sm:p-9">
               <SectionTitle
                 eyebrow="The Outcome"
                 title="The Result"
@@ -110,9 +107,9 @@ export default async function CaseStudyDetailPage({
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
 
       <FinalCta />
-    </>
+    </div>
   );
 }

@@ -37,7 +37,7 @@ export function FaqSection() {
   };
 
   return (
-    <section id="faq" className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
+    <section id="faq" className="relative w-full py-16 sm:py-24 lg:py-28 bg-white">
       <Container>
         {/* 12-Column Stretch Grid: 5 Cols Left (Header + CTA) + 7 Cols Right (Accordion) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">

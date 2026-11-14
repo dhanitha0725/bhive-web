@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 export function SelectedWorkSection() {
   return (
-    <section id="work" className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
+    <section id="work" className="relative w-full py-16 sm:py-24 lg:py-28 bg-white">
       <Container>
         {/* Section Header */}
         <div className="mb-10 sm:mb-14">

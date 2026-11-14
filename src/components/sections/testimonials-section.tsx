@@ -31,7 +31,7 @@ const STORIES = [
 
 export function TestimonialsSection() {
   return (
-    <section className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
+    <section className="relative w-full py-16 sm:py-24 lg:py-28 bg-white">
       <Container>
         {/* Section Header */}
         <div className="mb-12 sm:mb-16">
@@ -67,7 +67,7 @@ export function TestimonialsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.05 }}
-              className="rounded-2xl bg-white border border-[#e5e8ee] p-8 sm:p-10 flex flex-col justify-between h-full min-h-[320px] transition-colors duration-200 hover:border-[#c5cbe0]"
+              className="rounded-2xl bg-white border border-[#e5e8ee] p-7 sm:p-8 flex flex-col justify-between h-full min-h-[280px] transition-colors duration-200 hover:border-[#c5cbe0]"
             >
               <p className="text-base sm:text-lg text-[#0b1220] leading-relaxed">
                 {story.quote}

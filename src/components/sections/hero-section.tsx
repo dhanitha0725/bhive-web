@@ -3,7 +3,7 @@
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 import { useConsultation } from "@/components/providers/consultation-provider";
 
 // 16 tall showcase cards playing as a continuous panoramic cylindrical series
@@ -457,33 +457,81 @@ export function HeroSection() {
 
         {/* 2. HERO COPY & CTA BLOCK */}
         <div className="w-full max-w-[1180px] mx-auto px-6 pt-2 lg:pt-4 pb-3 lg:pb-5 flex flex-col items-center text-center shrink-0 z-10">
-          <span className="text-[12.5px] lg:text-[13.5px] font-medium tracking-[0.15em] text-[#3068f9] uppercase mb-2.5 lg:mb-3.5">
+          <span className="text-[12px] lg:text-[13px] font-medium tracking-[0.15em] text-[#3068f9] uppercase mb-2.5 lg:mb-3.5">
             STRATEGY. BRAND. MARKETING.
           </span>
 
-          <h1
-            className="text-[clamp(2.65rem,4.5vw,4.5rem)] leading-[1.06] font-bold text-[#0b1220] tracking-[-0.035em] max-w-[1100px]"
-            style={{ fontFamily: "var(--font-inter-tight)" }}
-          >
+          <h1 className="text-[clamp(2.4rem,4.3vw,4.15rem)] leading-[1.08] font-medium text-[#0b1220] tracking-[-0.035em] max-w-[1100px]">
             From First Step to Fully Scaled.
             <br />
-            <span className="text-[#3068f9]">We’re With You.</span>
+            <span className="group/phrase relative inline-flex items-baseline gap-1 mt-0.5 px-1 cursor-default">
+              <span
+                className="relative z-10 text-[#3068f9] font-semibold text-[1.18em] leading-none tracking-[-0.01em] transition-transform duration-300 ease-out group-hover/phrase:-rotate-1"
+                style={{ fontFamily: "var(--font-handwriting)" }}
+              >
+                We’re With You.
+              </span>
+
+              {/* Interactive hand-drawn doodle underline */}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 260 22"
+                fill="none"
+                className="pointer-events-none absolute -bottom-1.5 left-0 w-full h-[14px] lg:h-[16px] text-[#3068f9] overflow-visible"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M4 14C62 5 148 4 256 12"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  className="opacity-85 transition-all duration-300 ease-out group-hover/phrase:opacity-100"
+                  style={{
+                    strokeDasharray: 270,
+                    strokeDashoffset: 0,
+                  }}
+                />
+                <path
+                  d="M28 19C95 13 175 13 232 17"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  className="opacity-40 transition-transform duration-300 ease-out origin-left group-hover/phrase:scale-x-105 group-hover/phrase:opacity-75"
+                />
+              </svg>
+
+              {/* Interactive hand-drawn spark strokes */}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 32 32"
+                fill="none"
+                className="pointer-events-none absolute -right-6 -top-2 w-6 h-6 text-[#3068f9] opacity-75 transition-all duration-300 ease-out group-hover/phrase:opacity-100 group-hover/phrase:scale-110 group-hover/phrase:rotate-6"
+              >
+                <path
+                  d="M8 22L18 9M17 24L27 19M4 13L9 5"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
           </h1>
 
-          <p className="mt-3 lg:mt-4 text-[16px] lg:text-[18px] leading-[1.55] font-normal text-[#5b6475] max-w-[720px]">
+          <p className="mt-4 lg:mt-5 text-[15.5px] lg:text-[17.5px] leading-[1.55] font-normal text-[#5b6475] max-w-[660px]">
             Tailored strategy, brand, and marketing systems built to win real customers
             <br className="hidden lg:inline" /> and scale your business.
           </p>
 
-          <div className="mt-5 lg:mt-7 flex items-center justify-center gap-4 z-20">
+          <div className="mt-5 lg:mt-7 flex items-center justify-center gap-3.5 lg:gap-4 z-20">
             <button
               type="button"
               onClick={(e) =>
                 openConsultation("hero-growth-audit", e.currentTarget, { type: "growth-audit" })
               }
-              className="inline-flex items-center justify-center h-[48px] lg:h-[54px] px-7 lg:px-8 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[14.5px] lg:text-[15px] font-medium transition-colors duration-200 ease-out shadow-none cursor-pointer active:scale-95"
+              className="group inline-flex items-center justify-center gap-2 h-[48px] lg:h-[54px] px-7 lg:px-8 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[14.5px] lg:text-[15px] font-medium transition-colors duration-200 ease-out cursor-pointer active:scale-[0.98]"
             >
-              Get free growth audit
+              <span>Get free growth audit</span>
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" strokeWidth={1.75} />
             </button>
 
             <button
@@ -491,9 +539,13 @@ export function HeroSection() {
               onClick={(e) =>
                 openConsultation("hero-consultation", e.currentTarget, { type: "consultation" })
               }
-              className="inline-flex items-center justify-center h-[48px] lg:h-[54px] px-7 lg:px-8 rounded-full bg-white hover:bg-[#f8fafd] text-[#0b1220] border border-[#e5e8ee] hover:border-[#c5cbe0] text-[14.5px] lg:text-[15px] font-medium transition-colors duration-200 ease-out cursor-pointer active:scale-95"
+              className="group inline-flex items-center justify-center gap-2.5 h-[48px] lg:h-[54px] pl-3.5 pr-6 lg:pl-4 lg:pr-7 rounded-full bg-white hover:bg-[#eef3ff]/65 text-[#0b1220] border border-[#e5e8ee] hover:border-[#3068f9]/35 text-[14.5px] lg:text-[15px] font-medium transition-all duration-200 ease-out cursor-pointer active:scale-[0.98]"
             >
-              Book a growth consultation
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#eef3ff] text-[#3068f9] transition-colors duration-200 group-hover:bg-[#3068f9] group-hover:text-white">
+                <Calendar className="h-3.5 w-3.5" strokeWidth={1.75} />
+              </span>
+              <span>Book a growth consultation</span>
+              <ArrowRight className="h-3.5 w-3.5 text-[#5b6475] transition-all duration-200 ease-out group-hover:translate-x-0.5 group-hover:text-[#3068f9]" strokeWidth={1.75} />
             </button>
           </div>
         </div>
@@ -585,16 +637,34 @@ export function HeroSection() {
               </span>
             </div>
 
-            <h1
-              className="text-[34px] sm:text-[44px] leading-[1.1] font-bold text-[#0b1220] tracking-[-0.035em]"
-              style={{ fontFamily: "var(--font-inter-tight)" }}
-            >
+            <h1 className="text-[32px] sm:text-[42px] leading-[1.12] font-medium text-[#0b1220] tracking-[-0.03em]">
               From First Step to Fully Scaled.
               <br />
-              <span className="text-[#3068f9]">We’re With You.</span>
+              <span className="relative inline-block mt-1">
+                <span
+                  className="text-[#3068f9] font-semibold text-[1.2em] leading-none"
+                  style={{ fontFamily: "var(--font-handwriting)" }}
+                >
+                  We’re With You.
+                </span>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 220 18"
+                  fill="none"
+                  className="pointer-events-none absolute -bottom-1 left-0 w-full h-[11px] text-[#3068f9]"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M3 12C54 4 128 3 217 10"
+                    stroke="currentColor"
+                    strokeWidth="2.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
             </h1>
 
-            <p className="mt-3.5 text-[15px] sm:text-base leading-relaxed text-[#5b6475] max-w-md">
+            <p className="mt-4 text-[15px] sm:text-base leading-relaxed text-[#5b6475] max-w-md">
               Tailored strategy, brand, and marketing systems built to win real customers and scale your business.
             </p>
 
@@ -604,9 +674,10 @@ export function HeroSection() {
                 onClick={(e) =>
                   openConsultation("mobile-hero-growth-audit", e.currentTarget, { type: "growth-audit" })
                 }
-                className="w-full sm:w-auto h-12 px-6 rounded-full bg-[#3068f9] text-white text-[14px] font-medium flex items-center justify-center active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto h-12 px-6 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[14px] font-medium inline-flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer transition-colors"
               >
-                Get free growth audit
+                <span>Get free growth audit</span>
+                <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
               </button>
 
               <button
@@ -614,9 +685,12 @@ export function HeroSection() {
                 onClick={(e) =>
                   openConsultation("mobile-hero-consultation", e.currentTarget, { type: "consultation" })
                 }
-                className="w-full sm:w-auto h-12 px-6 rounded-full bg-white text-[#0b1220] border border-[#e5e8ee] text-[14px] font-medium flex items-center justify-center active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto h-12 px-5 rounded-full bg-white hover:bg-[#eef3ff]/60 text-[#0b1220] border border-[#e5e8ee] hover:border-[#3068f9]/35 text-[14px] font-medium inline-flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer transition-colors"
               >
-                Book a growth consultation
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#eef3ff] text-[#3068f9]">
+                  <Calendar className="h-3.5 w-3.5" strokeWidth={1.75} />
+                </span>
+                <span>Book a growth consultation</span>
               </button>
             </div>
           </div>

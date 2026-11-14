@@ -1,18 +1,19 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { PillButton } from "@/components/ui/pill-button";
 
 const EXPLORE_LINKS = [
-  { label: "Services", href: "/#services" },
-  { label: "How it works", href: "/#how-it-works" },
+  { label: "Services", href: "/services" },
+  { label: "Our work", href: "/work" },
   { label: "Insights", href: "/insights" },
+  { label: "About", href: "/about" },
 ];
 
 const SUPPORT_LINKS = [
-  { label: "Help centre", href: "/contact" },
+  { label: "How it works", href: "/#how-it-works" },
   { label: "FAQs", href: "/#faq" },
   { label: "Contact us", href: "/contact" },
 ];
@@ -21,50 +22,42 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative w-full bg-[#0b1220] text-white pt-16 sm:pt-20 md:pt-24 pb-12 border-t border-white/10">
+    <footer className="relative w-full bg-[#0b1220] text-white pt-16 sm:pt-20 pb-12">
       <Container>
         {/* Main Footer Grid: Brand Left + Links Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-          {/* Left Side: Brand Message & Action */}
-          <div className="lg:col-span-7 flex flex-col items-start max-w-xl">
-            <span className="text-xs sm:text-[13px] font-medium tracking-[0.15em] text-white/64 uppercase">
-              FIND YOUR STRATEGY. MAKE IT YOURS.
-            </span>
+          {/* Left Side: Brand Identity & Positioning */}
+          <div className="lg:col-span-6 flex flex-col items-start max-w-md">
+            <Link href="/" className="inline-flex items-center hover:opacity-90 transition-opacity">
+              <img
+                src="/images/figma/bhive-logo.png"
+                alt="BHive"
+                className="h-7 w-auto object-contain brightness-0 invert block"
+              />
+            </Link>
 
-            <h3 className="mt-4 text-3xl sm:text-5xl font-medium tracking-tight text-white leading-[1.05]">
-              Great marketing. <br />
-              Better growth.
+            <h3 className="mt-6 text-2xl sm:text-3xl font-medium tracking-[-0.02em] text-white leading-[1.2]">
+              Great marketing. Better growth.
             </h3>
 
-            <p className="mt-4 text-base sm:text-lg text-white/64 leading-[1.6]">
-              Discover and work the marketing for your next business. Less planning, more doing.
+            <p className="mt-3 text-sm sm:text-base text-white/64 leading-[1.6]">
+              Tailored strategy, brand, and marketing systems helping Sri Lankan businesses attract and convert paying customers.
             </p>
-
-            <div className="mt-8">
-              <PillButton
-                treatment="filled"
-                isConsultation
-                consultationLocation="footer"
-                showArrow
-              >
-                Book a growth consultation
-              </PillButton>
-            </div>
           </div>
 
           {/* Right Side: Navigation Columns */}
-          <div className="lg:col-span-5 grid grid-cols-2 gap-8 sm:gap-12 pt-2 lg:pt-0">
+          <div className="lg:col-span-6 grid grid-cols-2 sm:grid-cols-2 gap-8 sm:gap-12 lg:justify-self-end lg:min-w-[340px]">
             {/* Explore Column */}
             <div>
-              <p className="text-[15px] font-medium text-white mb-4 sm:mb-6">
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-white/64 mb-4 sm:mb-5">
                 Explore
               </p>
-              <ul className="space-y-3 sm:space-y-4">
+              <ul className="space-y-3">
                 {EXPLORE_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm sm:text-base text-white/64 hover:text-white transition-colors duration-200"
+                      className="text-sm sm:text-[15px] text-white/80 hover:text-white transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -75,15 +68,15 @@ export function Footer() {
 
             {/* Support Column */}
             <div>
-              <p className="text-[15px] font-medium text-white mb-4 sm:mb-6">
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-white/64 mb-4 sm:mb-5">
                 Support
               </p>
-              <ul className="space-y-3 sm:space-y-4">
+              <ul className="space-y-3">
                 {SUPPORT_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm sm:text-base text-white/64 hover:text-white transition-colors duration-200"
+                      className="text-sm sm:text-[15px] text-white/80 hover:text-white transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -95,7 +88,7 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="w-full border-t border-white/10 mt-16 sm:mt-20 pt-8" />
+        <div className="w-full border-t border-white/10 mt-14 sm:mt-16 pt-8" />
 
         {/* Bottom Legal Row */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-white/64">

@@ -1,5 +1,4 @@
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
 import { siteConfig } from "@/config/site";
 import { createMetadata } from "@/seo/metadata";
 
@@ -12,38 +11,36 @@ export const metadata = createMetadata({
 
 export default function PrivacyPage() {
   return (
-    <Section className="py-28 sm:py-36">
+    <section className="w-full bg-white text-[#0b1220] pt-32 sm:pt-40 pb-20 sm:pb-28">
       <Container className="max-w-3xl">
-        <span className="font-mono text-xs uppercase tracking-wider text-[#0066cc]">
-          Data & Privacy
+        <span className="text-xs font-medium uppercase tracking-[0.15em] text-[#3068f9]">
+          Data &amp; Privacy
         </span>
-        <h1 className="mt-2 text-3xl sm:text-4xl font-semibold font-display text-slate-900">
+        <h1 className="mt-2.5 text-3xl sm:text-5xl font-medium tracking-[-0.03em] leading-[1.08] text-[#0b1220]">
           Privacy Policy
         </h1>
-        <p className="mt-2 text-sm text-slate-500">
+        <p className="mt-3 text-sm text-[#5b6475]">
           Last updated: October 2026
         </p>
 
-        <div className="mt-8 space-y-8 text-base text-slate-700 leading-relaxed border-t border-slate-200 pt-8">
-          {/* 1. Data Collected */}
+        <div className="mt-10 space-y-8 text-base text-[#5b6475] leading-[1.65] border-t border-[#e5e8ee] pt-8">
           <div>
-            <h2 className="text-xl font-semibold font-display text-slate-900 mb-2">
+            <h2 className="text-xl font-medium tracking-[-0.015em] text-[#0b1220] mb-2.5">
               1. Information We Collect
             </h2>
             <p>
               When you request a free growth consultation through our website or WhatsApp, we collect only the essential information needed to review your business and contact you:
             </p>
-            <ul className="mt-3 list-disc pl-5 space-y-1.5 text-slate-600">
-              <li><strong>Your Name</strong>: To know who we are communicating with.</li>
-              <li><strong>WhatsApp Phone Number</strong>: To send your consultation response, message you, or arrange a short discussion.</li>
-              <li><strong>Business or Venture Name</strong>: To review your current market presence, website, or social profiles prior to replying.</li>
-              <li><strong>What You Need (Project Need)</strong>: The specific goals, questions, or marketing roadblocks you shared with us.</li>
+            <ul className="mt-3 list-disc pl-5 space-y-1.5">
+              <li><strong className="font-medium text-[#0b1220]">Your Name</strong>: To know who we are communicating with.</li>
+              <li><strong className="font-medium text-[#0b1220]">WhatsApp Phone Number</strong>: To send your consultation response, message you, or arrange a short discussion.</li>
+              <li><strong className="font-medium text-[#0b1220]">Business or Venture Name</strong>: To review your current market presence, website, or social profiles prior to replying.</li>
+              <li><strong className="font-medium text-[#0b1220]">What You Need (Project Need)</strong>: The specific goals, questions, or marketing roadblocks you shared with us.</li>
             </ul>
           </div>
 
-          {/* 2. Processors */}
           <div>
-            <h2 className="text-xl font-semibold font-display text-slate-900 mb-2">
+            <h2 className="text-xl font-medium tracking-[-0.015em] text-[#0b1220] mb-2.5">
               2. Third-Party Processors
             </h2>
             <p>
@@ -51,52 +48,49 @@ export default function PrivacyPage() {
             </p>
           </div>
 
-          {/* 3. Purpose */}
           <div>
-            <h2 className="text-xl font-semibold font-display text-slate-900 mb-2">
+            <h2 className="text-xl font-medium tracking-[-0.015em] text-[#0b1220] mb-2.5">
               3. Purpose of Processing
             </h2>
             <p>
               Your information is collected and processed for the sole purpose of:
             </p>
-            <ul className="mt-3 list-disc pl-5 space-y-1.5 text-slate-600">
+            <ul className="mt-3 list-disc pl-5 space-y-1.5">
               <li>Reviewing your current business marketing setup.</li>
               <li>Preparing your tailored 3-month action plan.</li>
               <li>Contacting you via WhatsApp or phone to deliver your free growth consultation.</li>
             </ul>
           </div>
 
-          {/* 4. Retention */}
           <div>
-            <h2 className="text-xl font-semibold font-display text-slate-900 mb-2">
-              4. Data Retention
+            <h2 className="text-xl font-medium tracking-[-0.015em] text-[#0b1220] mb-2.5">
+              4. Retention
             </h2>
             <p>
               We retain consultation inquiries only for as long as necessary to fulfill the initial inquiry or manage an ongoing business engagement. If no business relationship develops, your submitted details are safely purged from our records within 6 months.
             </p>
           </div>
 
-          {/* 5. Contact for Deletion */}
-          <div>
-            <h2 className="text-xl font-semibold font-display text-slate-900 mb-2">
+          <div id="cookies">
+            <h2 className="text-xl font-medium tracking-[-0.015em] text-[#0b1220] mb-2.5">
               5. Requesting Data Deletion
             </h2>
             <p>
               You have the right to request immediate deletion of your submitted details at any time. Simply contact us through either of the following channels:
             </p>
-            <ul className="mt-3 list-disc pl-5 space-y-1.5 text-slate-600">
+            <ul className="mt-3 list-disc pl-5 space-y-1.5">
               <li>
-                <strong>Email</strong>: Send a message to{" "}
+                <strong className="font-medium text-[#0b1220]">Email</strong>: Send a message to{" "}
                 <a
                   href={`mailto:${siteConfig.contactEmail}`}
-                  className="text-[#0066cc] underline hover:text-[#0055b3]"
+                  className="text-[#3068f9] underline hover:text-[#1f55e0]"
                 >
                   {siteConfig.contactEmail}
                 </a>{" "}
                 with the subject line &ldquo;Delete My Data&rdquo;.
               </li>
               <li>
-                <strong>WhatsApp</strong>: Send a message to our official WhatsApp (
+                <strong className="font-medium text-[#0b1220]">WhatsApp</strong>: Send a message to our official WhatsApp (
                 {siteConfig.whatsappDisplayNumber}) stating &ldquo;Please delete my data&rdquo;.
               </li>
             </ul>
@@ -106,6 +100,6 @@ export default function PrivacyPage() {
           </div>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

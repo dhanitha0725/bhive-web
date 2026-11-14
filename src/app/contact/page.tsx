@@ -1,5 +1,4 @@
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
 import { PageHero } from "@/components/sections/marketing";
 import { LeadForm } from "@/components/forms/lead-form";
 import { siteConfig } from "@/config/site";
@@ -16,7 +15,7 @@ export const metadata = createMetadata({
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="w-full bg-white text-[#0b1220]">
       <PageHero
         eyebrow="Contact Us"
         title="Tell us what you want to achieve or fix in your business."
@@ -24,72 +23,73 @@ export default function ContactPage() {
         showCta={false}
       />
 
-      <Section className="py-12 sm:py-16">
+      <section className="w-full py-16 sm:py-24 bg-white">
         <Container>
           <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Direct WhatsApp & Contact Channels */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="rounded-[22px] bg-emerald-50/70 border border-emerald-200/90 p-6 sm:p-7">
-                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-emerald-800">
+              <div className="rounded-2xl bg-[#f5f7fa] border border-[#e5e8ee] p-7">
+                <span className="text-xs font-medium uppercase tracking-[0.15em] text-[#3068f9]">
                   Fastest Way
                 </span>
-                <h2 className="mt-2 text-xl sm:text-2xl font-semibold font-display text-slate-900">
+                <h2 className="mt-2 text-xl sm:text-2xl font-medium tracking-[-0.02em] text-[#0b1220]">
                   Chat directly on WhatsApp
                 </h2>
-                <p className="mt-2 text-sm text-slate-700 leading-relaxed">
-                  Send us a message right now. We typically reply in under an hour during regular Sri Lankan business hours.
+                <p className="mt-2 text-sm text-[#5b6475] leading-[1.6]">
+                  Send us a message right now. We typically reply in under an hour during Sri Lankan business hours.
                 </p>
 
                 <WhatsAppLink
                   location="contact_page"
-                  className="mt-5 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] px-6 py-3.5 text-base font-semibold text-white transition-all active:scale-[0.98] shadow-sm"
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2.5 h-12 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] px-6 text-[15px] font-medium text-white transition-colors duration-200 active:scale-[0.98]"
                 >
-                  <MessageSquare className="h-5 w-5 fill-white stroke-none" />
+                  <MessageSquare className="h-4 w-4" strokeWidth={1.75} />
                   <span>Open WhatsApp Chat</span>
                 </WhatsAppLink>
               </div>
 
               {/* Contact Information */}
-              <div className="rounded-[22px] bg-slate-50 border border-slate-200 p-6 space-y-4">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-800">
+              <div className="rounded-2xl bg-white border border-[#e5e8ee] p-7 space-y-4">
+                <h3 className="text-xs font-medium uppercase tracking-[0.15em] text-[#5b6475]">
                   Direct Contact Details
                 </h3>
 
-                <div className="flex items-center gap-3 text-sm text-slate-700">
-                  <Mail className="h-4 w-4 text-[#0066cc]" />
+                <div className="flex items-center gap-3 text-sm text-[#0b1220]">
+                  <Mail className="h-4 w-4 text-[#3068f9]" strokeWidth={1.75} />
                   <a
                     href={`mailto:${siteConfig.contactEmail}`}
-                    className="hover:underline hover:text-[#0066cc]"
+                    className="hover:underline hover:text-[#3068f9] transition-colors"
                   >
                     {siteConfig.contactEmail}
                   </a>
                 </div>
 
-                <div className="flex items-center gap-3 text-sm text-slate-700">
-                  <Phone className="h-4 w-4 text-[#0066cc]" />
+                <div className="flex items-center gap-3 text-sm text-[#0b1220]">
+                  <Phone className="h-4 w-4 text-[#3068f9]" strokeWidth={1.75} />
                   <span>{siteConfig.whatsappDisplayNumber}</span>
                 </div>
 
-                <div className="pt-2 border-t border-slate-200 text-xs text-slate-500">
-                  Location: Colombo, Sri Lanka · Working with clients island-wide.
+                <div className="pt-3 border-t border-[#e5e8ee] text-xs text-[#5b6475]">
+                  Colombo, Sri Lanka · Working with businesses island-wide.
                 </div>
               </div>
 
               {/* Guarantee */}
-              <div className="flex items-start gap-3 text-xs text-slate-600 bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-                <ShieldCheck className="h-5 w-5 text-[#0066cc] shrink-0 mt-0.5" />
-                <span>
-                  <strong>100% Free Consultation Guarantee:</strong> We provide real, actionable feedback. No high-pressure sales pitches.
+              <div className="flex items-start gap-3 text-xs text-[#5b6475] bg-[#eef3ff] p-4 rounded-xl border border-[#dce6fb]">
+                <ShieldCheck className="h-5 w-5 text-[#3068f9] shrink-0 mt-0.5" strokeWidth={1.75} />
+                <span className="leading-[1.55]">
+                  <strong className="font-medium text-[#0b1220]">100% Free Consultation Guarantee:</strong>{" "}
+                  We provide real, actionable feedback with zero sales pressure.
                 </span>
               </div>
             </div>
 
             {/* Right Column: Lead Form */}
-            <div className="lg:col-span-7 rounded-[24px] border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-2xl font-semibold font-display text-slate-900">
+            <div className="lg:col-span-7 rounded-2xl border border-[#e5e8ee] bg-white p-7 sm:p-9">
+              <h2 className="text-2xl font-medium tracking-[-0.02em] text-[#0b1220]">
                 Send a quick message
               </h2>
-              <p className="mt-1 text-sm text-slate-600 mb-6">
+              <p className="mt-1.5 text-sm text-[#5b6475] mb-6 leading-[1.6]">
                 Fill in these details and we will review your business and reply via WhatsApp within 24 hours.
               </p>
 
@@ -97,7 +97,7 @@ export default function ContactPage() {
             </div>
           </div>
         </Container>
-      </Section>
-    </>
+      </section>
+    </div>
   );
 }

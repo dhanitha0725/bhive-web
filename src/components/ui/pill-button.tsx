@@ -60,7 +60,7 @@ export function PillButton({
       "bg-[#0b1220] text-white hover:bg-[#162035]",
   };
 
-  const baseClasses = `inline-flex items-center justify-center gap-2.5 h-13 sm:h-[60px] px-6 sm:px-8 rounded-full text-[15px] font-medium whitespace-nowrap shrink-0 transition-colors duration-200 ease-out select-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 ${
+  const baseClasses = `group inline-flex items-center justify-center gap-2.5 h-13 sm:h-[60px] px-6 sm:px-8 rounded-full text-[15px] font-medium whitespace-nowrap shrink-0 transition-colors duration-200 ease-out select-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 ${
     treatmentStyles[activeStyle] || treatmentStyles.primary
   } ${className}`;
 

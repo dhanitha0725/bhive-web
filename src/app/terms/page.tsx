@@ -1,5 +1,4 @@
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
 import { createMetadata } from "@/seo/metadata";
 
 export const metadata = createMetadata({
@@ -10,10 +9,15 @@ export const metadata = createMetadata({
 
 export default function Terms() {
   return (
-    <Section>
+    <section className="w-full bg-white text-[#0b1220] pt-32 sm:pt-40 pb-20 sm:pb-28">
       <Container className="max-w-3xl">
-        <h1 className="heading-1">Terms</h1>
-        <div className="prose-measure mt-8 grid gap-5 text-muted-foreground">
+        <span className="text-xs font-medium uppercase tracking-[0.15em] text-[#3068f9]">
+          Legal
+        </span>
+        <h1 className="mt-2.5 text-3xl sm:text-5xl font-medium tracking-[-0.03em] leading-[1.08] text-[#0b1220]">
+          Terms of Service
+        </h1>
+        <div className="mt-10 grid gap-5 text-base text-[#5b6475] leading-[1.65] border-t border-[#e5e8ee] pt-8">
           <p>
             This website provides information about BHive’s services. Content is general information, not a binding
             proposal or professional advice.
@@ -24,6 +28,6 @@ export default function Terms() {
           </p>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

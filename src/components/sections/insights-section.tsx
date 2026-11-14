@@ -13,7 +13,7 @@ export function InsightsSection({ posts }: { posts: InsightSummary[] }) {
   }
 
   return (
-    <section id="insights" className="relative w-full py-16 sm:py-24 lg:py-32 bg-white">
+    <section id="insights" className="relative w-full py-16 sm:py-24 lg:py-28 bg-white">
       <Container>
         {/* Section Header: Title Left + View All Button Right */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16">

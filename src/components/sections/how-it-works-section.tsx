@@ -95,7 +95,7 @@ const LAUNCH: ComparisonPanel = {
 
 export function HowItWorksSection() {
   return (
-    <section className="relative w-full bg-white py-16 sm:py-24 lg:py-32">
+    <section className="relative w-full bg-white py-16 sm:py-24 lg:py-28">
       <Container>
         <Reveal className="max-w-[1100px]">
           <p className="text-xs font-medium uppercase tracking-[0.15em] text-[#3068f9] sm:text-[13px]">
