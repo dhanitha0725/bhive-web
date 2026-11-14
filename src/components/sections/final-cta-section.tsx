@@ -56,7 +56,9 @@ export function FinalCtaSection() {
           >
             <PillButton
               treatment="primary"
-              href="/free-growth-audit"
+              isConsultation
+              consultationLocation="final-cta-growth-audit"
+              consultationType="growth-audit"
               showArrow
               className="w-full sm:w-auto"
             >
@@ -66,7 +68,8 @@ export function FinalCtaSection() {
             <PillButton
               treatment="filled"
               isConsultation
-              consultationLocation="final-cta"
+              consultationLocation="final-cta-consultation"
+              consultationType="consultation"
               className="w-full sm:w-auto"
             >
               Book a growth consultation

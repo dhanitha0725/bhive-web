@@ -516,16 +516,21 @@ export function HeroSection() {
               entered ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
             }`}
           >
-            <Link
-              href="/free-growth-audit"
+            <button
+              type="button"
+              onClick={(e) =>
+                openConsultation("hero-growth-audit", e.currentTarget, { type: "growth-audit" })
+              }
               className="inline-flex items-center justify-center h-[54px] px-8 rounded-full bg-[#3068f9] hover:bg-[#1f55e0] text-white text-[15px] font-medium transition-colors duration-200 ease-out shadow-none cursor-pointer active:scale-95"
             >
               Get free growth audit
-            </Link>
+            </button>
 
             <button
               type="button"
-              onClick={(e) => openConsultation("hero-consultation", e.currentTarget)}
+              onClick={(e) =>
+                openConsultation("hero-consultation", e.currentTarget, { type: "consultation" })
+              }
               className="inline-flex items-center justify-center h-[54px] px-8 rounded-full bg-white hover:bg-[#f8fafd] text-[#0b1220] border border-[#e5e8ee] hover:border-[#c5cbe0] text-[15px] font-medium transition-colors duration-200 ease-out cursor-pointer active:scale-95"
             >
               Book a growth consultation
@@ -639,17 +644,22 @@ export function HeroSection() {
 
           {/* Mobile CTA Buttons */}
           <div className="mt-6 flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-            <Link
-              href="/free-growth-audit"
-              className="w-full sm:w-auto h-12 px-6 rounded-full bg-[#3068f9] text-white text-[14px] font-medium flex items-center justify-center active:scale-95"
+            <button
+              type="button"
+              onClick={(e) =>
+                openConsultation("mobile-hero-growth-audit", e.currentTarget, { type: "growth-audit" })
+              }
+              className="w-full sm:w-auto h-12 px-6 rounded-full bg-[#3068f9] text-white text-[14px] font-medium flex items-center justify-center active:scale-95 cursor-pointer"
             >
               Get free growth audit
-            </Link>
+            </button>
 
             <button
               type="button"
-              onClick={(e) => openConsultation("mobile-hero-consultation", e.currentTarget)}
-              className="w-full sm:w-auto h-12 px-6 rounded-full bg-white text-[#0b1220] border border-[#e5e8ee] text-[14px] font-medium flex items-center justify-center active:scale-95"
+              onClick={(e) =>
+                openConsultation("mobile-hero-consultation", e.currentTarget, { type: "consultation" })
+              }
+              className="w-full sm:w-auto h-12 px-6 rounded-full bg-white text-[#0b1220] border border-[#e5e8ee] text-[14px] font-medium flex items-center justify-center active:scale-95 cursor-pointer"
             >
               Book a growth consultation
             </button>

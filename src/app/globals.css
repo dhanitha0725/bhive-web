@@ -365,6 +365,22 @@ a {
   backface-visibility: hidden;
 }
 
+/* Shine-border beam for the two-track comparison card.
+ * One slow revolution; the gradient is only visible through the 2px ring. */
+@keyframes border-beam {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.animate-border-beam {
+  animation: border-beam var(--beam-duration, 8s) linear infinite;
+  will-change: transform;
+}
+
 /* Lightweight scroll reveal (replaces framer-motion whileInView).
  * Transform + opacity only, so reveals never trigger layout/paint. */
 .reveal {
@@ -424,7 +440,8 @@ a {
     transition: none;
   }
   .animate-rocket,
-  .animate-scroll-cue {
+  .animate-scroll-cue,
+  .animate-border-beam {
     animation: none;
   }
   *,
