@@ -6,6 +6,12 @@ import { createClient } from "@sanity/client";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Auto-load environment variables from .env.local if present
+const envLocalPath = path.resolve(__dirname, "../.env.local");
+if (fs.existsSync(envLocalPath) && typeof process.loadEnvFile === "function") {
+  process.loadEnvFile(envLocalPath);
+}
+
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "ealudk4o";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-11-12";
@@ -13,16 +19,20 @@ const writeToken = process.env.SANITY_API_WRITE_TOKEN;
 
 const shouldUpdate = process.argv.includes("--update");
 const skipImage = process.argv.includes("--no-image");
+const asDraft = process.argv.includes("--draft");
 
 if (!writeToken) {
   console.error("Error: SANITY_API_WRITE_TOKEN environment variable is not set.");
   console.error("");
   console.error("Create an API token with 'Editor' or 'Write' permissions at https://sanity.io/manage");
   console.error("Then run:");
-  console.error("  Bash / macOS / Linux:");
-  console.error("    SANITY_API_WRITE_TOKEN=your_token node scripts/publish-entrepreneurship-blog.mjs");
-  console.error("  Windows PowerShell:");
-  console.error('    $env:SANITY_API_WRITE_TOKEN="your_token"; node scripts/publish-entrepreneurship-blog.mjs');
+  console.error("  To create as a DRAFT (to review & publish in Sanity UI):");
+  console.error('    Windows PowerShell:  $env:SANITY_API_WRITE_TOKEN="your_token"; node scripts/publish-entrepreneurship-blog.mjs --draft');
+  console.error('    Bash / macOS:        SANITY_API_WRITE_TOKEN=your_token node scripts/publish-entrepreneurship-blog.mjs --draft');
+  console.error("");
+  console.error("  To PUBLISH directly to the website via command:");
+  console.error('    Windows PowerShell:  $env:SANITY_API_WRITE_TOKEN="your_token"; node scripts/publish-entrepreneurship-blog.mjs');
+  console.error('    Bash / macOS:        SANITY_API_WRITE_TOKEN=your_token node scripts/publish-entrepreneurship-blog.mjs');
   process.exit(1);
 }
 
@@ -80,7 +90,7 @@ const POST = {
   slug: "what-building-a-business-teaches-that-a-job-rarely-can",
   excerpt:
     "Building a business removes workplace boundaries and trains problem-solving, creativity, and communication under real-world stakes.",
-  publishedAt: "2026-11-16",
+  publishedAt: "2026-11-16T09:00:00.000Z",
   readingTime: 5,
   preferredPillarSlugs: ["entrepreneurial-leadership", "creativity"],
   relatedServiceSlug: "business-strategy",
@@ -253,13 +263,13 @@ async function uploadCoverImage() {
 
 async function run() {
   const existing = await client.fetch(
-    `*[_type == "insight" && slug.current == $slug][0]{ _id, title }`,
+    `*[_type == "insight" && slug.current == $slug && !(_id in path("drafts.**"))][0]{ _id, title }`,
     { slug: POST.slug }
   );
 
-  if (existing?._id && !shouldUpdate) {
+  if (existing?._id && !shouldUpdate && !asDraft) {
     console.log(
-      `Insight "${existing.title}" already exists in Sanity (_id: ${existing._id}). Pass --update to overwrite.`
+      `Insight "${existing.title}" already exists in Sanity (_id: ${existing._id}). Pass --update to overwrite, or --draft to update draft.`
     );
     return;
   }
@@ -294,13 +304,43 @@ async function run() {
     ...(relatedService ? { relatedService } : {}),
   };
 
-  if (existing?._id && shouldUpdate) {
-    const updated = await client.patch(existing._id).set(docFields).commit();
-    console.log(`Updated insight in Sanity (_id: ${updated._id}).`);
-  } else {
-    const created = await client.create(docFields);
-    console.log(`Created insight in Sanity (_id: ${created._id}).`);
+  // Draft IDs must mirror the published document ID. Existing documents can
+  // have a generated _id that differs from the slug, so never build the draft
+  // ID from the slug alone.
+  const baseId = existing?._id || POST.slug;
+
+  if (asDraft) {
+    const draftId = `drafts.${baseId}`;
+    const draftDoc = {
+      _id: draftId,
+      ...docFields,
+    };
+    const createdDraft = await client.createOrReplace(draftDoc);
+    console.log("\n======================================================");
+    console.log("Success! Created DRAFT in Sanity.");
+    console.log(`Draft ID: ${createdDraft._id}`);
+    console.log("\nNext Steps to publish via Sanity UI:");
+    console.log("1. Open Sanity Studio (cd studio-bhive-blog && npm run dev)");
+    console.log("2. Open http://localhost:3333 in your browser");
+    console.log("3. Click 'Insights' in the left navigation");
+    console.log(`4. Click "${POST.title}" (it will show with a DRAFT badge)`);
+    console.log("5. Review the post and click the green 'Publish' button!");
+    console.log("======================================================");
+    return;
   }
+
+  const publishedDoc = {
+    _id: baseId,
+    ...docFields,
+  };
+  const result = await client.createOrReplace(publishedDoc);
+  await client.delete(`drafts.${baseId}`).catch(() => {});
+  console.log("\n======================================================");
+  console.log("Success! Published insight directly to Sanity.");
+  console.log(`Document ID: ${result._id}`);
+  console.log(`Slug: ${POST.slug}`);
+  console.log(`Live route: /insights/${POST.slug}`);
+  console.log("======================================================");
 }
 
 run().catch((err) => {

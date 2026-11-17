@@ -80,6 +80,38 @@ export const SERVICES_QUERY = defineQuery(/* groq */ `
   }
 `);
 
+export const CASE_STUDIES_QUERY = defineQuery(/* groq */ `
+  *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt asc) {
+    _id,
+    client,
+    "slug": slug.current,
+    industry,
+    challenge,
+    whatWeDid,
+    result,
+    outcomeMetric,
+    results[]{ value, label },
+    "scope": coalesce(scope[]->name, []),
+    featured,
+    isDemo,
+    "coverImage": coverImage{ "url": asset->url, "alt": alt },
+    seo
+  }
+`);
+
+export const TESTIMONIALS_QUERY = defineQuery(/* groq */ `
+  *[_type == "testimonial"] | order(order asc, _createdAt asc) {
+    _id,
+    author,
+    role,
+    company,
+    quote,
+    order,
+    featured,
+    "avatar": avatar{ "url": asset->url, "alt": alt }
+  }
+`);
+
 export const SITE_SETTINGS_QUERY = defineQuery(/* groq */ `
   *[_id == "siteSettings"][0] {
     siteName,

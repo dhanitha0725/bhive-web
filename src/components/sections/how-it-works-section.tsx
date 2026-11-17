@@ -1,5 +1,3 @@
-import { Building2, Sprout } from "lucide-react";
-
 import { Reveal } from "@/components/motion/reveal";
 import {
   ComparisonCard,
@@ -10,7 +8,6 @@ import { PillButton } from "@/components/ui/pill-button";
 
 const ESTABLISHED: ComparisonPanel = {
   id: "established",
-  icon: Building2,
   eyebrow: "For established businesses",
   title: "Scale an active business",
   description:
@@ -52,7 +49,6 @@ const ESTABLISHED: ComparisonPanel = {
 
 const LAUNCH: ComparisonPanel = {
   id: "launch",
-  icon: Sprout,
   eyebrow: "For founders & new ventures",
   title: "Launch a new brand or idea",
   description:

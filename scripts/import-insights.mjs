@@ -6,6 +6,12 @@ import { createClient } from "@sanity/client";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Auto-load environment variables from .env.local if present
+const envLocalPath = path.resolve(__dirname, "../.env.local");
+if (fs.existsSync(envLocalPath) && typeof process.loadEnvFile === "function") {
+  process.loadEnvFile(envLocalPath);
+}
+
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "ealudk4o";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-11-12";

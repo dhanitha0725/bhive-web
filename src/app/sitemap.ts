@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
-import { caseStudies } from "@/content/case-studies";
 import { client } from "@/sanity/client";
 import { INSIGHT_COUNT_QUERY, INSIGHT_SLUGS_QUERY } from "@/sanity/queries";
 
@@ -10,14 +9,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const basePaths: MetadataRoute.Sitemap = [
     "/",
     "/services",
-    "/work",
+    ...(siteConfig.showProof && !siteConfig.proofIsDemo ? ["/work"] : []),
     "/about",
     "/contact",
     "/privacy",
     "/terms",
-    ...(siteConfig.showProof
-      ? caseStudies.filter((x) => x.published).map((x) => `/work/${x.slug}`)
-      : []),
   ].map((path) => ({
     url: new URL(path, siteConfig.url).toString(),
     lastModified: new Date(),

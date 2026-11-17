@@ -1,15 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { PillButton } from "@/components/ui/pill-button";
-import type { CaseStudy } from "@/content/case-studies";
 import type { InsightSummary } from "@/lib/blog/types";
 import { WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { BlogCard } from "@/components/blog/blog-card";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
-import { MessageSquare, ArrowUpRight } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 
 export function PageHero({
   eyebrow,
@@ -115,62 +112,6 @@ export function SystemSteps({
         </li>
       ))}
     </ol>
-  );
-}
-
-export function CaseCard({ item }: { item: CaseStudy }) {
-  return (
-    <Card className="flex h-full flex-col justify-between rounded-2xl border border-[#e5e8ee] bg-white p-7 sm:p-8 hover:border-[#c5cbe0] transition-colors duration-200">
-      <div>
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <span className="text-xs font-medium uppercase tracking-[0.15em] text-[#5b6475]">
-            {item.industry}
-          </span>
-          {item.isDemo && (
-            <span className="text-[11px] font-medium bg-[#eef3ff] text-[#3068f9] px-2.5 py-0.5 rounded-full">
-              Example Case
-            </span>
-          )}
-        </div>
-
-        <h3 className="text-2xl font-medium tracking-[-0.02em] text-[#0b1220]">
-          {item.client}
-        </h3>
-
-        <div className="mt-5 space-y-4 text-sm leading-[1.6]">
-          <div className="border-l-2 border-[#e5e8ee] pl-3.5">
-            <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#5b6475] block mb-0.5">
-              Challenge
-            </span>
-            <span className="text-[#5b6475]">{item.challenge}</span>
-          </div>
-
-          <div className="border-l-2 border-[#3068f9]/40 pl-3.5">
-            <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#3068f9] block mb-0.5">
-              What We Did
-            </span>
-            <span className="text-[#5b6475]">{item.whatWeDid}</span>
-          </div>
-
-          <div className="border-l-2 border-[#3068f9] pl-3.5">
-            <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#0b1220] block mb-0.5">
-              Result
-            </span>
-            <span className="text-[#0b1220] font-medium">{item.result}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-6 pt-5 border-t border-[#e5e8ee] flex items-center justify-between">
-        <Link
-          href={`/work/${item.slug}`}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3068f9] hover:text-[#1f55e0] transition-colors"
-        >
-          <span>View case study</span>
-          <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} />
-        </Link>
-      </div>
-    </Card>
   );
 }
 

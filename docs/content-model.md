@@ -2,14 +2,13 @@
 
 ## Principles
 
-Marketing HTML and SEO-critical copy remain server-rendered. Repeated content belongs in typed local modules; editorial articles use local MDX. All proof records have `published: false` by default and are omitted unless explicitly approved.
+Marketing HTML and SEO-critical copy remain server-rendered. Repeated content belongs in typed local modules; editorial articles are managed in Sanity. Proof records stay flagged as illustrative until owner-verified data replaces them.
 
 ## Proposed locations
 
 ```text
 src/config/site.ts
 src/content/services.ts
-src/content/packages.ts
 src/content/case-studies.ts
 src/content/navigation.ts
 src/content/insights.ts
@@ -25,9 +24,7 @@ src/seo/*
 
 `Service`: `slug`, `name`, `shortDescription`, `problem`, `outcome`, `capabilities[]`, `audiences[]`, `relatedCaseStudySlugs[]`, `seo`, and `published`.
 
-`Package`: `id`, editable `name`, `audience`, `for`, `businessProblem`, `outcome`, `capabilityGroups[]`, `cta`, `featured`, and `published`. No price field is rendered unless the owner later supplies one.
-
-`CaseStudy`: `slug`, `client`, `industry`, `summary`, `challenge`, `scope[]`, `process[]`, `transformation`, `beforeAssets[]`, `afterAssets[]`, `results[]`, optional `testimonial`, `services[]`, `featured`, `published`, and `seo`. A result is `{ metric, value, context, source }`; incomplete or unverified results are omitted.
+`CaseStudy`: `slug`, `client`, `industry`, `challenge`, `whatWeDid`, `result`, `outcomeMetric`, `results[]`, `scope[]`, optional cover image, `featured`, `published`, `isDemo`, and `seo`. A result metric is `{ value, label }`; incomplete or unverified results are omitted.
 
 `Insight`: title, excerpt, author, published/updated dates, cover image, pillar, reading time, related service slugs, related post slugs, SEO title/description, and `published`. Fixed pillars are Business Architecture, Brand Strategy, Modern Marketing, Entrepreneurial Leadership, and Sustainable Growth.
 

@@ -51,26 +51,42 @@ export type SiteSettings = {
   showProof?: boolean;
 };
 
-export type PackagePlan = {
+export type Testimonial = {
   _id: string;
-  _type: "packagePlan";
+  _type: "testimonial";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  label?: string;
-  forWhom?: string;
-  outcome?: string;
-  capabilities?: Array<string>;
-  featured?: boolean;
+  author?: string;
+  role?: string;
+  company?: string;
+  quote?: string;
+  avatar?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
   order?: number;
+  featured?: boolean;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type ServiceReference = {
@@ -92,6 +108,13 @@ export type CaseStudy = {
   challenge?: string;
   whatWeDid?: string;
   result?: string;
+  outcomeMetric?: string;
+  results?: Array<{
+    value?: string;
+    label?: string;
+    _type: "resultMetric";
+    _key: string;
+  }>;
   scope?: Array<
     {
       _key: string;
@@ -110,20 +133,10 @@ export type CaseStudy = {
   seo?: Seo;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type PillarReference = {
@@ -315,12 +328,12 @@ export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Seo
   | SiteSettings
-  | PackagePlan
-  | Slug
-  | ServiceReference
-  | CaseStudy
+  | Testimonial
   | SanityImageCrop
   | SanityImageHotspot
+  | ServiceReference
+  | CaseStudy
+  | Slug
   | PillarReference
   | Insight
   | Service
@@ -478,6 +491,49 @@ export type SERVICES_QUERY_RESULT = Array<{
 }>;
 
 // Source: ../src/sanity/queries.ts
+// Variable: CASE_STUDIES_QUERY
+// Query: *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt asc) {    _id,    client,    "slug": slug.current,    industry,    challenge,    whatWeDid,    result,    outcomeMetric,    results[]{ value, label },    "scope": coalesce(scope[]->name, []),    featured,    isDemo,    "coverImage": coverImage{ "url": asset->url, "alt": alt },    seo  }
+export type CASE_STUDIES_QUERY_RESULT = Array<{
+  _id: string;
+  client: string | null;
+  slug: string | null;
+  industry: string | null;
+  challenge: string | null;
+  whatWeDid: string | null;
+  result: string | null;
+  outcomeMetric: string | null;
+  results: Array<{
+    value: string | null;
+    label: string | null;
+  }> | null;
+  scope: Array<never> | Array<string | null>;
+  featured: boolean | null;
+  isDemo: boolean | null;
+  coverImage: {
+    url: string | null;
+    alt: string | null;
+  } | null;
+  seo: Seo | null;
+}>;
+
+// Source: ../src/sanity/queries.ts
+// Variable: TESTIMONIALS_QUERY
+// Query: *[_type == "testimonial"] | order(order asc, _createdAt asc) {    _id,    author,    role,    company,    quote,    order,    featured,    "avatar": avatar{ "url": asset->url, "alt": alt }  }
+export type TESTIMONIALS_QUERY_RESULT = Array<{
+  _id: string;
+  author: string | null;
+  role: string | null;
+  company: string | null;
+  quote: string | null;
+  order: number | null;
+  featured: boolean | null;
+  avatar: {
+    url: string | null;
+    alt: string | null;
+  } | null;
+}>;
+
+// Source: ../src/sanity/queries.ts
 // Variable: SITE_SETTINGS_QUERY
 // Query: *[_id == "siteSettings"][0] {    siteName,    description,    contactEmail,    whatsappNumber,    whatsappDisplayNumber,    whatsappMessage,    showProof  }
 export type SITE_SETTINGS_QUERY_RESULT =
@@ -520,6 +576,8 @@ declare global {
     '\n  count(*[_type == "insight" && defined(slug.current)])\n': INSIGHT_COUNT_QUERY_RESULT;
     '\n  *[_type == "pillar"] | order(order asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    description\n  }\n': PILLARS_QUERY_RESULT;
     '\n  *[_type == "service"] | order(order asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    problemSolved,\n    scope,\n    outcome,\n    seo\n  }\n': SERVICES_QUERY_RESULT;
+    '\n  *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt asc) {\n    _id,\n    client,\n    "slug": slug.current,\n    industry,\n    challenge,\n    whatWeDid,\n    result,\n    outcomeMetric,\n    results[]{ value, label },\n    "scope": coalesce(scope[]->name, []),\n    featured,\n    isDemo,\n    "coverImage": coverImage{ "url": asset->url, "alt": alt },\n    seo\n  }\n': CASE_STUDIES_QUERY_RESULT;
+    '\n  *[_type == "testimonial"] | order(order asc, _createdAt asc) {\n    _id,\n    author,\n    role,\n    company,\n    quote,\n    order,\n    featured,\n    "avatar": avatar{ "url": asset->url, "alt": alt }\n  }\n': TESTIMONIALS_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    description,\n    contactEmail,\n    whatsappNumber,\n    whatsappDisplayNumber,\n    whatsappMessage,\n    showProof\n  }\n': SITE_SETTINGS_QUERY_RESULT;
   }
 }

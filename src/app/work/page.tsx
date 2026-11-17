@@ -1,75 +1,86 @@
-import { caseStudies } from "@/content/case-studies";
-import { siteConfig } from "@/config/site";
+import type { CaseStudy } from "@/content/case-studies";
+import { caseStudies as fallbackCaseStudies } from "@/content/case-studies";
 import { Container } from "@/components/ui/container";
-import { CaseCard, FinalCta, PageHero, SectionTitle } from "@/components/sections/marketing";
+import { CaseStudyGrid } from "@/components/work/case-study-grid";
+import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { createMetadata } from "@/seo/metadata";
+import { siteConfig } from "@/config/site";
+import { client } from "@/sanity/client";
+import { CASE_STUDIES_QUERY } from "@/sanity/queries";
+import { mapCaseStudies } from "@/lib/case-studies";
+import type { CASE_STUDIES_QUERY_RESULT } from "../../../sanity.types";
 
 export const metadata = createMetadata({
-  title: "Client Case Studies & Work",
+  title: "Case Studies & Client Work | BHive Marketing",
   description:
-    "See how BHive solves real marketing roadblocks for Sri Lankan businesses with planned, practical execution.",
+    "See how BHive solves real marketing challenges for Sri Lankan businesses with planned, practical execution and measurable growth.",
   path: "/work",
-  noIndex: !siteConfig.showProof,
+  noIndex: siteConfig.proofIsDemo,
 });
 
-export default function WorkPage() {
-  const publishedCases = caseStudies.filter((x) => x.published);
+export default async function WorkPage() {
+  let studies: CaseStudy[] = [];
 
-  if (!siteConfig.showProof) {
-    return (
-      <div className="w-full bg-white text-[#0b1220]">
-        <PageHero
-          eyebrow="Our Work"
-          title="Case studies coming soon."
-          body="We are currently documenting recent client transformations and compiling verified results. In the meantime, we'd love to review your business and show you relevant work examples directly."
-        />
+  if (siteConfig.showProof) {
+    const sanityCases = await client
+      .fetch<CASE_STUDIES_QUERY_RESULT>(CASE_STUDIES_QUERY, {}, { useCdn: false })
+      .catch(() => []);
 
-        <section className="w-full py-16 sm:py-24 bg-white">
-          <Container className="max-w-3xl mx-auto text-center">
-            <div className="rounded-2xl border border-[#e5e8ee] bg-[#f5f7fa] p-8 sm:p-12">
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#eef3ff] text-xs font-medium uppercase tracking-[0.15em] text-[#3068f9]">
-                Under Preparation
-              </span>
-              <h2 className="mt-4 text-2xl sm:text-3xl font-medium tracking-[-0.02em] text-[#0b1220]">
-                Want to see work relevant to your industry?
-              </h2>
-              <p className="mt-3 text-base text-[#5b6475] leading-[1.6] max-w-xl mx-auto">
-                Reach out for a free growth consultation. We&apos;ll walk you through specific marketing setups and strategies we&apos;ve used for businesses just like yours.
-              </p>
-            </div>
-          </Container>
-        </section>
+    studies = mapCaseStudies(sanityCases).filter((item) => item.published);
 
-        <FinalCta />
-      </div>
-    );
+    if (studies.length === 0) {
+      studies = fallbackCaseStudies.filter((item) => item.published);
+    }
   }
 
   return (
     <div className="w-full bg-white text-[#0b1220]">
-      <PageHero
-        eyebrow="Our Work"
-        title="Real marketing challenges solved with clear, practical plans."
-        body="Each case shows the exact challenge, what we built, and the real outcome achieved for the business."
-      />
-
-      <section className="w-full py-16 sm:py-24 bg-white">
+      {/* 1. Hero / Header Section */}
+      <section className="pt-32 pb-12 sm:pt-40 sm:pb-16 lg:pt-44 lg:pb-20">
         <Container>
-          <SectionTitle
-            eyebrow="Proven Solutions"
-            title="Challenge, action, and results."
-            body="These examples illustrate how our services combine to solve actual roadblocks for businesses across Sri Lanka."
-          />
+          <div className="mx-auto flex max-w-[840px] flex-col items-center text-center">
+            <span className="mb-3 text-xs font-medium uppercase tracking-[0.15em] text-[#3068f9] sm:mb-4 sm:text-[13px]">
+              SELECTED CLIENT WORK
+            </span>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {publishedCases.map((item) => (
-              <CaseCard key={item.slug} item={item} />
-            ))}
+            <h1 className="text-4xl font-medium leading-[1.08] tracking-[-0.035em] text-[#0b1220] sm:text-6xl lg:text-[72px]">
+              Case Studies &amp; Work
+            </h1>
+
+            <p className="mt-4 max-w-[640px] text-base font-normal leading-[1.6] text-[#5b6475] sm:mt-5 sm:text-lg">
+              Real marketing challenges solved with structured systems, predictable customer
+              acquisition, and zero agency fluff.
+            </p>
+
+            {siteConfig.proofIsDemo && studies.length > 0 ? (
+              <p className="mt-5 max-w-[620px] rounded-xl border border-[#e5e8ee] bg-[#f5f7fa] px-4 py-3 text-xs leading-relaxed text-[#5b6475] sm:text-[13px]">
+                These are illustrative examples built to demonstrate the format. Verified client
+                results will replace them.
+              </p>
+            ) : null}
           </div>
         </Container>
       </section>
 
-      <FinalCta />
+      {/* 2. Case Studies Grid */}
+      <section className="pb-24 sm:pb-32 lg:pb-40">
+        <Container>
+          {studies.length === 0 ? (
+            <div className="mx-auto max-w-md py-20 text-center">
+              <p className="text-xl font-medium text-[#0b1220]">Case studies coming soon.</p>
+              <p className="mt-2 text-sm leading-relaxed text-[#5b6475]">
+                We are currently documenting recent client transformations and compiling verified
+                results.
+              </p>
+            </div>
+          ) : (
+            <CaseStudyGrid studies={studies} />
+          )}
+        </Container>
+      </section>
+
+      {/* 3. Final Conversion CTA */}
+      <FinalCtaSection />
     </div>
   );
 }

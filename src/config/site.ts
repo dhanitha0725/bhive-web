@@ -11,9 +11,11 @@ export const siteConfig = {
   whatsappDisplayNumber: "+94 77 000 0000", // TODO: replace with real display phone number
   whatsappMessage:
     "Hi BHive, I'd like to get a free growth consultation for my business.",
-  // When false: hides stat counters, outcome metrics, case study cards, and testimonials on home;
-  // shows a "coming soon" state on /work; adds noindex to demo case studies and excludes from sitemap.
-  showProof: false,
+  // When true: shows the case study and testimonial sections on home and /work.
+  showProof: true,
+  // All proof content is illustrative until owner-verified data replaces it.
+  // While true, the site labels case studies and testimonials as examples.
+  proofIsDemo: true,
   // TODO: replace with verified BHive social profile URLs
   social: [
     { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com" },

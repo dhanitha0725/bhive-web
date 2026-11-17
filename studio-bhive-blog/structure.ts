@@ -17,5 +17,7 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title('Case studies')
         .child(S.documentTypeList('caseStudy').title('Case studies')),
-      S.listItem().title('Packages').child(S.documentTypeList('packagePlan').title('Packages')),
+      S.listItem()
+        .title('Testimonials')
+        .child(S.documentTypeList('testimonial').title('Testimonials')),
     ])

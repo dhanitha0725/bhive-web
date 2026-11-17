@@ -1,8 +1,10 @@
-import { services } from "@/content/services";
+import { services as fallbackServices } from "@/content/services";
 import { Container } from "@/components/ui/container";
 import { PageHero, FinalCta } from "@/components/sections/marketing";
 import { createMetadata } from "@/seo/metadata";
 import { Check } from "lucide-react";
+import { client } from "@/sanity/client";
+import { SERVICES_QUERY } from "@/sanity/queries";
 
 export const metadata = createMetadata({
   title: "Marketing Services for Sri Lankan Businesses",
@@ -11,7 +13,39 @@ export const metadata = createMetadata({
   path: "/services",
 });
 
-export default function ServicesPage() {
+type ServiceItem = {
+  slug: string;
+  name: string;
+  problemSolved: string;
+  scope: string[];
+  outcome: string;
+};
+
+export default async function ServicesPage() {
+  const sanityServices = await client
+    .fetch<Array<{
+      _id: string;
+      name: string | null;
+      slug: string | null;
+      problemSolved: string | null;
+      scope: string[] | null;
+      outcome: string | null;
+    }>>(SERVICES_QUERY, {}, { useCdn: false })
+    .catch(() => []);
+
+  const services: ServiceItem[] =
+    sanityServices && sanityServices.length > 0
+      ? sanityServices
+          .filter((s) => Boolean(s.slug && s.name))
+          .map((s) => ({
+            slug: s.slug as string,
+            name: s.name as string,
+            problemSolved: s.problemSolved || "",
+            scope: s.scope || [],
+            outcome: s.outcome || "",
+          }))
+      : fallbackServices;
+
   return (
     <div className="w-full bg-white text-[#0b1220]">
       <PageHero

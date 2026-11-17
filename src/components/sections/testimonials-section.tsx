@@ -1,11 +1,12 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import React from "react";
 import { Container } from "@/components/ui/container";
 import { motion } from "framer-motion";
+import { siteConfig } from "@/config/site";
+import type { TestimonialView } from "@/lib/testimonials";
 
-const STORIES = [
+const STORIES: TestimonialView[] = [
   {
     quote:
       "“B Hive completely changed how customers see our business. Every decision felt strategic instead of random marketing.”",
@@ -29,7 +30,13 @@ const STORIES = [
   },
 ];
 
-export function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  testimonials?: TestimonialView[];
+}
+
+export function TestimonialsSection({ testimonials }: TestimonialsSectionProps = {}) {
+  const displayStories = testimonials && testimonials.length > 0 ? testimonials : STORIES;
+
   return (
     <section className="relative w-full py-16 sm:py-24 lg:py-28 bg-white">
       <Container>
@@ -56,13 +63,20 @@ export function TestimonialsSection() {
           >
             Our success stories
           </motion.h2>
+
+          {siteConfig.proofIsDemo ? (
+            <p className="mt-4 max-w-xl text-sm leading-[1.6] text-[#5b6475]">
+              Illustrative examples used to demonstrate the layout. Verified client stories will
+              replace these.
+            </p>
+          ) : null}
         </div>
 
-        {/* 12-Column Stretch Grid: 3 Testimonial Cards (4 Cols each) */}
+        {/* 12-Column Stretch Grid: 3 Testimonial Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {STORIES.map((story, idx) => (
+          {displayStories.slice(0, 3).map((story, idx) => (
             <motion.div
-              key={idx}
+              key={story.id ?? `${story.author}-${idx}`}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -76,7 +90,7 @@ export function TestimonialsSection() {
               <div className="mt-8 pt-6 border-t border-[#e5e8ee] flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden bg-[#f5f7fa] shrink-0 border border-[#e5e8ee]">
                   <img
-                    src={story.avatar}
+                    src={story.avatar ?? "/images/figma/hero-1.png"}
                     alt={story.author}
                     className="w-full h-full object-cover"
                   />
@@ -85,9 +99,9 @@ export function TestimonialsSection() {
                   <p className="text-[15px] font-medium text-[#0b1220]">
                     {story.author}
                   </p>
-                  <p className="text-xs sm:text-[13px] text-[#5b6475]">
-                    {story.role}
-                  </p>
+                  {story.role ? (
+                    <p className="text-xs sm:text-[13px] text-[#5b6475]">{story.role}</p>
+                  ) : null}
                 </div>
               </div>
             </motion.div>
